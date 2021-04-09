@@ -47,7 +47,7 @@ const config: Configuration = {
         extensions: ["js", "jsx", "ts", "tsx"],
       })
   ],
-  devtool: "inline-source-map",
+  devtool: "source-map",
   devServer: {
     contentBase: path.join(__dirname, "build"),
     historyApiFallback: true,
