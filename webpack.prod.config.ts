@@ -10,7 +10,7 @@ const config: webpack.Configuration = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "[name].[contenthash].js",
-    clean: true, // Clean the output directory before emit.
+    clean: true // Clean the output directory before emit.
   },
   module: {
     rules: [
@@ -23,28 +23,27 @@ const config: webpack.Configuration = {
             presets: [
               "@babel/preset-env",
               "@babel/preset-react",
-              "@babel/preset-typescript",
-            ],
-          },
-        },
-      },
-    ],
+              "@babel/preset-typescript"
+            ]
+          }
+        }
+      }
+    ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js"]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./build/index.html",
+      template: "./build/index.html"
     }),
     new ForkTsCheckerWebpackPlugin({
-      async: false,
+      async: false
     }),
     new ESLintPlugin({
-      extensions: ["js", "jsx", "ts", "tsx"],
+      extensions: ["js", "jsx", "ts", "tsx"]
     })
-    
-  ],
+  ]
 };
 
 export default config;

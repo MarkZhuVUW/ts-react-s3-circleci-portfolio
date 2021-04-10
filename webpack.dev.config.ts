@@ -1,10 +1,12 @@
 import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import { Configuration as WebpackConfiguration, HotModuleReplacementPlugin  } from "webpack";
+import {
+  Configuration as WebpackConfiguration,
+  HotModuleReplacementPlugin
+} from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
-
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -12,7 +14,7 @@ interface Configuration extends WebpackConfiguration {
 const config: Configuration = {
   mode: "development",
   output: {
-   filename: "bundle.js"
+    filename: "bundle.js"
   },
   entry: "./src/index.tsx",
   module: {
@@ -26,26 +28,26 @@ const config: Configuration = {
             presets: [
               "@babel/preset-env",
               "@babel/preset-react",
-              "@babel/preset-typescript",
-            ],
-          },
-        },
-      },
-    ],
+              "@babel/preset-typescript"
+            ]
+          }
+        }
+      }
+    ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js"]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./build/index.html",
+      template: "./build/index.html"
     }),
     new ForkTsCheckerWebpackPlugin({
-        async: false
-      }),
-      new ESLintPlugin({
-        extensions: ["js", "jsx", "ts", "tsx"],
-      })
+      async: false
+    }),
+    new ESLintPlugin({
+      extensions: ["js", "jsx", "ts", "tsx"]
+    })
   ],
   devtool: "source-map",
   devServer: {
@@ -54,7 +56,7 @@ const config: Configuration = {
     port: 4000,
     open: true,
     hot: true
-  },
+  }
 };
 
 export default config;
