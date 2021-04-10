@@ -1,5 +1,5 @@
 {
-  "name": "employer-tracker",
+  "name": "portfolio",
   "version": "0.0.1",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -10,7 +10,8 @@
   "scripts": {
     "start": "webpack serve --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",
-    "test": "jest --config ./jest.config.json"
+    "test": "jest --config ./jest.config.json",
+    "lint": "eslint --fix . && prettier --write ."
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
@@ -31,6 +32,8 @@
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-webpack-plugin": "^2.5.3",

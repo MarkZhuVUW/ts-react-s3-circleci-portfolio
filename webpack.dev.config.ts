@@ -1,9 +1,6 @@
 import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import {
-  Configuration as WebpackConfiguration,
-  HotModuleReplacementPlugin
-} from "webpack";
+import { Configuration as WebpackConfiguration } from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
