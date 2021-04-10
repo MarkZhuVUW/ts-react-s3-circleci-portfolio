@@ -105,7 +105,7 @@ const Login: FC<LoginProps> = ({}: LoginProps) => {
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">
-              moon baboon
+              Moon Baboon
             </Typography>
 
             <form className={classes.form} noValidate>
@@ -143,7 +143,7 @@ const Login: FC<LoginProps> = ({}: LoginProps) => {
 
               <Grid container alignItems="center" justify="center">
                 <Grid item>
-                  <p style={{ fontWeight: "bold" }}>register</p>
+                  <p style={{ fontWeight: "bold" }}>Register</p>
                 </Grid>
               </Grid>
             </form>
