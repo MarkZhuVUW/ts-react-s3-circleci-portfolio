@@ -27,7 +27,7 @@ export const LocalStorageProvider: FC<LocalStorageProps> = ({
       }
       return JSON.parse(payload);
     } catch (e) {
-      console.warn(`Failed to get item with key = ${key}, ${e.message}`);
+      console.log(`Failed to get item with key = ${key}, ${e.message}`);
       return defaultValue;
     }
   };

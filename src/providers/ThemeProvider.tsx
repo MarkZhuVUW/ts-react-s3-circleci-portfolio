@@ -23,7 +23,7 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({
     getItemOrDefault(
       LocalStorageKeys.THEME,
       prefersDarkMode ? Theme.Dark : Theme.Light
-    )
+    ) || muiThemeLight
   );
 
   const setMuiTheme = (theme: Theme) => {

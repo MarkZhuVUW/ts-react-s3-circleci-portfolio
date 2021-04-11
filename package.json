@@ -11,6 +11,7 @@
     "start": "webpack serve --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint --fix . && prettier --write ."
   },
   "devDependencies": {

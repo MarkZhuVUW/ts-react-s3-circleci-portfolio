@@ -10,24 +10,24 @@ export type LocalStorageContextType = {
 
 export const LocalStorageContext = createContext<LocalStorageContextType>({
   keys: () => {
-    console.warn("Failed to get keys, no local storage provider");
+    console.log("Failed to get keys, no local storage provider");
     return [];
   },
   getItem: (key) => {
-    console.warn(
+    console.log(
       `Failed to find item with key = ${key}, no local storage provider`
     );
     return null;
   },
   getItemOrDefault: (key, defaultValue = null) => {
-    console.warn(
+    console.log(
       `Failed to find item with key = ${key}, no local storage provider`
     );
     return defaultValue;
   },
   setItem: (key, value) => {
-    console.warn(
-      `Failed to set item with key = ${key} and value = ${value}, not local storage provider`
+    console.log(
+      `Failed to set item with key = ${key} and value = ${value}, no local storage provider`
     );
   },
   removeItem: (key) => {
