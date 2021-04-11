@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import Login from "./components/Login";
+import AuthContainer from "./components/auth/AuthContainer";
 import { LocalStorageProvider } from "./providers/LocalStorageProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
 
 const App: FC = () => (
   <LocalStorageProvider>
     <ThemeProvider>
-      <Login />
+      <AuthContainer />
     </ThemeProvider>
   </LocalStorageProvider>
 );

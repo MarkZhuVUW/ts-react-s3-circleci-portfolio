@@ -19,24 +19,23 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   const { getItemOrDefault, setItem } = useLocalStorage();
-
-  const [theme, setThemeState] = useState(
+  const [theme, setTheme] = useState(
     getItemOrDefault(
       LocalStorageKeys.THEME,
       prefersDarkMode ? Theme.Dark : Theme.Light
     )
   );
 
-  const setTheme = (theme: Theme) => {
+  const setMuiTheme = (theme: Theme) => {
     setItem(LocalStorageKeys.THEME, theme);
-    setThemeState(theme);
+    setTheme(theme);
   };
 
   const muiTheme = theme === Theme.Dark ? muiThemeDark : muiThemeLight;
 
   return (
     <MuiThemeProvider theme={muiTheme}>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
+      <ThemeContext.Provider value={{ theme, setMuiTheme }}>
         <CssBaseline />
         {children}
       </ThemeContext.Provider>

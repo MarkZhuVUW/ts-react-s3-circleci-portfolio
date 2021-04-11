@@ -17,7 +17,7 @@ import {
   Zoom
 } from "@material-ui/core";
 import React, { FC } from "react";
-
+import CodeIcon from "@material-ui/icons/Code";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
       // display: "flex",
     },
     topBar: {
-      backgroundColor: "white",
       justifyContent: "flex-start"
     }
   })
@@ -83,21 +82,21 @@ const ValidationTextField = withStyles((theme: Theme) =>
   })
 )(TextField);
 
-type LoginProps = {
+type LoginViewProps = {
   // theme: Theme;
 };
-const Login: FC<LoginProps> = ({}: LoginProps) => {
+const LoginView: FC<LoginViewProps> = ({}: LoginViewProps) => {
   const classes = useStyles();
   return (
     <div style={{ backgroundColor: "#E9EAED" }}>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar className={classes.topBar}>
-          <Slide direction="right" in={true} timeout={500}>
-            <div>111</div>
+          <Slide direction="left" in={true} timeout={500}>
+            <span className={classes.logo}>
+              <CodeIcon />
+            </span>
           </Slide>
-
-          <Typography variant="h5" noWrap></Typography>
         </Toolbar>
       </AppBar>
 
@@ -153,4 +152,4 @@ const Login: FC<LoginProps> = ({}: LoginProps) => {
     </div>
   );
 };
-export default Login;
+export default LoginView;

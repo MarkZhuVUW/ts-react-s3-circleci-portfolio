@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 type ThemeContextType = {
   theme: Theme;
-  setTheme: (theme: Theme) => void;
+  setMuiTheme: (theme: Theme) => void;
 };
 
 export enum Theme {
@@ -12,9 +12,9 @@ export enum Theme {
 
 export const ThemeContext = createContext<ThemeContextType>({
   theme: Theme.Dark,
-  setTheme: (theme) => {
+  setMuiTheme: (theme) => {
     console.warn(`Failed to set theme = ${theme}, no theme provider`);
   }
 });
 
-export const useTheme = () => useContext(ThemeContext);
+export const useMuiTheme = () => useContext(ThemeContext);
