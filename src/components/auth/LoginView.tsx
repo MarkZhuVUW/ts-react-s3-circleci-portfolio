@@ -104,7 +104,7 @@ const LoginView: FC<LoginViewProps> = ({}: LoginViewProps) => {
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">
-              Moon Baboon
+              Moon Baboon1
             </Typography>
 
             <form className={classes.form} noValidate>
