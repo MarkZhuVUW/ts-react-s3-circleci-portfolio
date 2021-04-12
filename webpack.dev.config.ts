@@ -11,7 +11,8 @@ interface Configuration extends WebpackConfiguration {
 const config: Configuration = {
   mode: "development",
   output: {
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: "/"
   },
   entry: "./src/index.tsx",
   module: {
@@ -40,7 +41,7 @@ const config: Configuration = {
       template: "./public/index.html"
     }),
     new ForkTsCheckerWebpackPlugin({
-      async: false
+      async: true // can set it to false to make webpack wait for typechecking to finish.
     }),
     new ESLintPlugin({
       extensions: ["js", "jsx", "ts", "tsx"]

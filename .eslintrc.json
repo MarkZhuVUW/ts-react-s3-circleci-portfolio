@@ -20,5 +20,13 @@
       "pragma": "React",
       "version": "detect"
     }
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
