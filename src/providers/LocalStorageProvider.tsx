@@ -19,22 +19,9 @@ export const LocalStorageProvider: FC<LocalStorageProps> = ({
     return result;
   };
 
-  const getItemOrDefault = (key: string, defaultValue: any = null) => {
-    try {
-      const payload = localStorage.getItem(key);
-      if (payload === null) {
-        return defaultValue;
-      }
-      return JSON.parse(payload);
-    } catch (e) {
-      console.log(`Failed to get item with key = ${key}, ${e.message}`);
-      return defaultValue;
-    }
-  };
+  const getItem = (key: string) => localStorage.getItem(key);
 
-  const getItem = (key: string) => getItemOrDefault(key);
-
-  const setItem = (key: string, value: any) => {
+  const setItem = (key: string, value: string) => {
     localStorage.setItem(key, JSON.stringify(value));
   };
 
@@ -44,7 +31,7 @@ export const LocalStorageProvider: FC<LocalStorageProps> = ({
 
   return (
     <LocalStorageContext.Provider
-      value={{ keys, getItem, getItemOrDefault, setItem, removeItem }}
+      value={{ keys, getItem, setItem, removeItem }}
     >
       {children}
     </LocalStorageContext.Provider>

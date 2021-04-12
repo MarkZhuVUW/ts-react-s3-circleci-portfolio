@@ -5,8 +5,8 @@ import { Theme } from "../src/contexts/ThemeContext";
 import { ThemeProviderDebug } from "./Utils";
 import { LocalStorageProvider } from "../src/providers/LocalStorageProvider";
 
-describe("ThemeProvider unit tests.", () => {
-  it("default theme is light", async () => {
+describe("ThemeProvider tests.", () => {
+  test("default theme is light", async () => {
     const { container } = render(
       <LocalStorageProvider>
         <ThemeProvider>
@@ -18,7 +18,7 @@ describe("ThemeProvider unit tests.", () => {
 
     getByText(container, Theme.Light);
   });
-  it("sets theme to dark", async () => {
+  test("set theme to dark works", async () => {
     const { container } = render(
       <LocalStorageProvider>
         <ThemeProvider>

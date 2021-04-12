@@ -2,9 +2,8 @@ import { createContext, useContext } from "react";
 
 export type LocalStorageContextType = {
   keys: () => string[];
-  getItem: (key: string) => any;
-  getItemOrDefault: (key: string, defaultValue: any) => any;
-  setItem: (key: string, value: any) => void;
+  getItem: (key: string) => string | null;
+  setItem: (key: string, value: string) => void;
   removeItem: (key: string) => void;
 };
 
@@ -18,12 +17,6 @@ export const LocalStorageContext = createContext<LocalStorageContextType>({
       `Failed to find item with key = ${key}, no local storage provider`
     );
     return null;
-  },
-  getItemOrDefault: (key, defaultValue = null) => {
-    console.log(
-      `Failed to find item with key = ${key}, no local storage provider`
-    );
-    return defaultValue;
   },
   setItem: (key, value) => {
     console.log(

@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import { FC, useState } from "react";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Theme, ThemeContext } from "../contexts/ThemeContext";
@@ -16,14 +15,9 @@ type ThemeProviderProps = {
 export const ThemeProvider: FC<ThemeProviderProps> = ({
   children
 }: ThemeProviderProps) => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-
-  const { getItemOrDefault, setItem } = useLocalStorage();
+  const { getItem, setItem } = useLocalStorage();
   const [theme, setTheme] = useState(
-    getItemOrDefault(
-      LocalStorageKeys.THEME,
-      prefersDarkMode ? Theme.Dark : Theme.Light
-    ) || muiThemeLight
+    getItem(LocalStorageKeys.THEME) == Theme.Dark ? Theme.Dark : Theme.Light
   );
 
   const setMuiTheme = (theme: Theme) => {
