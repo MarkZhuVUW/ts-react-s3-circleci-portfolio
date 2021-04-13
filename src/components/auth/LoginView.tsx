@@ -21,14 +21,15 @@ import CodeIcon from "@material-ui/icons/Code";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      marginTop: "25%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      paddingTop: "5%",
-      paddingBottom: "5%",
-      paddingLeft: "15%",
-      paddingRight: "15%"
+      justifyContent: "center",
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
+      paddingLeft: theme.spacing(8),
+      paddingRight: theme.spacing(8),
+      marginTop: "30vh"
     },
     avatar: {
       margin: theme.spacing(1),
@@ -42,20 +43,31 @@ const useStyles = makeStyles((theme: Theme) =>
     submit: {
       margin: theme.spacing(3, 0, 2)
     },
-    content: {
-      flexGrow: 1,
-      height: "100vh",
-      overflow: "auto"
+    root: {
+      backgroundColor: "#E9EAED"
     },
     logo: {
-      width: "200px",
-      padding: "10px",
+      // width: "200px",
+      // padding: "10px",
       marginLeft: "20%"
+      // display: "flex"
       // marginRight: "10px",
       // display: "flex",
     },
     topBar: {
       justifyContent: "flex-start"
+    },
+    container: {
+      // display: "flex",
+      // margin: "auto",
+      // alignItems: "center",
+      // justifyContent: "center",
+      height: "64vh"
+    },
+    appBar: {
+      height: "6vh",
+      display: "flex",
+      justifyContent: "center"
     }
   })
 );
@@ -88,9 +100,9 @@ type LoginViewProps = {
 const LoginView: FC<LoginViewProps> = ({}: LoginViewProps) => {
   const classes = useStyles();
   return (
-    <div style={{ backgroundColor: "#E9EAED" }}>
+    <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="relative">
+      <AppBar position="relative" className={classes.appBar}>
         <Toolbar className={classes.topBar}>
           <Slide direction="left" in={true} timeout={500}>
             <span className={classes.logo}>
@@ -100,7 +112,7 @@ const LoginView: FC<LoginViewProps> = ({}: LoginViewProps) => {
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="sm" className={classes.content}>
+      <Container maxWidth="md" fixed className={classes.container}>
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">
