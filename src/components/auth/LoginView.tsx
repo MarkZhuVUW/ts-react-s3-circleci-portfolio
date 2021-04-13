@@ -25,11 +25,19 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-      paddingLeft: theme.spacing(8),
-      paddingRight: theme.spacing(8),
-      marginTop: "30vh"
+      marginTop: "23vh",
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(8),
+        paddingBottom: theme.spacing(8),
+        paddingLeft: theme.spacing(10),
+        paddingRight: theme.spacing(10)
+      },
+      [theme.breakpoints.down("md")]: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+        paddingLeft: theme.spacing(5),
+        paddingRight: theme.spacing(5)
+      }
     },
     avatar: {
       margin: theme.spacing(1),
@@ -62,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // margin: "auto",
       // alignItems: "center",
       // justifyContent: "center",
-      height: "64vh"
+      height: "71vh"
     },
     appBar: {
       height: "6vh",
