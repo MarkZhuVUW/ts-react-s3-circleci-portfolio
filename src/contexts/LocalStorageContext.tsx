@@ -1,10 +1,26 @@
 import { createContext, useContext } from "react";
 
 export type LocalStorageContextType = {
+  /**
+   * wrapper for the localStorage.keys function.
+   * return an array of local storage keys
+   */
   keys: () => string[];
+  /**
+   * wrapper for the localStorage.getItem function.
+   * return true if successful, null if unsuccessful.
+   */
   getItem: (key: string) => string | null;
-  setItem: (key: string, value: string) => void;
-  removeItem: (key: string) => void;
+  /**
+   * wrapper for the localStorage.setItem function.
+   * return true if successful, false if unsuccessful.
+   */
+  setItem: (key: string, value: string) => boolean;
+  /**
+   * wrapper for the localStorage.removeItem function.
+   * return true if successful, false if unsuccessful.
+   */
+  removeItem: (key: string) => boolean;
 };
 
 export const LocalStorageContext = createContext<LocalStorageContextType>({
@@ -20,13 +36,15 @@ export const LocalStorageContext = createContext<LocalStorageContextType>({
   },
   setItem: (key, value) => {
     console.log(
-      `Failed to set item with key = ${key} and value = ${value}, no local storage provider`
+      `Failed to set item with key = ${key} and value = ${value}, no local storage provider or an error is thrown`
     );
+    return false;
   },
   removeItem: (key) => {
-    console.warn(
-      `Failed to remove item with key = ${key}, no local storage provider`
+    console.log(
+      `Failed to remove item with key = ${key}, no local storage provider or an error is thrown`
     );
+    return false;
   }
 });
 

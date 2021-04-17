@@ -23,10 +23,12 @@ export const LocalStorageProvider: FC<LocalStorageProps> = ({
 
   const setItem = (key: string, value: string) => {
     localStorage.setItem(key, JSON.stringify(value));
+    return true;
   };
 
   const removeItem = (key: string) => {
     localStorage.removeItem(key);
+    return true;
   };
 
   return (

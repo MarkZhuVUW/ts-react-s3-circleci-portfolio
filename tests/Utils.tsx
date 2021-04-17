@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useLocalStorage } from "../src/contexts/LocalStorageContext";
 import { Theme, useMuiTheme } from "../src/contexts/ThemeContext";
 
@@ -22,26 +22,40 @@ export const LocalStorageProviderDebug: FC<LocalStorageProviderDebugProps> = ({
   functionToDebug
 }: LocalStorageProviderDebugProps) => {
   const { keys, setItem, removeItem, getItem } = useLocalStorage();
-
+  const [
+    isLocalStorageEventSuccessful,
+    setIsLocalStorageEventSuccessful
+  ] = useState(false);
   useEffect(() => {
     switch (functionToDebug) {
       case "setItem":
-        setItem("a", "1");
       case "keys":
-        setItem("a", "1");
-        setItem("b", "2");
+        setIsLocalStorageEventSuccessful(setItem("a", "1"));
+        break;
       case "removeItem":
-        setItem("a", "1");
-        setItem("b", "2");
-        removeItem("a");
+        setIsLocalStorageEventSuccessful(removeItem("a"));
+        break;
+      default:
+        break;
     }
   }, []);
   switch (functionToDebug) {
     case "setItem":
-      return <>{getItem("a")}</>;
+      return <>{getItem("a") || "null"}</>;
     case "keys":
-    case "removeItem":
       return <>{keys() || "[]"}</>;
+
+    case "removeItem":
+      return (
+        <>
+          <span>
+            is localstorage event successful:
+            {isLocalStorageEventSuccessful.toString()}
+          </span>
+          <span>{keys() || "[]"}</span>
+          {getItem("b") || "null"}
+        </>
+      );
     default:
       return <>{getItem("a") || "null"}</>;
   }
