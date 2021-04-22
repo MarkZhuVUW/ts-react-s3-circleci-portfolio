@@ -6,7 +6,7 @@ jobs:
     docker:
       - image: node:14.13.1
 
-    working_directory: ~/
+    working_directory: ~/project
 
     steps:
       - checkout
