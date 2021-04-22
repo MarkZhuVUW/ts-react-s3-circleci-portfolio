@@ -1,0 +1,18 @@
+version: 2.1
+orbs: # declare what orbs we are going to use
+  node: circleci/node@14.16.1 # the node orb provides common node-related configuration
+name: frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  unit-tests:
+      docker: 
+        - image: circleci/node@14.16.1
+      working_directory: ~/frontend
+      steps:
+        - run: npm install
+        - run: npm test
