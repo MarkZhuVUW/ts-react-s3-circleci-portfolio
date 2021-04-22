@@ -1,11 +1,5 @@
 version: 2.1
 name: frontend
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   unit-tests:
       docker: 
