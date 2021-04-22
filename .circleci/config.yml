@@ -1,6 +1,4 @@
 version: 2.1
-orbs: # declare what orbs we are going to use
-  node: circleci/node@14.16.1 # the node orb provides common node-related configuration
 name: frontend
 
 on:
