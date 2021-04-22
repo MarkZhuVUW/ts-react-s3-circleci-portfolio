@@ -22,7 +22,6 @@ jobs:
     steps:
       - checkout
       # disabled because it is too expensive.
-
       # - setup_remote_docker:
       # docker_layer_caching: true
       - run:
@@ -31,4 +30,4 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t your-image:$TAG .
+            docker build -f Dockerfile.dev -t frontend.dev:$TAG .
