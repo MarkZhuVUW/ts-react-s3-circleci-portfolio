@@ -21,9 +21,10 @@ jobs:
       - image: cimg/node:14.16.1
     steps:
       - checkout
-      - setup_remote_docker:
-          #available on performance plan
-          docker_layer_caching: true
+      # disabled because it is too expensive.
+
+      # - setup_remote_docker:
+      # docker_layer_caching: true
       - run:
           name: Set up tag
           command: echo "export TAG=0.1.$CIRCLE_SHA1" >> $BASH_ENV
