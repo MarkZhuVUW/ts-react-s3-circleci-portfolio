@@ -1,7 +1,7 @@
 version: 2.1
 name: frontend
 jobs:
-  unit-tests:
+  build:
       docker: 
         - image: circleci/node@14.16.1
       working_directory: ~/frontend
