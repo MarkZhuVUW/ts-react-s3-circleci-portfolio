@@ -2,8 +2,6 @@ version: 2.1
 name: frontend
 jobs:
   build:
-      docker: 
-        - image: circleci/node@14.16.1
       working_directory: ~/frontend
       steps:
         - run: npm install
