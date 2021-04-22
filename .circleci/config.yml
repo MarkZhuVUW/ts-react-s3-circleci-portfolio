@@ -21,13 +21,7 @@ jobs:
       - image: cimg/node:14.16.1
     steps:
       - checkout
-      # disabled because it is too expensive.
-      # - setup_remote_docker:
-      # docker_layer_caching: true
-      - run:
-          name: Set up tag
-          command: echo "export TAG=0.1.$CIRCLE_SHA1" >> $BASH_ENV
       - run:
           name: Build Docker image
           command: |
-            docker build -f Dockerfile.dev -t frontend.dev:$TAG .
+            docker build -f Dockerfile.dev -t frontend.dev:latest .
