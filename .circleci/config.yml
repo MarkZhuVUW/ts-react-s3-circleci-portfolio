@@ -6,7 +6,6 @@ jobs:
       - image: ubuntu:latest
     steps:
       - checkout
-
       - run: npm install
       - run:
           name: "Run Jest tests and Collect Coverage"
@@ -21,6 +20,11 @@ jobs:
             sudo apt-get update
             sudo apt install python3-pip
             sudo pip3 install awsebcli --upgrade
-      - run:  
+      - run:
           name: Deploy build files to aws s3 bucket.
           command: aws s3 sync ./build s3://react-frontend-circleci
+
+workflows:
+  deploy-to-s3:
+    jobs:
+      - test_build_deploy
