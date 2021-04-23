@@ -15,5 +15,8 @@ module.exports = {
   // Module file extensions for importing
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testRegex: "((\\.|/*.)(spec))\\.tsx?$",
-  collectCoverage: true
+  collectCoverage: true,
+
+  testResultsProcessor: "jest-junit",
+  reporters: ["default", "jest-junit"]
 };

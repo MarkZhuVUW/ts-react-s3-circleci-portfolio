@@ -1,29 +1,35 @@
 version: 2.1
 
 jobs:
-  test_build_deploy:
+  test:
     docker:
       - image: node:14.16.1-alpine
     steps:
       - checkout
+      - run: npm install
+      - run:
+          name: "Run Jest tests"
+          command: npm test
+      - store_test_results:
+          path: coverage
+
+  build-n-deploy:
+    docker:
+      - image: node:14.16.1-alpine
+    steps:
+      - run: npm run build
       - run:
           name: Install aws cli through python to always get the latest verison
           command: |
             apk add python3 py-pip
             pip3 install awscli --upgrade
             aws --version
-      - run: npm install
-      - run:
-          name: "Run Jest tests and Collect Coverage"
-          command: npm test
-      - store_test_results:
-          path: coverage
-      - run: npm run build
       - run:
           name: Deploy build files to aws s3 bucket.
           command: aws s3 sync ./build s3://react-frontend-circleci
 
 workflows:
-  deploy-to-s3:
+  test-build-deploy:
     jobs:
-      - test_build_deploy
+      - test
+      - build-n-deploy
