@@ -14,6 +14,7 @@ jobs:
           path: test-results
       - store_artifacts:
           path: coverage/lcov-report/tests
+          destination: coverage
 
   build-n-deploy:
     docker:
@@ -35,4 +36,6 @@ workflows:
   test-build-deploy:
     jobs:
       - test
-      - build-n-deploy
+      - build-n-deploy:
+          requires:
+            - test
