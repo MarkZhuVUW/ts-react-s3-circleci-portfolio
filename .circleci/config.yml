@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test_build_deploy:
     docker:
-      - image: node@14.16.1-alpine
+      - image: node:14.16.1-alpine
     steps:
       - checkout
       - run:
@@ -15,7 +15,6 @@ jobs:
       - run:
           name: Install aws cli through python to always get the latest verison
           command: |
-            apt-get update
             apt install python3-pip 
             pip3 install awsebcli --upgrade
       - run: npm install
