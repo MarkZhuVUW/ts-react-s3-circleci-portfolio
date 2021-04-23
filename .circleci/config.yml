@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  test:
+  test-build-deploy:
     docker:
       - image: node:14.16.1-alpine
     steps:
