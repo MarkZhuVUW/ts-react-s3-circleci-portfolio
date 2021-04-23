@@ -41,7 +41,7 @@ jobs:
     docker:
       - image: node:14.16.1-alpine
     steps:
-      - run: checkout
+      - checkout
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: ~project/build
