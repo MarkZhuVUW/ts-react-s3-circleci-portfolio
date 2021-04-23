@@ -9,9 +9,8 @@ jobs:
       - run:
           name: Install AWS CLI through python to always get the latest version of aws cli :)
           command: |
-            apt-get update
-            apt install python3-pip
-            pip3 install awsebcli --upgrade
+            apt install python3-pip  -y
+            pip3 install awsebcli --upgrade -y
       - run: npm install
       - run:
           name: "Run Jest tests and Collect Coverage"
