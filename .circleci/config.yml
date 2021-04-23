@@ -1,12 +1,20 @@
 version: 2.1
 
 jobs:
-  test-build-deploy:
+  test:
     docker:
       - image: node:14.16.1-alpine
+
     steps:
       - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
       - run:
           name: "Run Jest tests"
           command: npm test
@@ -15,7 +23,25 @@ jobs:
       - store_artifacts:
           path: coverage
           destination: coverage
+      - persist_to_workspace:
+          root: root
+          paths:
+            - project
+      - run: ls
+  build:
+    docker:
+      - image: node:14.16.1-alpine
+    steps:
       - run: npm run build
+      - persist_to_workspace:
+          root: root
+          paths:
+            - project
+      - run: ls
+  deploy:
+    docker:
+      - image: node:14.16.1-alpine
+    steps:
       - run:
           name: Install aws cli through python to always get the latest verison
           command: |
@@ -29,4 +55,10 @@ jobs:
 workflows:
   test-build-deploy:
     jobs:
-      - test-build-deploy
+      - test
+      - build:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - build
