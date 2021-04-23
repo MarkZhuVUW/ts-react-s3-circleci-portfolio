@@ -3,25 +3,28 @@ version: 2.1
 orbs:
   node: circleci/node@4.0.0
 
+jobs:
+  buildndeploy:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - run:
+          name: Installing AWS CLI
+          command: |
+            sudo apt-get update
+            sudo apt install python3-pip
+            sudo pip3 install awsebcli --upgrade
+      - run: npm install
+      - run: npm run build
+      - run: aws s3 sync ./build s3://react-frontend-circleci
+
 workflows:
-  build_test:
+  test_build_deploy:
     jobs:
       - node/test:
           matrix:
             parameters:
               version:
                 - 14.16.1
-      - build_docker_image:
-          requires:
-            - node/test
-
-jobs:
-  build_docker_image:
-    docker:
-      - image: cimg/node:14.16.1
-    steps:
-      - checkout
-      - run:
-          name: Build Docker image
-          command: |
-            docker build -f Dockerfile.dev -t frontend.dev:latest .
+      - buildndeploy
