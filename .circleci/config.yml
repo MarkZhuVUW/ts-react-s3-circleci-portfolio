@@ -33,7 +33,7 @@ jobs:
       - run: npm install
       - run: npm run build
       - persist_to_workspace:
-          root: /root/project
+          root: ./
           paths:
             - build
 
@@ -43,8 +43,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: root/project/
+          at: .
       - run:
           name: Install aws cli through python to always get the latest verison
           command: |
