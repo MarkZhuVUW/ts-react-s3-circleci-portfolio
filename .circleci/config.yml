@@ -1,31 +1,66 @@
 version: 2.1
-name: frontend
 
 jobs:
-  build:
+  test:
     docker:
-      - image: node:14.13.1
-
-    working_directory: ~/project
+      - image: node:14.16.1-alpine
 
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
+          key: dependency-cache-{{ checksum "package.json" }}
       - run: npm install
-
       - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: "Run Jest tests"
+          command: npm test
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: coverage
+          destination: coverage
 
-      # run tests!
-      - run: npm test
+  build:
+    docker:
+      - image: node:14.16.1-alpine
+    steps:
+      - checkout
+      - restore_cache: # at this stage we are 100% sure the saved cache is up to date.
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run: npm install
+      - run: npm run build
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - build
 
-      - run: npm build
+  deploy:
+    docker:
+      - image: node:14.16.1-alpine
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install aws cli through python to always get the latest verison
+          command: |
+            apk add python3 py-pip
+            pip3 install awscli --upgrade
+            aws --version
+      - run:
+          name: Deploy build files to aws s3 bucket.
+          command: aws s3 sync ./build s3://react-frontend-circleci
+
+workflows:
+  test-build-deploy:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - build
