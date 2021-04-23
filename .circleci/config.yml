@@ -7,12 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install npm and node for testing and building the app.
-          command: |
-            apt-get update
-            apt install python3-pip npm node@14.16.1
-            pip3 install awsebcli --upgrade
-      - run:
           name: Install aws cli through python to always get the latest verison
           command: |
             apt install python3-pip 
