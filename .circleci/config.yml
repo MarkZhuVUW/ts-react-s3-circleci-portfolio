@@ -32,6 +32,8 @@ jobs:
     docker:
       - image: node:14.16.1-alpine
     steps:
+      - checkout
+      - run: ls
       - run: npm run build
       - persist_to_workspace:
           root: /root
@@ -42,6 +44,8 @@ jobs:
     docker:
       - image: node:14.16.1-alpine
     steps:
+      - run: checkout
+      - run: ls
       - run:
           name: Install aws cli through python to always get the latest verison
           command: |
