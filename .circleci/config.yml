@@ -44,8 +44,7 @@ jobs:
       - checkout
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: ~project/build
-      - run: ls
+          at: root/project/
       - run:
           name: Install aws cli through python to always get the latest verison
           command: |
