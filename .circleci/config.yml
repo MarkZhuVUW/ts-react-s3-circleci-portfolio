@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@4.0.0
 
 jobs:
-  buildndeploy:
+  test_build_deploy:
     machine:
       image: ubuntu-2004:202010-01
     steps:
@@ -16,15 +16,17 @@ jobs:
             sudo apt install python3-pip
             sudo pip3 install awsebcli --upgrade
       - run: npm install
+      - run:
+          name: "Run Jest tests and Collect Coverage"
+          command: npm test
+      - store_artifacts:
+          path: coverage
       - run: npm run build
-      - run: aws s3 sync ./build s3://react-frontend-circleci
+      - run:
+          name: Deploy build files to aws s3 bucket.
+          command: aws s3 sync ./build s3://react-frontend-circleci
 
 workflows:
   test_build_deploy:
     jobs:
-      - node/test:
-          matrix:
-            parameters:
-              version:
-                - 14.16.1
       - buildndeploy
