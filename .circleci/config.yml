@@ -1,32 +1,26 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@4.0.0
-
 jobs:
   test_build_deploy:
-    machine:
-      image: ubuntu-2004:202010-01
+    docker:
+      - image: ubuntu:latest
     steps:
       - checkout
-      - run:
-          name: Installing AWS CLI
-          command: |
-            sudo apt-get update
-            sudo apt install python3-pip
-            sudo pip3 install awsebcli --upgrade
+
       - run: npm install
       - run:
           name: "Run Jest tests and Collect Coverage"
           command: npm test
       - store_artifacts:
           path: coverage
+
       - run: npm run build
       - run:
+          name: Install AWS CLI through python to always get the latest version of aws cli :)
+          command: |
+            sudo apt-get update
+            sudo apt install python3-pip
+            sudo pip3 install awsebcli --upgrade
+      - run:  
           name: Deploy build files to aws s3 bucket.
           command: aws s3 sync ./build s3://react-frontend-circleci
-
-workflows:
-  test_build_deploy:
-    jobs:
-      - buildndeploy
