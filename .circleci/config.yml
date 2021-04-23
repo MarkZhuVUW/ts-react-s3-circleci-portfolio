@@ -13,7 +13,7 @@ jobs:
       - store_test_results:
           path: test-results
       - store_artifacts:
-          path: coverage/lcov-report/tests
+          path: coverage
           destination: coverage
       - run: npm run build
       - run:
