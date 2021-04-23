@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Install aws cli through python to always get the latest verison
           command: |
-            apk add python3-pip 
+            apk add python3 py-pip
             pip3 install awscli --upgrade
             aws --version
       - run: npm install
