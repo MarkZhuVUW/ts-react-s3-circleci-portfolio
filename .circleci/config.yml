@@ -11,12 +11,15 @@ jobs:
           name: "Run Jest tests"
           command: npm test
       - store_test_results:
-          path: coverage
+          path: test-results
+      - store_artifacts:
+          path: coverage/lcov-report/tests
 
   build-n-deploy:
     docker:
       - image: node:14.16.1-alpine
     steps:
+      - checkout
       - run: npm run build
       - run:
           name: Install aws cli through python to always get the latest verison
