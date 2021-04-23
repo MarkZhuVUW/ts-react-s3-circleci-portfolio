@@ -10,7 +10,8 @@ jobs:
           name: Install aws cli through python to always get the latest verison
           command: |
             apk add python3-pip 
-            pip3 install awsebcli --upgrade
+            pip3 install awscli --upgrade
+            aws --version
       - run: npm install
       - run:
           name: "Run Jest tests and Collect Coverage"
