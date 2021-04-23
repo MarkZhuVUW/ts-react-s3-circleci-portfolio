@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test_build_deploy:
     docker:
-      - image: ubuntu:latest
+      - image: node@14.16.1-alpine
     steps:
       - checkout
       - run:
