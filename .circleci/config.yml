@@ -24,7 +24,7 @@ jobs:
           path: coverage
           destination: coverage
       - persist_to_workspace:
-          root: root
+          root: /root
           paths:
             - project
       - run: ls
@@ -34,7 +34,7 @@ jobs:
     steps:
       - run: npm run build
       - persist_to_workspace:
-          root: root
+          root: /root
           paths:
             - project
       - run: ls
