@@ -14,7 +14,6 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-
       - run:
           name: "Run Jest tests"
           command: npm test
@@ -23,28 +22,29 @@ jobs:
       - store_artifacts:
           path: coverage
           destination: coverage
-      - persist_to_workspace:
-          root: /root
-          paths:
-            - project
-      - run: ls
+
   build:
     docker:
       - image: node:14.16.1-alpine
     steps:
       - checkout
-      - run: ls
+      - restore_cache: # at this stage we are 100% sure the saved cache is up to date.
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run: npm install
       - run: npm run build
       - persist_to_workspace:
           root: /root
           paths:
-            - project
-      - run: ls
+            - project/build
+
   deploy:
     docker:
       - image: node:14.16.1-alpine
     steps:
       - run: checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ~project/build
       - run: ls
       - run:
           name: Install aws cli through python to always get the latest verison
