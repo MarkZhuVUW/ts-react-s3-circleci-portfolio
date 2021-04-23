@@ -7,9 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install AWS CLI through python to always get the latest version of aws cli :)
+          name: Install dependencies for running tests, build and deploy to S3
           command: |
-            apt install python3-pip  -y
+            apt-get update
+            apt install python3-pip -y
             pip3 install awsebcli --upgrade -y
       - run: npm install
       - run:
