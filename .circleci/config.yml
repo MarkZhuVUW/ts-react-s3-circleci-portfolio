@@ -16,7 +16,7 @@ jobs:
       - run:
           name: "Run Jest tests and Collect Coverage"
           command: npm test
-      - store_artifacts:
+      - store_test_results:
           path: coverage
       - run: npm run build
       - run:
