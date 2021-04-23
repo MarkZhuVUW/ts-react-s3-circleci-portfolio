@@ -15,12 +15,6 @@ jobs:
       - store_artifacts:
           path: coverage/lcov-report/tests
           destination: coverage
-
-  build-n-deploy:
-    docker:
-      - image: node:14.16.1-alpine
-    steps:
-      - checkout
       - run: npm run build
       - run:
           name: Install aws cli through python to always get the latest verison
@@ -35,7 +29,4 @@ jobs:
 workflows:
   test-build-deploy:
     jobs:
-      - test
-      - build-n-deploy:
-          requires:
-            - test
+      - test-build-deploy
