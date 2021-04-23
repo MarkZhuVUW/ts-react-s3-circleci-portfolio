@@ -6,20 +6,19 @@ jobs:
       - image: ubuntu:latest
     steps:
       - checkout
-      - run: npm install
-      - run:
-          name: "Run Jest tests and Collect Coverage"
-          command: npm test
-      - store_artifacts:
-          path: coverage
-
-      - run: npm run build
       - run:
           name: Install AWS CLI through python to always get the latest version of aws cli :)
           command: |
             sudo apt-get update
             sudo apt install python3-pip
             sudo pip3 install awsebcli --upgrade
+      - run: npm install
+      - run:
+          name: "Run Jest tests and Collect Coverage"
+          command: npm test
+      - store_artifacts:
+          path: coverage
+      - run: npm run build
       - run:
           name: Deploy build files to aws s3 bucket.
           command: aws s3 sync ./build s3://react-frontend-circleci
