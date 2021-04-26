@@ -50,8 +50,15 @@ jobs:
             apk add python3 py-pip
             pip3 install awscli --upgrade
       - run:
-          name: Deploy build files to aws s3 bucket.
-          command: aws s3 sync ./build s3://react-frontend-circleci
+          name: Instal docker on alpine linux
+          command: | 
+            rc-update add docker boot
+            service docker start
+            docker status
+      # - run:
+      #     name: Deploy build files to aws s3 bucket.
+      #     command: aws s3 sync ./build s3://react-frontend-circleci
+
       - run:
           name: Login to aws-ecr
           command: aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com
