@@ -52,9 +52,7 @@ jobs:
       - run:
           name: Instal docker on alpine linux
           command: | 
-            rc-update add docker boot
-            service docker start
-            docker status
+            apk add docker
       # - run:
       #     name: Deploy build files to aws s3 bucket.
       #     command: aws s3 sync ./build s3://react-frontend-circleci
