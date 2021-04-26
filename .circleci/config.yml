@@ -1,18 +1,5 @@
 version: 2.1
 
-
-orbs:
-  aws-ecr: circleci/aws-ecr@7.0.0
-  aws-ecs: circleci/aws-ecs@2.2.0
-
-
-
-workflows:
-  build-and-deploy:
-    jobs:
-      - aws-ecr/build-and-push-image:
-          repo: "${AWS_RESOURCE_NAME_PREFIX}"
-          tag: "${CIRCLE_SHA1}"
 jobs:
   test:
     docker:
@@ -48,7 +35,6 @@ jobs:
           paths:
             - build
 
-
   deploy:
     docker:
       - image: node:14.16.1-alpine
@@ -73,15 +59,6 @@ jobs:
             docker build -f Dockerfile.prod -t portfolio-frontend .
             docker tag portfolio-frontend:latest 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
             docker push 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
-      
-
-
-
-          
-
-
-
-
 
 workflows:
   test-build-deploy:
