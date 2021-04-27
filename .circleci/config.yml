@@ -50,9 +50,8 @@ jobs:
             apk add python3 py-pip
             pip3 install awscli --upgrade
       - run:
-          name: Instal docker on alpine linux and ensure the docker daemon is running
+          name: check if docker is working 
           command: | 
-            apk add --update docker openrc
             service docker status 
       # - run:
       #     name: Deploy build files to aws s3 bucket.
