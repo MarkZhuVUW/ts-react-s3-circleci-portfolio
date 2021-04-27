@@ -14,12 +14,6 @@ RUN npm run build
 
 FROM nginx:stable-alpine
 
-# install aws cli through python as python seems to always have the latest version of aws cli.
-
-RUN apk add python3 py-pip
-
-RUN pip3 install awscli --upgrade
-
 COPY --from=build /frontend/build /usr/share/nginx/html
 
 EXPOSE 80
