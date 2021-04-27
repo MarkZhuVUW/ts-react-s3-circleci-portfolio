@@ -53,7 +53,6 @@ jobs:
           name: Instal docker on alpine linux and ensure the docker daemon is running
           command: | 
             apk add --update docker openrc
-            service docker start
             service docker status 
       # - run:
       #     name: Deploy build files to aws s3 bucket.
