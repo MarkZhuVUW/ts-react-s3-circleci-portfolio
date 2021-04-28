@@ -41,12 +41,7 @@ jobs:
       - image: docker:latest
     steps:
       - checkout
-      - run:
-          name: Install tar which is needed by circle cli
-          command: |
-            TAG=0.1.$CIRCLE_BUILD_NUM
-            yum install tar gzip -y
-            yum update -y
+
       - attach_workspace:
           at: ./
       - run:
