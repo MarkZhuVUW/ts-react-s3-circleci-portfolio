@@ -44,8 +44,8 @@ jobs:
       - run:
           name: Install tar which is needed by circle cli
           command: |
-            sudo yum install tar
-            sudo yum update -y
+            yum install tar
+            yum update -y
       - attach_workspace:
           at: ./
       # - run:
