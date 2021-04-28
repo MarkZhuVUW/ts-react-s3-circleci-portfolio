@@ -53,7 +53,6 @@ jobs:
             apk add openrc --no-cache
             apk add --update docker openrc
             rc-update add docker boot
-            service docker status
       # - run:
       #     name: Deploy build files to aws s3 bucket.
       #     command: aws s3 sync ./build s3://react-frontend-circleci
