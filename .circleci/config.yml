@@ -50,7 +50,6 @@ jobs:
       - run:
           name: install docker cli inside the alpine container...
           command: |
-            apk add openrc --no-cache
             apk add --update docker openrc
             rc-update add docker boot
       # - run:
