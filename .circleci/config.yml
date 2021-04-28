@@ -44,15 +44,16 @@ jobs:
       - run:
           name: Install tar which is needed by circle cli
           command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
             yum install tar gzip -y
             yum update -y
       - attach_workspace:
           at: ./
-      # - run:
-      #     name: Install aws cli through python to always get the latest verison
-      #     command: |
-      #       apk add python3 py-pip
-      #       pip3 install awscli --upgrade
+      - run:
+          name: Install aws cli through python to always get the latest verison
+          command: |
+            apk add python3 py-pip
+            pip3 install awscli --upgrade
       # - run:
       #     name: install docker cli...
       #     command: |
