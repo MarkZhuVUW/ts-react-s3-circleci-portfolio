@@ -38,7 +38,7 @@ jobs:
   deploy:
     docker:
       # I use amazon linux which has the built in aws cli and all I need is to install docker in order to do my deployment.
-      - image: amazon/aws-cli
+      - image: docker:latest
     steps:
       - checkout
       - run:
@@ -49,11 +49,11 @@ jobs:
             yum update -y
       - attach_workspace:
           at: ./
-      # - run:
-      #     name: Install aws cli through python to always get the latest verison
-      #     command: |
-      #       apk add python3 py-pip
-      #       pip3 install awscli --upgrade
+      - run:
+          name: Install aws cli through python to always get the latest verison
+          command: |
+            apk add python3 py-pip
+            pip3 install awscli --upgrade
       # - run:
       #     name: install docker cli...
       #     command: |
