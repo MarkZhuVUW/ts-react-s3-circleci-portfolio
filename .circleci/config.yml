@@ -50,7 +50,7 @@ jobs:
       - run:
           name: install docker cli inside the alpine container...
           command: |
-            apk add --update docker openrc
+            apk add --update docker openrc sudo
             rc-update add docker boot
       # - run:
       #     name: Deploy build files to aws s3 bucket.
