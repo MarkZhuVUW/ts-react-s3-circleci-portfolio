@@ -62,9 +62,9 @@ jobs:
       - run:
           name: build and push image to the ecr repo
           command: |
-            docker build -f Dockerfile.prod -t portfolio-frontend .
-            docker tag portfolio-frontend:latest 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
-            docker push 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
+            sudo docker build -f Dockerfile.prod -t portfolio-frontend .
+            sudo docker tag portfolio-frontend:latest 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
+            sudo docker push 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
 
 workflows:
   test-build-deploy:
