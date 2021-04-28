@@ -51,16 +51,6 @@ jobs:
             apk add python3 py-pip
             pip3 install awscli --upgrade
       # - run:
-      #     name: install docker cli...
-      #     command: |
-      #       sudo yum update -y
-      #       sudo amazon-linux-extras install docker
-      #       sudo service docker start
-      #       sudo usermod -a -G docker ec2-user
-      #       docker info
-      - setup_remote_docker:
-          version: 19.03.13
-      # - run:
       #     name: Deploy build files to aws s3 bucket.
       #     command: aws s3 sync ./build s3://react-frontend-circleci
 
@@ -75,7 +65,7 @@ jobs:
             docker push 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
       - run:
           name: trigger aws create deployment on AWS CodeDeploy with aws cli
-          command: aws deploy create-deployment --cli-input-json file://create-deployment.json --region ap-southeast-2
+          command: aws deploy create-deployment --cli-input-json file://scripts/create-deployment.json --region ap-southeast-2
 
 workflows:
   test-build-deploy:

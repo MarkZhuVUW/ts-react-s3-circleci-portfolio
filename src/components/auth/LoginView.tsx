@@ -125,7 +125,8 @@ const LoginView: FC<LoginViewProps> = ({}: LoginViewProps) => {
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">
               App developed and deployed with ci on circleci and cd on aws (ecr
-              ecs) fully docker containerized with load balancing
+              ecs blue-green deployment) fully docker containerized with load
+              balancing
             </Typography>
 
             <form className={classes.form} noValidate>
