@@ -24,7 +24,7 @@ jobs:
 
   build:
     docker:
-      - image: scratch # I am trying to use the lightest weight docker container for the build step because essentially I am doing copying and pasting in this step...
+      - image: node:14.16.1-alpine
     steps:
       - checkout
       - restore_cache: # at this stage we are 100% sure the saved cache is up to date.
@@ -37,7 +37,8 @@ jobs:
 
   deploy:
     docker:
-      - image: amazonlinux:latest # I use amazon linux which has the built in aws cli and all I need is to install docker in order to do my deployment.
+      # I use amazon linux which has the built in aws cli and all I need is to install docker in order to do my deployment.
+      - image: amazonlinux:latest
     steps:
       - checkout
       - attach_workspace:
@@ -47,15 +48,16 @@ jobs:
       #     command: |
       #       apk add python3 py-pip
       #       pip3 install awscli --upgrade
-      - run:
-          name: install docker cli...
-          command: |
-            sudo yum update -y
-            sudo amazon-linux-extras install docker
-            sudo service docker start
-            sudo usermod -a -G docker ec2-user
-            docker info
-
+      # - run:
+      #     name: install docker cli...
+      #     command: |
+      #       sudo yum update -y
+      #       sudo amazon-linux-extras install docker
+      #       sudo service docker start
+      #       sudo usermod -a -G docker ec2-user
+      #       docker info
+      - setup_remote_docker:
+          version: 19.03.13
       # - run:
       #     name: Deploy build files to aws s3 bucket.
       #     command: aws s3 sync ./build s3://react-frontend-circleci
