@@ -38,7 +38,7 @@ jobs:
   deploy:
     docker:
       # I use amazon linux which has the built in aws cli and all I need is to install docker in order to do my deployment.
-      - image: amazonlinux:latest
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
