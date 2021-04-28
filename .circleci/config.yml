@@ -41,7 +41,7 @@ jobs:
       - image: amazonlinux:latest
     steps:
       - checkout
-      - run: |
+      - run:
           name: Install tar which is needed by circle cli
           command: |
             sudo yum install tar
