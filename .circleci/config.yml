@@ -24,7 +24,7 @@ jobs:
 
   build:
     docker:
-      - image: node:14.16.1-alpine
+      - image: scratch # I am trying to use the lightest weight docker container for the build step because essentially I am doing copying and pasting in this step...
     steps:
       - checkout
       - restore_cache: # at this stage we are 100% sure the saved cache is up to date.
@@ -37,21 +37,25 @@ jobs:
 
   deploy:
     docker:
-      - image: node:14.16.1-alpine
+      - image: amazonlinux:latest # I use amazon linux which has the built in aws cli and all I need is to install docker in order to do my deployment.
     steps:
       - checkout
       - attach_workspace:
           at: ./
+      # - run:
+      #     name: Install aws cli through python to always get the latest verison
+      #     command: |
+      #       apk add python3 py-pip
+      #       pip3 install awscli --upgrade
       - run:
-          name: Install aws cli through python to always get the latest verison
+          name: install docker cli...
           command: |
-            apk add python3 py-pip
-            pip3 install awscli --upgrade
-      - run:
-          name: install docker cli inside the alpine container...
-          command: |
-            apk add --update docker openrc sudo
-            rc-update add docker boot
+            sudo yum update -y
+            sudo amazon-linux-extras install docker
+            sudo service docker start
+            sudo usermod -a -G docker ec2-user
+            docker info
+
       # - run:
       #     name: Deploy build files to aws s3 bucket.
       #     command: aws s3 sync ./build s3://react-frontend-circleci
@@ -62,9 +66,9 @@ jobs:
       - run:
           name: build and push image to the ecr repo
           command: |
-            sudo docker build -f Dockerfile.prod -t portfolio-frontend .
-            sudo docker tag portfolio-frontend:latest 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
-            sudo docker push 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
+            docker build -f Dockerfile.prod -t portfolio-frontend .
+            docker tag portfolio-frontend:latest 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
+            docker push 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
 
 workflows:
   test-build-deploy:
