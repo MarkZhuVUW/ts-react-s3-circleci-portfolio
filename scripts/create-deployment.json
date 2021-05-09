@@ -5,7 +5,7 @@
     "revisionType": "S3",
     "s3Location": {
       "bucket": "blue-green-portfolio-ecs-deployment-bucket",
-      "key": "appspec.yaml",
+      "key": "codeDeployAppSpec.yml",
       "bundleType": "YAML"
     }
   }
