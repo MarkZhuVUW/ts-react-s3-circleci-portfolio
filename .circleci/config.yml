@@ -88,5 +88,5 @@ workflows:
             - testnbuild
           filters:
             branches:
-            only:
-              - master
+              only:
+                - master
