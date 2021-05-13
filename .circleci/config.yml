@@ -83,7 +83,7 @@ workflows:
       # - dev:
       #     requires:
       #       - testnbuild
-      - prod:
+      - deploy:
           requires:
             - testnbuild
           branches:
