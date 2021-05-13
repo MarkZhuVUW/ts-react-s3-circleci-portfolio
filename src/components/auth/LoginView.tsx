@@ -124,9 +124,7 @@ const LoginView: FC<LoginViewProps> = ({}: LoginViewProps) => {
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h5">
-              App developed and deployed with ci on circleci and cd on aws (ecr
-              ecs blue-green deployment) fully docker containerized with load
-              balancing
+              App developed and deployed with ci on circleci and cd to s3 bucket
             </Typography>
 
             <form className={classes.form} noValidate>

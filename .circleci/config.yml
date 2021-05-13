@@ -60,7 +60,11 @@ jobs:
           name: Deploy build files to aws s3 bucket.
           command: | 
             aws s3 sync ./build s3://react-frontend-circleci 
-            aws s3 website s3://react-frontend-circleci  --index-document index.html
+      # - run: 
+      #     name: Host static react website
+      #     command: |
+      #       aws s3 website s3://react-frontend-circleci  --index-document index.html      
+            
       # - setup_remote_docker:
       #     version: 19.03.13
       # - run:
@@ -86,7 +90,7 @@ workflows:
       - deploy:
           requires:
             - testnbuild
-          filters:
-            branches:
-              only:
-                - master
+          # filters:
+          #   branches:
+          #     only:
+          #       - master
