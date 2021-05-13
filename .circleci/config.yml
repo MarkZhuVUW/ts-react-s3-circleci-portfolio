@@ -90,7 +90,7 @@ workflows:
       - deploy:
           requires:
             - testnbuild
-          # filters:
-          #   branches:
-          #     only:
-          #       - master
+          filters:
+            branches:
+              only:
+                - master
