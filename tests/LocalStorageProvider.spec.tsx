@@ -20,7 +20,7 @@ describe("LocalStorageProvider tests.", () => {
       </LocalStorageProvider>
     );
     expect(container).toBeTruthy();
-    expect(await findByText(container, '"1"')).toBeTruthy();
+    await findByText(container, '"1"');
   });
   test("local storage provider function keys works", async () => {
     const { container } = render(
@@ -29,7 +29,7 @@ describe("LocalStorageProvider tests.", () => {
       </LocalStorageProvider>
     );
     expect(container).toBeTruthy();
-    expect(await findByText(container, "a", { exact: true })).toBeTruthy();
+    await findByText(container, "a", { exact: true });
     localStorage.removeItem("a");
   });
   test("local storage provider function removeItem works", async () => {
@@ -42,7 +42,7 @@ describe("LocalStorageProvider tests.", () => {
       </LocalStorageProvider>
     );
     expect(container).toBeTruthy();
-    expect(await findByText(container, "2", { exact: true })).toBeTruthy();
-    expect(await findByText(container, "b", { exact: true })).toBeTruthy();
+    await findByText(container, "2", { exact: true });
+    await findByText(container, "b", { exact: true });
   });
 });

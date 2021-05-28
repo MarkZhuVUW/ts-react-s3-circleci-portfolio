@@ -48,4 +48,5 @@ export const LocalStorageContext = createContext<LocalStorageContextType>({
   }
 });
 
-export const useLocalStorage = () => useContext(LocalStorageContext);
+export const useLocalStorage = (): LocalStorageContextType =>
+  useContext(LocalStorageContext);

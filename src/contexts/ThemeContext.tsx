@@ -17,4 +17,4 @@ export const ThemeContext = createContext<ThemeContextType>({
   }
 });
 
-export const useMuiTheme = () => useContext(ThemeContext);
+export const useMuiTheme = (): ThemeContextType => useContext(ThemeContext);

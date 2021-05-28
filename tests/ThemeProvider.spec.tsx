@@ -1,5 +1,5 @@
 import React from "react";
-import { findByText, getByText, render } from "@testing-library/react";
+import { findByText, render } from "@testing-library/react";
 import { ThemeProvider } from "../src/providers/ThemeProvider";
 import { Theme } from "../src/contexts/ThemeContext";
 import { ThemeProviderDebug } from "./Utils";
@@ -16,7 +16,7 @@ describe("ThemeProvider tests.", () => {
     );
     expect(container).toBeTruthy();
 
-    expect(findByText(container, Theme.Light, { exact: true })).toBeTruthy();
+    await findByText(container, Theme.Light, { exact: true });
   });
   test("set theme to dark works", async () => {
     const { container } = render(
@@ -28,6 +28,6 @@ describe("ThemeProvider tests.", () => {
     );
     expect(container).toBeTruthy();
 
-    expect(findByText(container, Theme.Dark, { exact: true })).toBeTruthy();
+    await findByText(container, Theme.Dark, { exact: true });
   });
 });
