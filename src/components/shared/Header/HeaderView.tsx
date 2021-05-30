@@ -82,10 +82,9 @@ const HeaderView: FC<HeaderViewProps> = ({
           </Tooltip>
         </Box>
         <Box>
-          <Tooltip title="Check out frontend source code">
+          <Tooltip title="Check out frontend source code" color="inherit">
             <Link
               href="https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
-              color="inherit"
               aria-label="Check out frontend source code"
             >
               <GitHubIcon />
@@ -109,7 +108,6 @@ const HeaderView: FC<HeaderViewProps> = ({
             <IconButton color="inherit">
               <Link
                 href="#"
-                color="inherit"
                 aria-label="Check out general app backend microservice source code"
               >
                 <GitHubIcon />
