@@ -1,23 +1,22 @@
 import {
-  AppBar,
   Button,
   Container,
   createStyles,
   CssBaseline,
   FormControl,
   Grid,
+  IconButton,
+  InputAdornment,
   makeStyles,
   Paper,
-  Slide,
   TextField,
   Theme,
-  Toolbar,
-  Typography,
   withStyles,
   Zoom
 } from "@material-ui/core";
 import React, { FC } from "react";
-import CodeIcon from "@material-ui/icons/Code";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
+import HeaderContainer from "../shared/Header/HeaderContainer";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -40,8 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main
+      margin: theme.spacing(1)
     },
     form: {
       width: "100%", // Fix IE 11 issue.,
@@ -51,25 +49,14 @@ const useStyles = makeStyles((theme: Theme) =>
     submit: {
       margin: theme.spacing(3, 0, 2)
     },
-    root: {
-      backgroundColor: "#E9EAED"
-    },
-    logo: {
-      // width: "200px",
-      // padding: "10px",
+    root: {},
+    headerText: {
       marginLeft: "20%"
-      // display: "flex"
-      // marginRight: "10px",
-      // display: "flex",
     },
     topBar: {
       justifyContent: "flex-start"
     },
     container: {
-      // display: "flex",
-      // margin: "auto",
-      // alignItems: "center",
-      // justifyContent: "center",
       height: "71vh"
     },
     appBar: {
@@ -83,7 +70,6 @@ const ValidationTextField = withStyles((theme: Theme) =>
   createStyles({
     root: {
       "& input:valid + fieldset": {
-        // borderColor: "#0084ff",
         borderWidth: 1
       },
       "& input:invalid + fieldset": {
@@ -103,30 +89,22 @@ const ValidationTextField = withStyles((theme: Theme) =>
 )(TextField);
 
 type LoginViewProps = {
-  // theme: Theme;
+  showPassword: boolean;
+  setShowPassword: (showPassword: boolean) => void;
 };
-const LoginView: FC<LoginViewProps> = ({}: LoginViewProps) => {
+const LoginView: FC<LoginViewProps> = ({
+  showPassword,
+  setShowPassword
+}: LoginViewProps) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="relative" className={classes.appBar}>
-        <Toolbar className={classes.topBar}>
-          <Slide direction="left" in={true} timeout={500}>
-            <span className={classes.logo}>
-              <CodeIcon />
-            </span>
-          </Slide>
-        </Toolbar>
-      </AppBar>
+      <HeaderContainer />
 
       <Container maxWidth="md" fixed className={classes.container}>
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              App developed and deployed with ci on circleci and cd to s3 bucket
-            </Typography>
-
             <form className={classes.form} noValidate>
               <FormControl margin="normal" fullWidth>
                 <ValidationTextField
@@ -135,18 +113,32 @@ const LoginView: FC<LoginViewProps> = ({}: LoginViewProps) => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  inputProps={{ "aria-label": "Email Address" }}
                   autoFocus
                 />
               </FormControl>
               <FormControl margin="normal" fullWidth>
                 <ValidationTextField
                   variant="outlined"
-                  // margin="normal"
                   id="password"
                   label="Password"
                   name="password"
                   autoComplete="current-password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
+                  inputProps={{ "aria-label": "Password" }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle login password visibility"
+                          onClick={() => setShowPassword(!showPassword)}
+                          onMouseDown={(event) => event.preventDefault()}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
                 />
               </FormControl>
 

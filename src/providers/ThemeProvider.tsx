@@ -27,9 +27,16 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({
 
   const muiTheme = theme === Theme.Dark ? muiThemeDark : muiThemeLight;
 
+  const toggleLightDarkTheme = () => {
+    const toggledTheme = theme == Theme.Dark ? Theme.Light : Theme.Dark;
+    setItem(LocalStorageKeys.THEME, toggledTheme);
+    setTheme(toggledTheme);
+  };
   return (
     <MuiThemeProvider theme={muiTheme}>
-      <ThemeContext.Provider value={{ theme, setMuiTheme }}>
+      <ThemeContext.Provider
+        value={{ theme, setMuiTheme, toggleLightDarkTheme }}
+      >
         <CssBaseline />
         {children}
       </ThemeContext.Provider>

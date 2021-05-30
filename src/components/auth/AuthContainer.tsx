@@ -1,11 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import LoginView from "./LoginView";
 
-type AuthContainerProps = {
-  // theme: Theme;
+const AuthContainer: FC = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  return (
+    <LoginView showPassword={showPassword} setShowPassword={setShowPassword} />
+  );
 };
-const AuthContainer: FC<AuthContainerProps> = ({}: AuthContainerProps) => (
-  <LoginView />
-);
-
 export default AuthContainer;
