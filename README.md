@@ -5,7 +5,7 @@ a website frontend built with material ui, typescript, react and webpack with Je
 ### Unit-testability
 ### Code reuse
 
-[![CircleCI](https://circleci.com/gh/ts-react-s3-circleci-employer-tracker.svg?style=svg)](https://circleci.com/gh/ts-react-s3-circleci-employer-tracker)
+[![CircleCI](https://circleci.com/gh/MarkZhuVUW/ts-react-s3-circleci-employer-tracker.svg?style=svg)](https://circleci.com/gh/MarkZhuVUW/ts-react-s3-circleci-employer-tracker)
 
 
 Website deployed to: http://react-frontend-circleci.s3-website-ap-southeast-2.amazonaws.com
