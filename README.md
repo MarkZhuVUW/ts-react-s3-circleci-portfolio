@@ -1,11 +1,10 @@
+[![CircleCI](https://circleci.com/gh/MarkZhuVUW/ts-react-s3-circleci-employer-tracker.svg?style=svg)](https://circleci.com/gh/MarkZhuVUW/ts-react-s3-circleci-employer-tracker)
 # ts-react-s3-circleci-employer-tracker
 a website frontend built with material ui, typescript, react and webpack with Jest unit testing, taking as much of the following as I can into consideration: 
 ### Extendability
 ### Scalability
 ### Unit-testability
 ### Code reuse
-
-[![CircleCI](https://circleci.com/gh/MarkZhuVUW/ts-react-s3-circleci-employer-tracker.svg?style=svg)](https://circleci.com/gh/MarkZhuVUW/ts-react-s3-circleci-employer-tracker)
 
 
 Website deployed to: http://react-frontend-circleci.s3-website-ap-southeast-2.amazonaws.com
