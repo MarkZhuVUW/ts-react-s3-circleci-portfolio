@@ -1,5 +1,6 @@
 import React from "react";
 import GitHubIcon from "@material-ui/icons/GitHub";
+
 /**
  * Defines a map of existing menu in the app to an object of properties including its label, its corresponding icon and etc.
  */

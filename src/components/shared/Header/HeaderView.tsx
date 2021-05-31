@@ -92,13 +92,11 @@ const HeaderView: FC<HeaderViewProps> = ({
         </Box>
 
         <Box>
-          <Tooltip title={menuMap.githubLinksMenu.label}>
-            <MenuContainer
-              menuItemsList={menuMap.githubLinksMenu.menuItemsList}
-              label={menuMap.githubLinksMenu.label}
-              element={menuMap.githubLinksMenu.element}
-            />
-          </Tooltip>
+          <MenuContainer
+            menuItemsList={menuMap.githubLinksMenu.menuItemsList}
+            label={menuMap.githubLinksMenu.label}
+            element={menuMap.githubLinksMenu.element}
+          />
         </Box>
       </Toolbar>
     </AppBar>
