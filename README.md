@@ -20,7 +20,7 @@ In the project directory, you can run:
 
 - Runs the app in the webpackdevelopment mode.
 
-- Open [http://localhost:4000](http://localhost:3000) to view it in the browser.
+- Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
 
 - The page will reload if you make edits.
 
