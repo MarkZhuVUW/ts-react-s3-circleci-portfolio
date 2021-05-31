@@ -5,6 +5,8 @@ a website frontend built with material ui, typescript, react and webpack with Je
 ### Unit-testability
 ### Code reuse
 
+[![CircleCI](https://circleci.com/gh/ts-react-s3-circleci-employer-tracker.svg?style=svg)](https://circleci.com/gh/ts-react-s3-circleci-employer-tracker)
+
 
 Website deployed to: http://react-frontend-circleci.s3-website-ap-southeast-2.amazonaws.com
 
@@ -26,6 +28,7 @@ In the project directory, you can run:
 - You will also see any lint errors in the console.
 
 ## The app features husky pre-commit linting checks (eslint and prettier)
-## Circle CI is used to test, build and serve the static React App to an S3 bucket.
+## Circle CI is used to test, build and serve the static React App to an S3 bucket on Master branch change. 
+## On branches other than master, only unit testing will be done on commit.
 
 
