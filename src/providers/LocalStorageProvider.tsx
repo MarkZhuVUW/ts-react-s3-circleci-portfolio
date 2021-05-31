@@ -1,14 +1,14 @@
 import React, { ReactNode } from "react";
 
 import { FC } from "react";
-import { LocalStorageContext } from "../contexts/LocalStorageContext";
+import LocalStorageContext from "../contexts/LocalStorageContext";
 
 const localStorage = window.localStorage;
 
 type LocalStorageProps = {
   children?: ReactNode;
 };
-export const LocalStorageProvider: FC<LocalStorageProps> = ({
+const LocalStorageProvider: FC<LocalStorageProps> = ({
   children
 }: LocalStorageProps) => {
   const keys = () => {
@@ -39,3 +39,4 @@ export const LocalStorageProvider: FC<LocalStorageProps> = ({
     </LocalStorageContext.Provider>
   );
 };
+export default LocalStorageProvider;

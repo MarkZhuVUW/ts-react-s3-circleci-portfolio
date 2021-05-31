@@ -14,8 +14,9 @@ import {
 import { Theme as MuiTheme } from "../../../contexts/ThemeContext";
 import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import GitHubIcon from "@material-ui/icons/GitHub";
 import EmailIcon from "@material-ui/icons/Email";
+import MenuContainer from "../Menu/MenuContainer";
+import { menuMap } from "../Menu/MenuUtils";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     avatar: {
@@ -41,6 +42,7 @@ type HeaderViewProps = {
   theme: MuiTheme;
   toggleLightDarkTheme: () => void;
 };
+
 const HeaderView: FC<HeaderViewProps> = ({
   theme,
   toggleLightDarkTheme
@@ -57,7 +59,7 @@ const HeaderView: FC<HeaderViewProps> = ({
               alignItems="center"
               className={classes.headerText}
             >
-              <span>Source codes and contact can be found here.</span>
+              <span>Source codes and contact can be found on the right.</span>
               {/* For decorative icons, set aira-hidden to true */}
               <ArrowForwardIcon aria-hidden="true" />
               <ArrowForwardIcon aria-hidden="true" />
@@ -66,55 +68,36 @@ const HeaderView: FC<HeaderViewProps> = ({
           </Slide>
         </Box>
         <Box>
-          <Tooltip title="Toggle light/dark mode">
+          <Tooltip title={`Toggle light/dark mode - Currently ${theme} mode.`}>
             <Switch
               checked={theme === MuiTheme.Dark}
               onChange={toggleLightDarkTheme}
-              aria-label="Toggle light/dark mode"
+              inputProps={{
+                "aria-label": `Toggle light/dark mode - Currently ${theme} mode.`
+              }}
             />
           </Tooltip>
         </Box>
         <Box>
           <Tooltip title="Contact the developer">
-            <IconButton aria-label="Contact the developer" color="inherit">
-              <EmailIcon />
-            </IconButton>
+            <Link
+              href="mailto:zdy120939259@outlook.com?subject=Interview Invitation"
+              color="inherit"
+            >
+              <IconButton aria-label="Contact the developer" color="inherit">
+                <EmailIcon />
+              </IconButton>
+            </Link>
           </Tooltip>
         </Box>
+
         <Box>
-          <Tooltip title="Check out frontend source code">
-            <IconButton color="inherit">
-              <Link
-                href="https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
-                aria-label="Check out frontend source code"
-              >
-                <GitHubIcon />
-              </Link>
-            </IconButton>
-          </Tooltip>
-        </Box>
-        <Box>
-          <Tooltip title="Check out APLAKKA logging microservice source code">
-            <IconButton color="inherit">
-              <Link
-                href="#"
-                aria-label="Check out APLAKKA logging microservice source code"
-              >
-                <GitHubIcon />
-              </Link>
-            </IconButton>
-          </Tooltip>
-        </Box>
-        <Box>
-          <Tooltip title="Check out general app backend microservice source code">
-            <IconButton color="inherit">
-              <Link
-                href="#"
-                aria-label="Check out general app backend microservice source code"
-              >
-                <GitHubIcon />
-              </Link>
-            </IconButton>
+          <Tooltip title={menuMap.githubLinksMenu.label}>
+            <MenuContainer
+              menuItemsList={menuMap.githubLinksMenu.menuItemsList}
+              label={menuMap.githubLinksMenu.label}
+              element={menuMap.githubLinksMenu.element}
+            />
           </Tooltip>
         </Box>
       </Toolbar>

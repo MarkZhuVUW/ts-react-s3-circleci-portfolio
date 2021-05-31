@@ -11,7 +11,7 @@ export enum Theme {
   Light = "light"
 }
 
-export const ThemeContext = createContext<ThemeContextType>({
+const ThemeContext = createContext<ThemeContextType>({
   theme: Theme.Dark,
   setMuiTheme: (theme) => {
     console.warn(`Failed to set theme = ${theme}, no theme provider`);
@@ -22,3 +22,4 @@ export const ThemeContext = createContext<ThemeContextType>({
 });
 
 export const useMuiTheme = (): ThemeContextType => useContext(ThemeContext);
+export default ThemeContext;

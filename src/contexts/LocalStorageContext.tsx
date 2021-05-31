@@ -23,7 +23,7 @@ export type LocalStorageContextType = {
   removeItem: (key: string) => boolean;
 };
 
-export const LocalStorageContext = createContext<LocalStorageContextType>({
+const LocalStorageContext = createContext<LocalStorageContextType>({
   keys: () => {
     console.log("Failed to get keys, no local storage provider");
     return [];
@@ -50,3 +50,4 @@ export const LocalStorageContext = createContext<LocalStorageContextType>({
 
 export const useLocalStorage = (): LocalStorageContextType =>
   useContext(LocalStorageContext);
+export default LocalStorageContext;
