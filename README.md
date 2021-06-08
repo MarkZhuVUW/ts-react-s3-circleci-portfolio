@@ -18,13 +18,9 @@ In the project directory, you can run:
 
 ### `npm start`
 
-- Runs the app in webpack development mode.
+- Runs the app in webpack development mode with live reloading.
 
 - Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
-
-- The page will reload if you make edits.
-
-- You will also see any lint errors in the console.
 
 ## The app features husky pre-commit linting checks (eslint and prettier)
 ## Circle CI is used to test, build and serve the static React App to an S3 bucket on Master branch change. 
