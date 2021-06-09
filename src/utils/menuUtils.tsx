@@ -6,7 +6,7 @@ import GitHubIcon from "@material-ui/icons/GitHub";
  */
 export const menuMap = {
   githubLinksMenu: {
-    element: <GitHubIcon />,
+    element: <GitHubIcon fontSize="large" />,
     label: "Github links menu",
     menuItemsList: [
       {

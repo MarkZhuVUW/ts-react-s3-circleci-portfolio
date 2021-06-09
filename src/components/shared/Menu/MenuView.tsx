@@ -11,7 +11,8 @@ import {
   Paper,
   ClickAwayListener,
   MenuList,
-  MenuItem as MuiMenuItem
+  MenuItem as MuiMenuItem,
+  Typography
 } from "@material-ui/core";
 import { MenuItem } from "../../../Utils/MenuUtils";
 
@@ -67,14 +68,22 @@ const MenuView: FC<MenuViewProps> = ({
         role="dialog"
         transition
         disablePortal
+        modifiers={{
+          flip: {
+            enabled: true
+          },
+          preventOverflow: {
+            enabled: true,
+            boundariesElement: "viewport"
+          }
+        }}
         aria-label={`${label} popup`}
       >
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom"
+              transformOrigin: placement === "bottom" ? "center top" : "bottom"
             }}
           >
             <Paper>
@@ -89,7 +98,7 @@ const MenuView: FC<MenuViewProps> = ({
                     >
                       {menuItem.href ? (
                         <Link href={menuItem.href} color="inherit">
-                          {menuItem.label}
+                          <Typography>{menuItem.label}</Typography>
                         </Link>
                       ) : (
                         <>{menuItem.label}</>

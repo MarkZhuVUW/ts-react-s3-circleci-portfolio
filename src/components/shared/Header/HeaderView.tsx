@@ -64,9 +64,9 @@ const HeaderView: FC<HeaderViewProps> = ({
             >
               <span>Source codes and contact can be found on the right.</span>
               {/* For decorative icons, set aira-hidden to true */}
-              <ArrowForwardIcon aria-hidden="true" />
-              <ArrowForwardIcon aria-hidden="true" />
-              <ArrowForwardIcon aria-hidden="true" />
+              <ArrowForwardIcon aria-hidden="true" fontSize="large" />
+              <ArrowForwardIcon aria-hidden="true" fontSize="large" />
+              <ArrowForwardIcon aria-hidden="true" fontSize="large" />
             </Box>
           </Slide>
         </Box>
@@ -88,7 +88,7 @@ const HeaderView: FC<HeaderViewProps> = ({
               color="inherit"
             >
               <IconButton aria-label="Contact the developer" color="inherit">
-                <EmailIcon />
+                <EmailIcon fontSize="large" />
               </IconButton>
             </Link>
           </Tooltip>
