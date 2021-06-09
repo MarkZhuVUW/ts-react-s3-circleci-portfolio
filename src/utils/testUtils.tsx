@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
-import { useLocalStorage } from "../src/contexts/LocalStorageContext";
-import { Theme, useMuiTheme } from "../src/contexts/ThemeContext";
+import { useLocalStorage } from "../contexts/LocalStorageContext";
+import { Theme, useMuiTheme } from "../contexts/ThemeContext";
 
 interface ThemeProviderDebugProps {
   themeMode?: Theme;

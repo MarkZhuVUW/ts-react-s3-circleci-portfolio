@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import React, { FC } from "react";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import HeaderContainer from "../shared/Header/HeaderContainer";
+import { Header } from "../shared";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -100,7 +100,7 @@ const LoginView: FC<LoginViewProps> = ({
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <HeaderContainer />
+      <Header />
 
       <Container maxWidth="md" fixed className={classes.container}>
         <Zoom timeout={500} in={true}>

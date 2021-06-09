@@ -15,8 +15,8 @@ import { Theme as MuiTheme } from "../../../contexts/ThemeContext";
 import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
-import MenuContainer from "../Menu/MenuContainer";
-import { menuMap } from "../Menu/MenuUtils";
+import Menu from "../Menu/MenuContainer";
+import { menuMap } from "../../../Utils";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     avatar: {
@@ -38,14 +38,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+type HeaderViewHandlersMap = {
+  handleThemeChange: () => void;
+};
 type HeaderViewProps = {
   theme: MuiTheme;
-  toggleLightDarkTheme: () => void;
+  handlersMap: HeaderViewHandlersMap;
 };
 
 const HeaderView: FC<HeaderViewProps> = ({
   theme,
-  toggleLightDarkTheme
+  handlersMap
 }: HeaderViewProps) => {
   const classes = useStyles();
   return (
@@ -71,7 +74,7 @@ const HeaderView: FC<HeaderViewProps> = ({
           <Tooltip title={`Toggle light/dark mode - Currently ${theme} mode.`}>
             <Switch
               checked={theme === MuiTheme.Dark}
-              onChange={toggleLightDarkTheme}
+              onChange={handlersMap.handleThemeChange}
               inputProps={{
                 "aria-label": `Toggle light/dark mode - Currently ${theme} mode.`
               }}
@@ -92,7 +95,7 @@ const HeaderView: FC<HeaderViewProps> = ({
         </Box>
 
         <Box>
-          <MenuContainer
+          <Menu
             menuItemsList={menuMap.githubLinksMenu.menuItemsList}
             label={menuMap.githubLinksMenu.label}
             element={menuMap.githubLinksMenu.element}

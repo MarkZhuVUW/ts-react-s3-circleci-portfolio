@@ -1,12 +1,19 @@
 import React, { FC } from "react";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { IconButton, Link, Tooltip } from "@material-ui/core";
+import {
+  IconButton,
+  Link,
+  Tooltip,
+  makeStyles,
+  createStyles,
+  Theme,
+  Grow,
+  Popper,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+  MenuItem as MuiMenuItem
+} from "@material-ui/core";
+import { MenuItem } from "../../../Utils/MenuUtils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,10 +33,6 @@ type MenuViewProps = {
   handleClose: (event: React.MouseEvent<EventTarget>) => void;
   handleToggle: () => void;
   anchorRef: React.RefObject<HTMLButtonElement>;
-};
-type MenuItem = {
-  label: string;
-  href?: string; // if href exists, clicking on the menu list goes to the specified url.
 };
 const MenuView: FC<MenuViewProps> = ({
   label,
@@ -78,7 +81,7 @@ const MenuView: FC<MenuViewProps> = ({
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" role="menu">
                   {menuItemsList.map((menuItem, index) => (
-                    <MenuItem
+                    <MuiMenuItem
                       key={`${menuItem.label} ${index}`}
                       aria-label={menuItem.label}
                       onClick={handleClose}
@@ -91,7 +94,7 @@ const MenuView: FC<MenuViewProps> = ({
                       ) : (
                         <>{menuItem.label}</>
                       )}
-                    </MenuItem>
+                    </MuiMenuItem>
                   ))}
                 </MenuList>
               </ClickAwayListener>

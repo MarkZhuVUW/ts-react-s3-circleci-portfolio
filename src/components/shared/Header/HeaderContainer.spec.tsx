@@ -1,11 +1,11 @@
 import { findByLabelText, findByText, render } from "@testing-library/react";
 import React from "react";
-import LocalStorageProvider from "../src/providers/LocalStorageProvider";
-import ThemeProvider from "../src/providers/ThemeProvider";
-import HeaderContainer from "../src/components/shared/Header/HeaderContainer";
+import LocalStorageProvider from "../../../providers/LocalStorageProvider";
+import ThemeProvider from "../../../providers/ThemeProvider";
+import HeaderContainer from "./HeaderContainer";
 import userEvent from "@testing-library/user-event";
-import HeaderView from "../src/components/shared/Header/HeaderView";
-import { Theme } from "../src/contexts/ThemeContext";
+import HeaderView from "./HeaderView";
+import { Theme } from "../../../contexts/ThemeContext";
 describe("HeaderCotainer tests.", () => {
   test("HeaderView renders correctly", async () => {
     const { container } = render(

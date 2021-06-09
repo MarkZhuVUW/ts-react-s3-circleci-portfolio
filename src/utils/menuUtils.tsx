@@ -26,3 +26,11 @@ export const menuMap = {
     ]
   }
 };
+
+/**
+ * Defines a MenuItem.
+ */
+export type MenuItem = {
+  label: string;
+  href?: string; // if href exists, clicking on the menu list goes to the specified url.
+};

@@ -1,19 +1,12 @@
 import React, { FC } from "react";
+import { MenuItem } from "../../../Utils/";
 
 import MenuView from "./MenuView";
 
 type MenuContainerProps = {
   menuItemsList: Array<MenuItem>;
-  /**
-   * Every menu should have a text label representation of itself.
-   */
   label: string;
   element?: JSX.Element;
-};
-
-type MenuItem = {
-  label: string;
-  href?: string; // if href exists, clicking on the menu list goes to the specified url.
 };
 const MenuContainer: FC<MenuContainerProps> = ({
   menuItemsList,

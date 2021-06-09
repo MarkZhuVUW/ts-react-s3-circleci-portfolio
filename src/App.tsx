@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import AuthContainer from "./components/auth/AuthContainer";
+import AuthContainer from "./components/Auth/AuthContainer";
 import LocalStorageProvider from "./providers/LocalStorageProvider";
 import ThemeProvider from "./providers/ThemeProvider";
 
