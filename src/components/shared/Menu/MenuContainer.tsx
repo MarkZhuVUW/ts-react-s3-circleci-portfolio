@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { MenuItem } from "../../../Utils/";
+import { MenuItem } from "../../../Utils";
 
 import MenuView from "./MenuView";
 
