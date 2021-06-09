@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
 import { FC } from "react";
-import LocalStorageContext from "../contexts/LocalStorageContext";
+import LocalStorageContext from "./LocalStorageContext";
 
 const localStorage = window.localStorage;
 

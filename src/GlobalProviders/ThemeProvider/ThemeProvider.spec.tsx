@@ -1,9 +1,9 @@
 import React from "react";
 import { findByText, render } from "@testing-library/react";
 import ThemeProvider from "./ThemeProvider";
-import { Theme } from "../contexts/ThemeContext";
-import LocalStorageProvider from "./LocalStorageProvider";
-import { ThemeProviderDebug } from "../Utils/TestUtils";
+import { Theme } from "./ThemeContext";
+import LocalStorageProvider from "../LocalStorageProvider/LocalStorageProvider";
+import { ThemeProviderDebug } from "../../Utils/TestUtils";
 
 describe("ThemeProvider tests.", () => {
   test("default theme is light", async () => {

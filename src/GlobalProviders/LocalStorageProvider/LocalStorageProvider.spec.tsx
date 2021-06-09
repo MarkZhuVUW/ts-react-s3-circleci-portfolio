@@ -1,6 +1,6 @@
 import { findByText, getByText, render } from "@testing-library/react";
 import React from "react";
-import { LocalStorageProviderDebug } from "../Utils/TestUtils";
+import { LocalStorageProviderDebug } from "../../Utils/TestUtils";
 import LocalStorageProvider from "./LocalStorageProvider";
 describe("LocalStorageProvider tests.", () => {
   test("local storage provider function getItem with non existing key works", async () => {

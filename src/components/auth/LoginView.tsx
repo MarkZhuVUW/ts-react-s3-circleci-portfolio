@@ -17,7 +17,7 @@ import {
 
 import React, { FC } from "react";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Header } from "../Shared";
+import { Header } from "components/Shared";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {

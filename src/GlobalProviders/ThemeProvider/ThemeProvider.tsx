@@ -2,11 +2,11 @@ import React, { ReactNode } from "react";
 import { FC, useState } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import ThemeContext, { Theme } from "../contexts/ThemeContext";
-import { useLocalStorage } from "../contexts/LocalStorageContext";
-import LocalStorageKeys from "../constants/LocalStorageKeys";
-import muiThemeDark from "../themes/Dark";
-import muiThemeLight from "../themes/Light";
+import ThemeContext, { Theme } from "./ThemeContext";
+import { useLocalStorage } from "../LocalStorageProvider/LocalStorageContext";
+import LocalStorageKeys from "../../constants/LocalStorageKeys";
+import muiThemeDark from "../../themes/Dark";
+import muiThemeLight from "../../themes/Light";
 
 type ThemeProviderProps = {
   children?: ReactNode;

@@ -1,15 +1,13 @@
 import { findByLabelText, findByText, render } from "@testing-library/react";
 import React from "react";
-import LocalStorageProvider from "../../../providers/LocalStorageProvider";
-import ThemeProvider from "../../../providers/ThemeProvider";
+import { LocalStorageProvider, ThemeProvider, MuiTheme } from "GlobalProviders";
 import HeaderContainer from "./HeaderContainer";
 import userEvent from "@testing-library/user-event";
 import HeaderView from "./HeaderView";
-import { Theme } from "../../../contexts/ThemeContext";
 describe("HeaderCotainer tests.", () => {
   test("HeaderView renders correctly", async () => {
     const { container } = render(
-      <HeaderView theme={Theme.Light} toggleLightDarkTheme={() => ({})} />
+      <HeaderView theme={MuiTheme.Light} toggleLightDarkTheme={() => ({})} />
     );
     expect(container).toBeTruthy();
 

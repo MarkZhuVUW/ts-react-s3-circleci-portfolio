@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-export type LocalStorageContextType = {
+type LocalStorageContextType = {
   /**
    * wrapper for the localStorage.keys function.
    * return an array of local storage keys
