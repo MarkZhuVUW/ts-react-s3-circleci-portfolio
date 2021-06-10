@@ -35,7 +35,10 @@ const config: webpack.Configuration = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"]
+    extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "@employer-tracker-ui": path.resolve(__dirname, "src/")
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({

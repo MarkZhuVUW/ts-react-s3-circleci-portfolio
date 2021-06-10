@@ -1,14 +1,14 @@
 import React, { FC } from "react";
-import { MenuItem } from "Utils";
+import { MenuItem } from "@employer-tracker-ui/Utils";
 
 import MenuView from "./MenuView";
-
 
 type MenuContainerProps = {
   menuItemsList: Array<MenuItem>;
   label: string;
   element?: JSX.Element;
 };
+
 const MenuContainer: FC<MenuContainerProps> = ({
   menuItemsList,
   label,

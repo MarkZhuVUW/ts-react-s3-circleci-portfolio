@@ -3,13 +3,13 @@ import { FC, useState } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import { LightTheme, DarkTheme } from "Themes";
+import { LightTheme, DarkTheme } from "@employer-tracker-ui/Themes";
 import {
   useLocalStorage,
   ThemeContext,
   MuiTheme,
   localStorageKeys
-} from "components/GlobalProviders";
+} from "@employer-tracker-ui/components/GlobalProviders";
 
 type ThemeProviderProps = {
   children?: ReactNode;

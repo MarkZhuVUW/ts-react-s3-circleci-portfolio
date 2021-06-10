@@ -11,12 +11,13 @@ import {
   Tooltip,
   Link
 } from "@material-ui/core";
-import { MuiTheme } from "components/GlobalProviders";
+import { MuiTheme } from "@employer-tracker-ui/components/GlobalProviders";
 import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
-import { Menu } from "components/Shared";
-import { menuMap } from "Utils";
+import { Menu } from "@employer-tracker-ui/components/Shared";
+import { menuMap } from "@employer-tracker-ui/Utils";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     avatar: {

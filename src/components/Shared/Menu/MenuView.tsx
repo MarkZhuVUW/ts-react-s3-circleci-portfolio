@@ -14,7 +14,7 @@ import {
   MenuItem as MuiMenuItem,
   Typography
 } from "@material-ui/core";
-import { MenuItem } from "Utils";
+import { MenuItem } from "@employer-tracker-ui/Utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

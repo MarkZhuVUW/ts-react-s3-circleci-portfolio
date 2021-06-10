@@ -1,7 +1,7 @@
 import React from "react";
 import { findByText, render } from "@testing-library/react";
-import { LocalStorageProvider } from "components/GlobalProviders";
-import { ThemeProviderDebug } from "Utils";
+import { LocalStorageProvider } from "@employer-tracker-ui/components/GlobalProviders";
+import { ThemeProviderDebug } from "@employer-tracker-ui/Utils";
 import { MuiTheme, ThemeProvider } from ".";
 
 describe("ThemeProvider tests.", () => {

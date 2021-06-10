@@ -4,7 +4,7 @@ import {
   LocalStorageProvider,
   ThemeProvider,
   MuiTheme
-} from "components/GlobalProviders";
+} from "@employer-tracker-ui/components/GlobalProviders";
 import HeaderContainer from "./HeaderContainer";
 import userEvent from "@testing-library/user-event";
 import HeaderView from "./HeaderView";

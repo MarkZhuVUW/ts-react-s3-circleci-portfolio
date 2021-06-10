@@ -3,7 +3,7 @@ import {
   useLocalStorage,
   MuiTheme,
   useMuiTheme
-} from "components/GlobalProviders";
+} from "@employer-tracker-ui/components/GlobalProviders";
 
 interface ThemeProviderDebugProps {
   themeMode?: MuiTheme;

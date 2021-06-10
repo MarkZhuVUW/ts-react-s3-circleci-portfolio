@@ -17,7 +17,8 @@ import {
 
 import React, { FC } from "react";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Header } from "components/Shared";
+import { Header } from "@employer-tracker-ui/components/Shared";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {

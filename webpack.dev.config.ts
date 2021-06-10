@@ -1,13 +1,9 @@
 import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import {
-  Configuration as WebpackConfiguration,
-  WebpackPluginInstance
-} from "webpack";
+import { Configuration as WebpackConfiguration } from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
-import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
@@ -37,7 +33,10 @@ const config: Configuration = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js", "json"]
+    extensions: [".tsx", ".ts", ".js", "json"],
+    alias: {
+      "@employer-tracker-ui": path.resolve(__dirname, "src/")
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -48,10 +47,7 @@ const config: Configuration = {
     }),
     new ESLintPlugin({
       extensions: ["js", "jsx", "ts", "tsx"]
-    }),
-    new TsconfigPathsPlugin({
-      configFile: "./tsconfig.json"
-    }) as unknown as WebpackPluginInstance // Hack to convert it to unkown and then to WebpackPluginInstance. TODO: think of a better way...
+    })
   ],
   devtool: "source-map",
   devServer: {
