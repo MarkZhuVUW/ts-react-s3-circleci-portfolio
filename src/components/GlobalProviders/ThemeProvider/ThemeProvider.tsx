@@ -2,11 +2,14 @@ import React, { ReactNode } from "react";
 import { FC, useState } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import ThemeContext, { Theme } from "./ThemeContext";
-import { useLocalStorage } from "../LocalStorageProvider/LocalStorageContext";
-import LocalStorageKeys from "../../constants/LocalStorageKeys";
-import muiThemeDark from "../../themes/Dark";
-import muiThemeLight from "../../themes/Light";
+
+import { LightTheme, DarkTheme } from "Themes";
+import {
+  useLocalStorage,
+  ThemeContext,
+  MuiTheme,
+  localStorageKeys
+} from "components/GlobalProviders";
 
 type ThemeProviderProps = {
   children?: ReactNode;
@@ -17,19 +20,22 @@ const ThemeProvider: FC<ThemeProviderProps> = ({
 }: ThemeProviderProps) => {
   const { getItem, setItem } = useLocalStorage();
   const [theme, setTheme] = useState(
-    getItem(LocalStorageKeys.THEME) == Theme.Dark ? Theme.Dark : Theme.Light
+    getItem(localStorageKeys.THEME) == MuiTheme.Dark
+      ? MuiTheme.Dark
+      : MuiTheme.Light
   );
 
-  const setMuiTheme = (theme: Theme) => {
-    setItem(LocalStorageKeys.THEME, theme);
+  const setMuiTheme = (theme: MuiTheme) => {
+    setItem(localStorageKeys.THEME, theme);
     setTheme(theme);
   };
 
-  const muiTheme = theme === Theme.Dark ? muiThemeDark : muiThemeLight;
+  const muiTheme = theme === MuiTheme.Dark ? DarkTheme : LightTheme;
 
   const toggleLightDarkTheme = () => {
-    const toggledTheme = theme == Theme.Dark ? Theme.Light : Theme.Dark;
-    setItem(LocalStorageKeys.THEME, toggledTheme);
+    const toggledTheme =
+      theme == MuiTheme.Dark ? MuiTheme.Light : MuiTheme.Dark;
+    setItem(localStorageKeys.THEME, toggledTheme);
     setTheme(toggledTheme);
   };
   return (

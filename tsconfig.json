@@ -12,8 +12,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "baseUrl": "./src",
+    "paths": {
+      "@employer-tracker/*": ["./src/*"]
+    },
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
   },
   "include": ["src", "webpack.common.js", "webpack.prod.config.ts", "tests"]
 }

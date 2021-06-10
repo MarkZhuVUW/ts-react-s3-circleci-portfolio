@@ -40,12 +40,6 @@ const config: webpack.Configuration = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html"
-    }),
-    new ForkTsCheckerWebpackPlugin({
-      async: false
-    }),
-    new ESLintPlugin({
-      extensions: ["js", "jsx", "ts", "tsx"]
     })
   ]
 };

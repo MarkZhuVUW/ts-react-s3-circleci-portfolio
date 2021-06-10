@@ -1,6 +1,10 @@
 import { findByLabelText, findByText, render } from "@testing-library/react";
 import React from "react";
-import { LocalStorageProvider, ThemeProvider, MuiTheme } from "GlobalProviders";
+import {
+  LocalStorageProvider,
+  ThemeProvider,
+  MuiTheme
+} from "components/GlobalProviders";
 import HeaderContainer from "./HeaderContainer";
 import userEvent from "@testing-library/user-event";
 import HeaderView from "./HeaderView";

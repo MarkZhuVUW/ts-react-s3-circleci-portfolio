@@ -1,9 +1,8 @@
 import React from "react";
 import { findByText, render } from "@testing-library/react";
-import ThemeProvider from "./ThemeProvider";
-import { Theme } from "./ThemeContext";
-import LocalStorageProvider from "../LocalStorageProvider/LocalStorageProvider";
-import { ThemeProviderDebug } from "../../Utils/TestUtils";
+import { LocalStorageProvider } from "components/GlobalProviders";
+import { ThemeProviderDebug } from "Utils";
+import { MuiTheme, ThemeProvider } from ".";
 
 describe("ThemeProvider tests.", () => {
   test("default theme is light", async () => {
@@ -16,31 +15,31 @@ describe("ThemeProvider tests.", () => {
     );
     expect(container).toBeTruthy();
 
-    await findByText(container, Theme.Light, { exact: true });
+    await findByText(container, MuiTheme.Light, { exact: true });
   });
   test("set theme to dark works", async () => {
     const { container } = render(
       <LocalStorageProvider>
         <ThemeProvider>
-          <ThemeProviderDebug themeMode={Theme.Dark} />
+          <ThemeProviderDebug themeMode={MuiTheme.Dark} />
         </ThemeProvider>
       </LocalStorageProvider>
     );
     expect(container).toBeTruthy();
 
-    await findByText(container, Theme.Dark, { exact: true });
+    await findByText(container, MuiTheme.Dark, { exact: true });
   });
 
   test("toggle light theme from dark", async () => {
     const { container } = render(
       <LocalStorageProvider>
         <ThemeProvider>
-          <ThemeProviderDebug themeMode={Theme.Dark} />
+          <ThemeProviderDebug themeMode={MuiTheme.Dark} />
         </ThemeProvider>
       </LocalStorageProvider>
     );
     expect(container).toBeTruthy();
 
-    await findByText(container, Theme.Dark, { exact: true });
+    await findByText(container, MuiTheme.Dark, { exact: true });
   });
 });

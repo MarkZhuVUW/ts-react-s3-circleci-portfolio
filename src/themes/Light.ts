@@ -1,7 +1,7 @@
 import { blue, green } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const muiThemeLight = createMuiTheme({
+const LightTheme = createMuiTheme({
   palette: {
     type: "light",
     primary: {
@@ -16,4 +16,4 @@ const muiThemeLight = createMuiTheme({
   }
 });
 
-export default muiThemeLight;
+export default LightTheme;

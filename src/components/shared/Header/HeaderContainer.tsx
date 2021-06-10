@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useMuiTheme } from "GlobalProviders";
+import { useMuiTheme } from "components/GlobalProviders";
 import HeaderView from "./HeaderView";
 const HeaderContainer: FC = () => {
   const { theme, toggleLightDarkTheme } = useMuiTheme();

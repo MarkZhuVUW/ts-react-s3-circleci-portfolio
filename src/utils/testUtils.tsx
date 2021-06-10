@@ -1,9 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
-import { useLocalStorage } from "../GlobalProviders/LocalStorageProvider/LocalStorageContext";
-import { Theme, useMuiTheme } from "../GlobalProviders/ThemeProvider/ThemeContext";
+import {
+  useLocalStorage,
+  MuiTheme,
+  useMuiTheme
+} from "components/GlobalProviders";
 
 interface ThemeProviderDebugProps {
-  themeMode?: Theme;
+  themeMode?: MuiTheme;
 }
 export const ThemeProviderDebug: FC<ThemeProviderDebugProps> = ({
   themeMode
@@ -22,10 +25,8 @@ export const LocalStorageProviderDebug: FC<LocalStorageProviderDebugProps> = ({
   functionToDebug
 }: LocalStorageProviderDebugProps) => {
   const { keys, setItem, removeItem, getItem } = useLocalStorage();
-  const [
-    isLocalStorageEventSuccessful,
-    setIsLocalStorageEventSuccessful
-  ] = useState(false);
+  const [isLocalStorageEventSuccessful, setIsLocalStorageEventSuccessful] =
+    useState(false);
   useEffect(() => {
     switch (functionToDebug) {
       case "setItem":

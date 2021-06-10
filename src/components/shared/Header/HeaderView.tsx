@@ -11,7 +11,7 @@ import {
   Tooltip,
   Link
 } from "@material-ui/core";
-import { MuiTheme } from "GlobalProviders";
+import { MuiTheme } from "components/GlobalProviders";
 import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
     avatar: {
       margin: theme.spacing(1)
     },
-
     headerText: {
       marginLeft: "20%"
     },
