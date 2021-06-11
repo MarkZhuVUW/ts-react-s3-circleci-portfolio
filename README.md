@@ -22,6 +22,8 @@ In the project directory, you can run:
 
 - Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
 
+- Feel free to fork and submit pull request :)
+
 ## The app features husky pre-commit linting checks (eslint and prettier)
 ## Circle CI is used to test, build and serve the static React App to an S3 bucket on Master branch change. 
 ## On branches other than master, only unit testing will be done on commit.
