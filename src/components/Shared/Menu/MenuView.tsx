@@ -14,8 +14,9 @@ import {
   MenuItem as MuiMenuItem,
   Typography
 } from "@material-ui/core";
+import useMenu from "./useMenu";
 import { MenuItem } from "@employer-tracker-ui/Utils";
-
+import MenuIcon from "@material-ui/icons/Menu";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -26,44 +27,45 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
+
 type MenuViewProps = {
+  /**
+   * Text label of the menu. Used for displaying tooltip, accessibility and dom querying in jest tests.
+   */
   label: string;
   menuItemsList: Array<MenuItem>;
-  element?: JSX.Element;
-  open: boolean;
-  handleClose: (event: React.MouseEvent<EventTarget>) => void;
-  handleToggle: () => void;
-  anchorRef: React.RefObject<HTMLButtonElement>;
+  /**
+   * A render prop for overriding the presentation of a menu icon. If this does not exist the menu icon defaults to <MenuIcon fontSize="large" />
+   */
+  menuIconRenderer?: JSX.Element;
 };
 const MenuView: FC<MenuViewProps> = ({
   label,
   menuItemsList,
-  open,
-  handleClose,
-  handleToggle,
-  anchorRef,
-  element
+  menuIconRenderer
 }: MenuViewProps) => {
   const classes = useStyles();
-
+  const { isOpen, handleMenuClose, handleMenuToggle, anchorRef } = useMenu();
   return (
     <div className={classes.root}>
-      {element && (
+      {menuIconRenderer ? (
         <Tooltip title={label}>
           <IconButton
             ref={anchorRef}
-            aria-controls={open ? "menu-list-grow" : undefined}
+            aria-controls={isOpen ? "menu-list-grow" : undefined}
             aria-haspopup="true"
-            onClick={handleToggle}
+            onClick={handleMenuToggle}
             aria-label={label}
             color="inherit"
           >
-            {element}
+            {menuIconRenderer}
           </IconButton>
         </Tooltip>
+      ) : (
+        <MenuIcon fontSize="large" />
       )}
       <Popper
-        open={open}
+        open={isOpen}
         anchorEl={anchorRef.current}
         role="dialog"
         transition
@@ -87,13 +89,17 @@ const MenuView: FC<MenuViewProps> = ({
             }}
           >
             <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList autoFocusItem={open} id="menu-list-grow" role="menu">
+              <ClickAwayListener onClickAway={handleMenuClose}>
+                <MenuList
+                  autoFocusItem={isOpen}
+                  id="menu-list-grow"
+                  role="menu"
+                >
                   {menuItemsList.map((menuItem, index) => (
                     <MuiMenuItem
                       key={`${menuItem.label} ${index}`}
                       aria-label={menuItem.label}
-                      onClick={handleClose}
+                      onClick={handleMenuClose}
                       role="menuitem"
                     >
                       {menuItem.href ? (

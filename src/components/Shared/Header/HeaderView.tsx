@@ -9,14 +9,19 @@ import {
   Toolbar,
   Theme,
   Tooltip,
-  Link
+  Link,
+  useTheme
 } from "@material-ui/core";
-import { MuiTheme } from "@employer-tracker-ui/components/GlobalProviders";
+import {
+  MuiTheme,
+  useMuiTheme
+} from "@employer-tracker-ui/components/GlobalProviders";
 import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
 import { Menu } from "@employer-tracker-ui/components/Shared";
 import { menuMap } from "@employer-tracker-ui/Utils";
+import useHeader from "./useHeader";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,19 +43,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type HeaderViewHandlersMap = {
-  handleThemeChange: () => void;
-};
-type HeaderViewProps = {
-  theme: MuiTheme;
-  handlersMap: HeaderViewHandlersMap;
-};
-
-const HeaderView: FC<HeaderViewProps> = ({
-  theme,
-  handlersMap
-}: HeaderViewProps) => {
+const HeaderView: FC = () => {
   const classes = useStyles();
+  const { theme } = useMuiTheme();
+  const { handleThemeSwitchClick } = useHeader();
+
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
@@ -74,7 +71,7 @@ const HeaderView: FC<HeaderViewProps> = ({
           <Tooltip title={`Toggle light/dark mode - Currently ${theme} mode.`}>
             <Switch
               checked={theme === MuiTheme.Dark}
-              onChange={handlersMap.handleThemeChange}
+              onChange={handleThemeSwitchClick}
               inputProps={{
                 "aria-label": `Toggle light/dark mode - Currently ${theme} mode.`
               }}
@@ -98,7 +95,7 @@ const HeaderView: FC<HeaderViewProps> = ({
           <Menu
             menuItemsList={menuMap.githubLinksMenu.menuItemsList}
             label={menuMap.githubLinksMenu.label}
-            element={menuMap.githubLinksMenu.element}
+            menuIconRenderer={menuMap.githubLinksMenu.element}
           />
         </Box>
       </Toolbar>

@@ -2,7 +2,7 @@ import React from "react";
 import GitHubIcon from "@material-ui/icons/GitHub";
 
 /**
- * Defines a map of existing menu in the app to an object of properties including its label, its corresponding icon and etc.
+ * Defines a map of hardcoded menus.
  */
 export const menuMap = {
   githubLinksMenu: {

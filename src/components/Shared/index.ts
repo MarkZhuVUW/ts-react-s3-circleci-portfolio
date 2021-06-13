@@ -1,3 +1,3 @@
 export { Header } from "./Header";
-export { Menu } from "./Menu";
+export { Menu, menuReducer, MenuActionTypes } from "./Menu";
 export { ErrorPage } from "./ErrorPage";
