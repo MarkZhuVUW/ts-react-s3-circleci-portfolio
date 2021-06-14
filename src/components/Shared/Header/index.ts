@@ -1,1 +1,2 @@
-export { default as Header } from "./HeaderView";
+export { default } from "./HeaderView";
+export { HeaderActionTypes } from "./headerReducer";

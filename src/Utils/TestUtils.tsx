@@ -25,8 +25,10 @@ export const LocalStorageProviderDebug: FC<LocalStorageProviderDebugProps> = ({
   functionToDebug
 }: LocalStorageProviderDebugProps) => {
   const { keys, setItem, removeItem, getItem } = useLocalStorage();
-  const [isLocalStorageEventSuccessful, setIsLocalStorageEventSuccessful] =
-    useState(false);
+  const [
+    isLocalStorageEventSuccessful,
+    setIsLocalStorageEventSuccessful
+  ] = useState(false);
   useEffect(() => {
     switch (functionToDebug) {
       case "setItem":

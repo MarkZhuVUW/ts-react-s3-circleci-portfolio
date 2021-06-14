@@ -1,12 +1,10 @@
 export {
-  LocalStorageProvider,
+  default as LocalStorageProvider,
   localStorageKeys,
-  LocalStorageContext,
   useLocalStorage
 } from "./LocalStorageProvider";
 export {
-  ThemeProvider,
+  default as ThemeProvider,
   MuiTheme,
-  ThemeContext,
   useMuiTheme
 } from "./ThemeProvider";

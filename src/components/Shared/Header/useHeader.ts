@@ -4,9 +4,9 @@ import headerReducer, { HeaderActionTypes } from "./headerReducer";
 
 type HeaderControls = { handleThemeSwitchClick: () => void };
 
-const useHeader = (): HeaderControls => {
+export const useHeader = (reducer = headerReducer): HeaderControls => {
   const { toggleLightDarkTheme } = useMuiTheme();
-  const [{}, dispatch] = useReducer(headerReducer, {});
+  const [{}, dispatch] = useReducer(reducer, {});
   const handleThemeSwitchClick = () => {
     dispatch({
       type: HeaderActionTypes.HEADER_SWITCH_CLICK,
@@ -16,4 +16,3 @@ const useHeader = (): HeaderControls => {
 
   return { handleThemeSwitchClick };
 };
-export default useHeader;

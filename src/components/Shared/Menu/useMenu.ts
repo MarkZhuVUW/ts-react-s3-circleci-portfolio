@@ -13,7 +13,7 @@ type MenuControls = {
  * @param reducer Defaults to using the menuReducer but user can specify their own reducer.
  * @returns The controls of the MenuView component.
  */
-const useMenu = (reducer = menuReducer): MenuControls => {
+export const useMenu = (reducer = menuReducer): MenuControls => {
   const [{ isOpen, anchorRef }, dispatch] = useReducer(reducer, {
     isOpen: false,
     anchorRef: useRef<HTMLButtonElement>(null)
@@ -29,4 +29,3 @@ const useMenu = (reducer = menuReducer): MenuControls => {
 
   return { handleMenuClose, handleMenuToggle, isOpen, anchorRef };
 };
-export default useMenu;

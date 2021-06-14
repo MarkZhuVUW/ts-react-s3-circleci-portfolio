@@ -1,18 +1,18 @@
 import { createContext, useContext } from "react";
 
 type ThemeContextType = {
-  theme: Theme;
-  setMuiTheme: (theme: Theme) => void;
+  theme: MuiTheme;
+  setMuiTheme: (theme: MuiTheme) => void;
   toggleLightDarkTheme: () => void;
 };
 
-export enum Theme {
+export enum MuiTheme {
   Dark = "dark",
   Light = "light"
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: Theme.Dark,
+  theme: MuiTheme.Dark,
   setMuiTheme: (theme) => {
     console.warn(`Failed to set theme = ${theme}, no theme provider`);
   },

@@ -6,10 +6,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { LightTheme, DarkTheme } from "@employer-tracker-ui/Themes";
 import {
   useLocalStorage,
-  ThemeContext,
   MuiTheme,
   localStorageKeys
 } from "@employer-tracker-ui/components/GlobalProviders";
+import ThemeContext from "./ThemeContext";
 
 type ThemeProviderProps = {
   children?: ReactNode;

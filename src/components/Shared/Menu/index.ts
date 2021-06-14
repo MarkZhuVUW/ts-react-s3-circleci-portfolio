@@ -1,2 +1,2 @@
-export { default as Menu } from "./MenuView";
-export { default as menuReducer, MenuActionTypes } from "./menuReducer";
+export { default } from "./MenuView";
+export { MenuActionTypes } from "./menuReducer";

@@ -1,6 +1,2 @@
-export { default as ThemeProvider } from "./ThemeProvider";
-export {
-  useMuiTheme,
-  Theme as MuiTheme,
-  default as ThemeContext
-} from "./ThemeContext";
+export { default } from "./ThemeProvider";
+export { useMuiTheme, MuiTheme } from "./ThemeContext";

@@ -2,7 +2,7 @@ import React from "react";
 import { findByText, render } from "@testing-library/react";
 import { LocalStorageProvider } from "@employer-tracker-ui/components/GlobalProviders";
 import { ThemeProviderDebug } from "@employer-tracker-ui/Utils";
-import { MuiTheme, ThemeProvider } from ".";
+import ThemeProvider, { MuiTheme } from ".";
 
 describe("ThemeProvider tests.", () => {
   test("default theme is light", async () => {
