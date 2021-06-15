@@ -1,19 +1,22 @@
+/* eslint-disable @typescript-eslint/ban-types */
+import { Reducer } from "react";
+
 export enum HeaderActionTypes {
   HEADER_SWITCH_CLICK = "HEADER_SWITCH_CLICK"
 }
 
-type HeaderAction = {
+export type HeaderAction = {
   type: string;
   payload?: { toggleLightDarkTheme: () => void };
 };
-type HeaderState = Record<string, never>;
+export type HeaderState = {};
 /**
  * The default reducer for the useHeader hook.
  * @param prevStates Previous MenuState.
  * @param action MenuAction.
  * @returns MenuState
  */
-const headerReducer = (
+const headerReducer: Reducer<HeaderState, HeaderAction> = (
   prevStates: HeaderState,
   action: HeaderAction
 ): HeaderState => {

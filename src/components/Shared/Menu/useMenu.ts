@@ -1,4 +1,5 @@
-import { RefObject, useReducer, useRef } from "react";
+import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
+import { RefObject, useRef } from "react";
 import menuReducer, { MenuActionTypes } from "./menuReducer";
 
 type MenuControls = {
@@ -14,10 +15,14 @@ type MenuControls = {
  * @returns The controls of the MenuView component.
  */
 export const useMenu = (reducer = menuReducer): MenuControls => {
-  const [{ isOpen, anchorRef }, dispatch] = useReducer(reducer, {
+  const initialStates = {
     isOpen: false,
     anchorRef: useRef<HTMLButtonElement>(null)
-  });
+  };
+  const [{ isOpen, anchorRef }, dispatch] = useReducerOnSteroid(
+    reducer,
+    initialStates
+  );
 
   const handleMenuClose = (event: React.MouseEvent<EventTarget>) => {
     dispatch({ type: MenuActionTypes.MENU_CLOSE, payload: { event } });

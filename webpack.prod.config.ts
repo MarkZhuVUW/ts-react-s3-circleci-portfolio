@@ -1,5 +1,5 @@
 import path from "path";
-import webpack from "webpack";
+import webpack, { EnvironmentPlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const config: webpack.Configuration = {
@@ -41,6 +41,10 @@ const config: webpack.Configuration = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html"
+    }),
+    new EnvironmentPlugin({
+      NODE_ENV: "production", // Set process.env.NODE_ENV to be 'development'
+      DEBUG: false
     })
   ]
 };

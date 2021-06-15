@@ -37,7 +37,7 @@ type MenuViewProps = {
   /**
    * A render prop for overriding the presentation of a menu icon. If this does not exist the menu icon defaults to <MenuIcon fontSize="large" />
    */
-  menuIconRenderer?: JSX.Element;
+  menuIconRenderer?: () => JSX.Element;
 };
 const MenuView: FC<MenuViewProps> = ({
   label,
@@ -58,7 +58,7 @@ const MenuView: FC<MenuViewProps> = ({
             aria-label={label}
             color="inherit"
           >
-            {menuIconRenderer}
+            {menuIconRenderer()}
           </IconButton>
         </Tooltip>
       ) : (
@@ -96,20 +96,27 @@ const MenuView: FC<MenuViewProps> = ({
                   role="menu"
                 >
                   {menuItemsList.map((menuItem, index) => (
-                    <MuiMenuItem
-                      key={`${menuItem.label} ${index}`}
-                      aria-label={menuItem.label}
-                      onClick={handleMenuClose}
-                      role="menuitem"
-                    >
+                    <span key={`${menuItem.label} ${index}`}>
                       {menuItem.href ? (
                         <Link href={menuItem.href} color="inherit">
-                          <Typography>{menuItem.label}</Typography>
+                          <MuiMenuItem
+                            aria-label={menuItem.label}
+                            onClick={handleMenuClose}
+                            role="menuitem"
+                          >
+                            <Typography>{menuItem.label}</Typography>
+                          </MuiMenuItem>
                         </Link>
                       ) : (
-                        <>{menuItem.label}</>
+                        <MuiMenuItem
+                          aria-label={menuItem.label}
+                          onClick={handleMenuClose}
+                          role="menuitem"
+                        >
+                          <Typography>{menuItem.label}</Typography>
+                        </MuiMenuItem>
                       )}
-                    </MuiMenuItem>
+                    </span>
                   ))}
                 </MenuList>
               </ClickAwayListener>

@@ -94,7 +94,7 @@ const HeaderView: FC = () => {
           <MenuView
             menuItemsList={menuMap.githubLinksMenu.menuItemsList}
             label={menuMap.githubLinksMenu.label}
-            menuIconRenderer={menuMap.githubLinksMenu.menuIconRenderer}
+            menuIconRenderer={() => menuMap.githubLinksMenu.menuIconRenderer}
           />
         </Box>
       </Toolbar>

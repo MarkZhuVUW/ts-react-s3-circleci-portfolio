@@ -1,6 +1,9 @@
 import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import { Configuration as WebpackConfiguration } from "webpack";
+import {
+  Configuration as WebpackConfiguration,
+  EnvironmentPlugin
+} from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
@@ -47,6 +50,10 @@ const config: Configuration = {
     }),
     new ESLintPlugin({
       extensions: ["js", "jsx", "ts", "tsx"]
+    }),
+    new EnvironmentPlugin({
+      NODE_ENV: "development", // Set process.env.NODE_ENV to be 'development'
+      DEBUG: false
     })
   ],
   devtool: "source-map",
