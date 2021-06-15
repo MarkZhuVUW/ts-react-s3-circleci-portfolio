@@ -34,8 +34,6 @@ export const useReducerOnSteroid = (
       initialState
     );
 
-    console.log("current states: ");
-    console.log(currentState);
     /**
      * A closure that wraps the dispatch function with logger middleware.
      * @param action
@@ -43,11 +41,12 @@ export const useReducerOnSteroid = (
     const dispatchWithLoggerAfterware = (action: any) => {
       dispatch(action);
       //After dispatch do log action.
+      console.log("current states: ");
+      console.log(currentState);
       console.log("action: ");
       console.log(action);
     };
     return [state, dispatchWithLoggerAfterware];
   }
-
   return reactUseReducer(reducer, initialState); // return infant useReducer in prod mode.
 };

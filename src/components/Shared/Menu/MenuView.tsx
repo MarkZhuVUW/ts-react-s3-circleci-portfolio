@@ -44,52 +44,55 @@ const MenuView: FC<MenuViewProps> = ({
   menuItemsList,
   menuIconRenderer
 }: MenuViewProps) => {
+  console.log("useMenu");
+
   const classes = useStyles();
   const { isOpen, handleMenuClose, handleMenuToggle, anchorRef } = useMenu();
   return (
-    <div className={classes.root}>
-      {menuIconRenderer ? (
-        <Tooltip title={label}>
-          <IconButton
-            ref={anchorRef}
-            aria-controls={isOpen ? "menu-list-grow" : undefined}
-            aria-haspopup="true"
-            onClick={handleMenuToggle}
-            aria-label={label}
-            color="inherit"
-          >
-            {menuIconRenderer()}
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <MenuIcon fontSize="large" />
-      )}
-      <Popper
-        open={isOpen}
-        anchorEl={anchorRef.current}
-        role="dialog"
-        transition
-        disablePortal
-        modifiers={{
-          flip: {
-            enabled: true
-          },
-          preventOverflow: {
-            enabled: true,
-            boundariesElement: "viewport"
-          }
-        }}
-        aria-label={`${label} popup`}
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin: placement === "bottom" ? "center top" : "bottom"
-            }}
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={handleMenuClose}>
+    <ClickAwayListener onClickAway={handleMenuClose}>
+      <div className={classes.root}>
+        {menuIconRenderer ? (
+          <Tooltip title={label}>
+            <IconButton
+              ref={anchorRef}
+              aria-controls={isOpen ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              onClick={handleMenuToggle}
+              aria-label={label}
+              color="inherit"
+            >
+              {menuIconRenderer()}
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <MenuIcon fontSize="large" />
+        )}
+        <Popper
+          open={isOpen}
+          anchorEl={anchorRef.current}
+          role="dialog"
+          transition
+          disablePortal
+          modifiers={{
+            flip: {
+              enabled: true
+            },
+            preventOverflow: {
+              enabled: true,
+              boundariesElement: "viewport"
+            }
+          }}
+          aria-label={`${label} popup`}
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin:
+                  placement === "bottom" ? "center top" : "bottom"
+              }}
+            >
+              <Paper>
                 <MenuList
                   autoFocusItem={isOpen}
                   id="menu-list-grow"
@@ -119,12 +122,12 @@ const MenuView: FC<MenuViewProps> = ({
                     </span>
                   ))}
                 </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </div>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+      </div>
+    </ClickAwayListener>
   );
 };
 
