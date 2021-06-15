@@ -12,7 +12,7 @@ export enum MuiTheme {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: MuiTheme.Dark,
+  theme: MuiTheme.Light,
   setMuiTheme: (theme) => {
     console.warn(`Failed to set theme = ${theme}, no theme provider`);
   },

@@ -5,11 +5,7 @@ import {
   Reducer,
   ReducerAction,
   ReducerState,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer as reactUseReducer,
-  useRef
+  useReducer as reactUseReducer
 } from "react";
 
 /**
@@ -41,10 +37,11 @@ export const useReducerOnSteroid = (
     const dispatchWithLoggerAfterware = (action: any) => {
       dispatch(action);
       //After dispatch do log action.
-      console.log("current states: ");
       console.log(currentState);
-      console.log("action: ");
       console.log(action);
+      console.log(
+        "-------------------------------------------------------------------"
+      );
     };
     return [state, dispatchWithLoggerAfterware];
   }

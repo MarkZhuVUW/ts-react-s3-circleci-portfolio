@@ -30,7 +30,7 @@ const menuReducer = (prevStates: MenuState, action: MenuAction): MenuState => {
           action.payload?.event.target as HTMLElement
         )
       ) {
-        return { ...prevStates };
+        return prevStates;
       }
 
       return { ...prevStates, isOpen: false };

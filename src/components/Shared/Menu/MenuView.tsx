@@ -12,21 +12,19 @@ import {
   ClickAwayListener,
   MenuList,
   MenuItem as MuiMenuItem,
-  Typography
+  Typography,
+  Box
 } from "@material-ui/core";
 import { useMenu } from "./useMenu";
 import { MenuItem } from "@employer-tracker-ui/Utils";
 import MenuIcon from "@material-ui/icons/Menu";
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex"
-    },
-    paper: {
-      marginRight: theme.spacing(2)
-    }
-  })
-);
+// const useStyles = makeStyles((theme: Theme) =>
+//   createStyles({
+//     paper: {
+//       marginRight: theme.spacing(2)
+//     }
+//   })
+// );
 
 type MenuViewProps = {
   /**
@@ -44,64 +42,72 @@ const MenuView: FC<MenuViewProps> = ({
   menuItemsList,
   menuIconRenderer
 }: MenuViewProps) => {
-  console.log("useMenu");
-
-  const classes = useStyles();
+  // const classes = useStyles();
   const { isOpen, handleMenuClose, handleMenuToggle, anchorRef } = useMenu();
   return (
-    <ClickAwayListener onClickAway={handleMenuClose}>
-      <div className={classes.root}>
-        {menuIconRenderer ? (
-          <Tooltip title={label}>
-            <IconButton
-              ref={anchorRef}
-              aria-controls={isOpen ? "menu-list-grow" : undefined}
-              aria-haspopup="true"
-              onClick={handleMenuToggle}
-              aria-label={label}
-              color="inherit"
-            >
-              {menuIconRenderer()}
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <MenuIcon fontSize="large" />
-        )}
-        <Popper
-          open={isOpen}
-          anchorEl={anchorRef.current}
-          role="dialog"
-          transition
-          disablePortal
-          modifiers={{
-            flip: {
-              enabled: true
-            },
-            preventOverflow: {
-              enabled: true,
-              boundariesElement: "viewport"
-            }
-          }}
-          aria-label={`${label} popup`}
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "bottom"
-              }}
-            >
-              <Paper>
-                <MenuList
-                  autoFocusItem={isOpen}
-                  id="menu-list-grow"
-                  role="menu"
-                >
-                  {menuItemsList.map((menuItem, index) => (
-                    <span key={`${menuItem.label} ${index}`}>
-                      {menuItem.href ? (
-                        <Link href={menuItem.href} color="inherit">
+    <Box display="flex">
+      {menuIconRenderer ? (
+        <Tooltip title={label}>
+          <IconButton
+            ref={anchorRef}
+            aria-controls={isOpen ? "menu-list-grow" : undefined}
+            aria-haspopup="true"
+            onClick={handleMenuToggle}
+            aria-label={label}
+            color="inherit"
+          >
+            {menuIconRenderer()}
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <MenuIcon fontSize="large" />
+      )}
+      {isOpen && (
+        <ClickAwayListener onClickAway={handleMenuClose}>
+          <Popper
+            open={isOpen}
+            anchorEl={anchorRef.current}
+            role="dialog"
+            transition
+            disablePortal
+            modifiers={{
+              flip: {
+                enabled: true
+              },
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "viewport"
+              }
+            }}
+            aria-label={`${label} popup`}
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "bottom"
+                }}
+              >
+                <Paper>
+                  <MenuList
+                    autoFocusItem={isOpen}
+                    id="menu-list-grow"
+                    role="menu"
+                  >
+                    {menuItemsList.map((menuItem, index) => (
+                      <span key={`${menuItem.label} ${index}`}>
+                        {menuItem.href ? (
+                          <Link href={menuItem.href} color="inherit">
+                            <MuiMenuItem
+                              aria-label={menuItem.label}
+                              onClick={handleMenuClose}
+                              role="menuitem"
+                            >
+                              <Typography>{menuItem.label}</Typography>
+                            </MuiMenuItem>
+                          </Link>
+                        ) : (
                           <MuiMenuItem
                             aria-label={menuItem.label}
                             onClick={handleMenuClose}
@@ -109,25 +115,17 @@ const MenuView: FC<MenuViewProps> = ({
                           >
                             <Typography>{menuItem.label}</Typography>
                           </MuiMenuItem>
-                        </Link>
-                      ) : (
-                        <MuiMenuItem
-                          aria-label={menuItem.label}
-                          onClick={handleMenuClose}
-                          role="menuitem"
-                        >
-                          <Typography>{menuItem.label}</Typography>
-                        </MuiMenuItem>
-                      )}
-                    </span>
-                  ))}
-                </MenuList>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-    </ClickAwayListener>
+                        )}
+                      </span>
+                    ))}
+                  </MenuList>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </ClickAwayListener>
+      )}
+    </Box>
   );
 };
 
