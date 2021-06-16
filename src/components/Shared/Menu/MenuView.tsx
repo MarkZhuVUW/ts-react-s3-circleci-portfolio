@@ -8,13 +8,14 @@ import {
   Paper,
   ClickAwayListener,
   MenuList,
-  MenuItem as MuiMenuItem,
+  MenuItem,
   Typography,
-  Box
+  Box,
+  PopperProps
 } from "@material-ui/core";
 import { useMenu } from "./useMenu";
-import { MenuItem } from "@employer-tracker-ui/Utils";
-import MenuIcon from "@material-ui/icons/Menu";
+import GithubIcon from "@material-ui/icons/GitHub";
+import { MenuItemRenderer, MenuToggleRenderer } from "./types";
 // const useStyles = makeStyles((theme: Theme) =>
 //   createStyles({
 //     paper: {
@@ -23,46 +24,41 @@ import MenuIcon from "@material-ui/icons/Menu";
 //   })
 // );
 
-const MenuView: FC<MenuViewProps> = () => {
+type MenuViewProps = {
+  menuItemRenderer?: MenuItemRenderer;
+  menuToggleRenderer?: MenuToggleRenderer;
+  popperProps?: PopperProps;
+};
+const MenuView: FC<MenuViewProps> = ({
+  menuItemRenderer,
+  menuToggleRenderer,
+  popperProps
+}: MenuViewProps) => {
   // const classes = useStyles();
-  const { isOpen, handleMenuClose, handleMenuToggle, anchorRef, label } =
-    useMenu();
+  const {
+    isOpen,
+    label,
+    menuListItems,
+    handleMenuClose,
+    getMenuToggleProps,
+    getMenuItemProps,
+    getPopperProps
+  } = useMenu();
   return (
     <Box display="flex">
-      {menuIconRenderer ? (
+      {menuToggleRenderer ? (
+        menuToggleRenderer(getMenuToggleProps, label)
+      ) : (
         <Tooltip title={label}>
-          <IconButton
-            ref={anchorRef}
-            aria-controls={isOpen ? "menu-list-grow" : undefined}
-            aria-haspopup="true"
-            onClick={handleMenuToggle}
-            aria-label={label}
-            color="inherit"
-          >
-            {menuIconRenderer()}
+          <IconButton {...getMenuToggleProps()}>
+            <GithubIcon fontSize="large" />
           </IconButton>
         </Tooltip>
-      ) : (
-        <MenuIcon fontSize="large" />
       )}
       {isOpen && (
         <ClickAwayListener onClickAway={handleMenuClose}>
           <Popper
-            open={isOpen}
-            anchorEl={anchorRef.current}
-            role="dialog"
-            transition
-            disablePortal
-            modifiers={{
-              flip: {
-                enabled: true
-              },
-              preventOverflow: {
-                enabled: true,
-                boundariesElement: "viewport"
-              }
-            }}
-            aria-label={`${label} popup`}
+            {...(popperProps || getPopperProps())} //
           >
             {({ TransitionProps, placement }) => (
               <Grow
@@ -78,26 +74,18 @@ const MenuView: FC<MenuViewProps> = () => {
                     id="menu-list-grow"
                     role="menu"
                   >
-                    {menuItemsList.map((menuItem, index) => (
-                      <span key={`${menuItem.label} ${index}`}>
-                        {menuItem.href ? (
-                          <Link href={menuItem.href} color="inherit">
-                            <MuiMenuItem
-                              aria-label={menuItem.label}
-                              onClick={handleMenuClose}
-                              role="menuitem"
-                            >
-                              <Typography>{menuItem.label}</Typography>
-                            </MuiMenuItem>
-                          </Link>
+                    {menuListItems.map(({ label, href }, index) => (
+                      <span key={`${label} ${index}`}>
+                        {menuItemRenderer ? (
+                          menuItemRenderer(getMenuItemProps, label, href)
                         ) : (
-                          <MuiMenuItem
-                            aria-label={menuItem.label}
-                            onClick={handleMenuClose}
-                            role="menuitem"
-                          >
-                            <Typography>{menuItem.label}</Typography>
-                          </MuiMenuItem>
+                          <span>
+                            <Link href={href} color="inherit">
+                              <MenuItem {...getMenuItemProps()}>
+                                <Typography>{label}</Typography>
+                              </MenuItem>
+                            </Link>
+                          </span>
                         )}
                       </span>
                     ))}

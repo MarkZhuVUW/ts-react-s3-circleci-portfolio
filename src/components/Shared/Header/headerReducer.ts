@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Reducer } from "react";
 
-export enum HeaderActionTypes {
-  HEADER_SWITCH_CLICK = "HEADER_SWITCH_CLICK"
-}
+export enum HeaderActionTypes {}
 
 export type HeaderAction = {
   type: string;
-  payload?: { toggleLightDarkTheme: () => void };
+  payload?: {};
 };
 export type HeaderState = {};
 /**
@@ -21,9 +19,6 @@ const headerReducer: Reducer<HeaderState, HeaderAction> = (
   action: HeaderAction
 ): HeaderState => {
   switch (action.type) {
-    case HeaderActionTypes.HEADER_SWITCH_CLICK:
-      action.payload?.toggleLightDarkTheme();
-      return {};
     default:
       throw new Error(`Unhandled header action type: ${action.type}`);
   }

@@ -83,30 +83,4 @@ describe("Header module tests.", () => {
       { exact: true }
     );
   });
-
-  test("HeaderView renders correctly when theme is set to light mode.", async () => {
-    THEME_STATE_SPY.mockReturnValueOnce({
-      theme: GlobalHooks.MuiTheme.Light,
-      setMuiTheme,
-      toggleLightDarkTheme
-    });
-    const { container } = render(<HeaderView />);
-    expect(container).toBeTruthy();
-
-    userEvent.click(
-      await findByLabelText(
-        container,
-        "Toggle light/dark mode - Currently light mode.",
-        { exact: true }
-      )
-    );
-    expect(handleThemeSwitchClick).toHaveBeenCalledTimes(3);
-
-    await findByLabelText(container, "Contact the developer", { exact: true });
-    await findByText(
-      container,
-      "Source codes and contact can be found on the right.",
-      { exact: true }
-    );
-  });
 });

@@ -20,7 +20,6 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
 import { MenuView } from "@employer-tracker-ui/components/Shared";
 import { useHeader } from "./useHeader";
-import { menuMap } from "@employer-tracker-ui/Utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,11 +90,7 @@ const HeaderView: FC = () => {
         </Box>
 
         <Box>
-          <MenuView
-            menuItemsList={menuMap.githubLinksMenu.menuItemsList}
-            label={menuMap.githubLinksMenu.label}
-            menuIconRenderer={() => menuMap.githubLinksMenu.menuIconRenderer}
-          />
+          <MenuView />
         </Box>
       </Toolbar>
     </AppBar>

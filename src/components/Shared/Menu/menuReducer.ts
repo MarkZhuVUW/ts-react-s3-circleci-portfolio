@@ -4,16 +4,17 @@ export enum MenuActionTypes {
   MENU_CLOSE = "MENU_CLOSE",
   MENU_TOGGLE = "MENU_TOGGLE"
 }
-type MenuAction = {
+export type MenuAction = {
   type: string;
   payload?: {
     event: React.MouseEvent<EventTarget>;
   };
 };
-type MenuState = {
+export type MenuState = {
   anchorRef: RefObject<HTMLButtonElement>;
   isOpen: boolean;
   label: string;
+  menuListItems: Array<{ href?: string; label: string }>;
 };
 
 /**
