@@ -3,9 +3,6 @@ import {
   IconButton,
   Link,
   Tooltip,
-  makeStyles,
-  createStyles,
-  Theme,
   Grow,
   Popper,
   Paper,
@@ -26,24 +23,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 //   })
 // );
 
-type MenuViewProps = {
-  /**
-   * Text label of the menu. Used for displaying tooltip, accessibility and dom querying in jest tests.
-   */
-  label: string;
-  menuItemsList: Array<MenuItem>;
-  /**
-   * A render prop for overriding the presentation of a menu icon. If this does not exist the menu icon defaults to <MenuIcon fontSize="large" />
-   */
-  menuIconRenderer?: () => JSX.Element;
-};
-const MenuView: FC<MenuViewProps> = ({
-  label,
-  menuItemsList,
-  menuIconRenderer
-}: MenuViewProps) => {
+const MenuView: FC<MenuViewProps> = () => {
   // const classes = useStyles();
-  const { isOpen, handleMenuClose, handleMenuToggle, anchorRef } = useMenu();
+  const { isOpen, handleMenuClose, handleMenuToggle, anchorRef, label } =
+    useMenu();
   return (
     <Box display="flex">
       {menuIconRenderer ? (

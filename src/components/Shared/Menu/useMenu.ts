@@ -17,9 +17,13 @@ type MenuControls = {
 export const useMenu = (reducer = menuReducer): MenuControls => {
   const initialStates = {
     isOpen: false,
-    anchorRef: useRef<HTMLButtonElement>(null)
+    anchorRef: useRef<HTMLButtonElement>(null),
+    /**
+     * Text label of the menu. Used for displaying tooltip, accessibility and dom querying in jest tests.
+     */
+    label: ""
   };
-  const [{ isOpen, anchorRef }, dispatch] = useReducerOnSteroid(
+  const [{ isOpen, anchorRef, label }, dispatch] = useReducerOnSteroid(
     reducer,
     initialStates
   );

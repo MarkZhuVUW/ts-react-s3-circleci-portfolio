@@ -9,7 +9,7 @@ import {
 } from "react";
 
 /**
- * Wraps the React useReducer hook and returns a customized useReducer hook with logging 'afterware'.
+ * Wraps the React useReducer hook and returns a customized useReducer hook with 'middlewares' and 'afterwares'
  * Diabled eslint any checking to achieve polymorphic state and action typing behavior.
  * @param reducer
  * @param initialState
@@ -23,25 +23,26 @@ export const useReducerOnSteroid = (
   Dispatch<ReducerAction<Reducer<any, any>>>
 ] => {
   if (process.env.NODE_ENV === "development") {
-    let currentState: any = null;
-
+    let afterState: any = null;
     const [state, dispatch] = reactUseReducer(
-      (state: any, action: any) => (currentState = reducer(state, action)),
+      (state: any, action: any) => (afterState = reducer(state, action)),
       initialState
     );
 
     /**
      * A closure that wraps the dispatch function with logger middleware.
      * @param action
+     * @returns The
      */
     const dispatchWithLoggerAfterware = (action: any) => {
       dispatch(action);
       //After dispatch do log action.
-      console.log(currentState);
+      console.log(afterState);
       console.log(action);
       console.log(
         "-------------------------------------------------------------------"
       );
+      return { afterState, action };
     };
     return [state, dispatchWithLoggerAfterware];
   }

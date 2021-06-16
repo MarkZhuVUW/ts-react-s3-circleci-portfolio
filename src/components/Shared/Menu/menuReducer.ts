@@ -13,6 +13,7 @@ type MenuAction = {
 type MenuState = {
   anchorRef: RefObject<HTMLButtonElement>;
   isOpen: boolean;
+  label: string;
 };
 
 /**
