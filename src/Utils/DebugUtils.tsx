@@ -5,7 +5,8 @@ import {
   Reducer,
   ReducerAction,
   ReducerState,
-  useReducer as reactUseReducer
+  useReducer,
+  useRef
 } from "react";
 
 /**
@@ -13,7 +14,6 @@ import {
  * Diabled eslint any checking to achieve polymorphic state and action typing behavior.
  * @param reducer
  * @param initialState
- * @returns
  */
 export const useReducerOnSteroid = (
   reducer: Reducer<any, any>,
@@ -22,29 +22,55 @@ export const useReducerOnSteroid = (
   ReducerState<Reducer<any, any>>,
   Dispatch<ReducerAction<Reducer<any, any>>>
 ] => {
+  const ref = useRef(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
   if (process.env.NODE_ENV === "development") {
-    let afterState: any = null;
-    const [state, dispatch] = reactUseReducer(
-      (state: any, action: any) => (afterState = reducer(state, action)),
-      initialState
-    );
+    /**
+     * Curried function provides a way for us to do something like this:
+     * In here I am Attaching middleware and afterware callbacks and I am running those callbacks in appropriate places...
+     */
+    const applyAfterwares = attachAfterwares([logger]);
+    const applyMiddlewares = attachMiddlewares([]);
 
     /**
-     * A closure that wraps the dispatch function with logger middleware.
+     * A closure that runs all the afterwares after dispatch.
      * @param action
-     * @returns The
      */
-    const dispatchWithLoggerAfterware = (action: any) => {
+    const dispatchWithAfterware = (action: any) => {
+      // Run middleware callbacks here.
+      applyMiddlewares(action, state);
       dispatch(action);
-      //After dispatch do log action.
-      console.log(afterState);
-      console.log(action);
-      console.log(
-        "-------------------------------------------------------------------"
-      );
-      return { afterState, action };
+
+      ref.current = action;
     };
-    return [state, dispatchWithLoggerAfterware];
+    // Run afterware callbacks here.
+    applyAfterwares(state, ref.current);
+    return [state, dispatchWithAfterware];
   }
-  return reactUseReducer(reducer, initialState); // return infant useReducer in prod mode.
+
+  return [state, dispatch]; // return infant useReducer in prod mode.
+};
+
+/**
+ * A curried function that takes in an array of afterware callbacks and returns a function that runs all the afterwares.
+ * @param afterwares Array of afterware callbacks
+ */
+const attachAfterwares = (afterwares: any[]) => (action: any, state: any) => {
+  afterwares.forEach((afterware) => afterware(action, state));
+};
+
+/**
+ * A curried function that takes in an array of middleware callbacks and returns a function that runs all the middlewares.
+ * @param middlewares Array of middleware callbacks.
+ */
+const attachMiddlewares = (middlewares: any[]) => (action: any, state: any) => {
+  middlewares.forEach((middlewares) => middlewares(action, state));
+};
+
+const logger = (action: any, afterState: any) => {
+  console.log(afterState);
+  console.log(action);
+  console.log(
+    "-------------------------------------------------------------------"
+  );
 };

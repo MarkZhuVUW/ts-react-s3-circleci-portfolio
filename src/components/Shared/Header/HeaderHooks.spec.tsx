@@ -4,12 +4,6 @@ import { act } from "react-dom/test-utils";
 import headerReducer from "./headerReducer";
 import { useHeader } from "./useHeader";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
-import { findByLabelText, render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import {
-  LocalStorageProvider,
-  ThemeProvider
-} from "@employer-tracker-ui/components/GlobalProviders";
 
 const THEME_STATE_SPY = jest.spyOn(GlobalHooks, "useMuiTheme");
 const LOCAL_STORAGE_STATE_SPY = jest.spyOn(GlobalHooks, "useLocalStorage");

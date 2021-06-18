@@ -9,7 +9,8 @@ import {
   Toolbar,
   Theme,
   Tooltip,
-  Link
+  Link,
+  MenuItem
 } from "@material-ui/core";
 import {
   MuiTheme,
@@ -90,7 +91,11 @@ const HeaderView: FC = () => {
         </Box>
 
         <Box>
-          <MenuView />
+          <MenuView
+            menuItemRenderer={(getMenuItemProps, label) => (
+              <MenuItem {...getMenuItemProps()}>label</MenuItem>
+            )}
+          />
         </Box>
       </Toolbar>
     </AppBar>

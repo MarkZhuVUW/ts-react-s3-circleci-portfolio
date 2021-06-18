@@ -16,6 +16,7 @@ import {
 import { useMenu } from "./useMenu";
 import GithubIcon from "@material-ui/icons/GitHub";
 import { MenuItemRenderer, MenuToggleRenderer } from "./types";
+
 // const useStyles = makeStyles((theme: Theme) =>
 //   createStyles({
 //     paper: {
@@ -44,6 +45,7 @@ const MenuView: FC<MenuViewProps> = ({
     getMenuItemProps,
     getPopperProps
   } = useMenu();
+
   return (
     <Box display="flex">
       {menuToggleRenderer ? (
@@ -57,9 +59,7 @@ const MenuView: FC<MenuViewProps> = ({
       )}
       {isOpen && (
         <ClickAwayListener onClickAway={handleMenuClose}>
-          <Popper
-            {...(popperProps || getPopperProps())} //
-          >
+          <Popper {...(popperProps || getPopperProps())}>
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}

@@ -1,15 +1,15 @@
 import {
   findByLabelText,
   findByText,
-  queryByText,
-  render
+  render,
+  screen
 } from "@testing-library/react";
 import React, { useRef } from "react";
 import userEvent from "@testing-library/user-event";
 import MenuView from "./MenuView";
 import * as MenuHook from "./useMenu";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
-
+import { renderHook } from "@testing-library/react-hooks";
 /** ------------------- Mocks and spies----------------- */
 
 /** ------------------- Mocks and spies----------------- */
@@ -19,7 +19,6 @@ describe("Menu module tests.", () => {
   const MENU_STATE_SPY = jest.spyOn(MenuHook, "useMenu");
 
   const LOCAL_STORAGE_STATE_SPY = jest.spyOn(GlobalHooks, "useLocalStorage");
-  const handleThemeSwitchClick = jest.fn();
   const toggleLightDarkTheme = jest.fn();
   const setMuiTheme = jest.fn();
   const keys = jest.fn();
@@ -28,9 +27,33 @@ describe("Menu module tests.", () => {
   const removeItem = jest.fn();
   const handleMenuClose = jest.fn();
   const handleMenuToggle = jest.fn();
-  const getMenuToggleProps = jest.fn();
-  const getPopperProps = jest.fn();
-  const getMenuItemProps = jest.fn();
+  const anchorRef = renderHook(() => useRef(null)).result.current;
+  const getMenuToggleProps = jest.fn().mockReturnValue({
+    "aria-label": "test menu toggle button label",
+    ref: anchorRef,
+    onClick: handleMenuToggle
+  });
+  const getPopperProps = jest.fn().mockReturnValue({
+    open: true,
+    "aria-label": "test popper label",
+    anchorEl: document.body,
+    role: "dialog",
+    transition: true,
+    disablePortal: true,
+    modifiers: {
+      flip: {
+        enabled: true
+      },
+      preventOverflow: {
+        enabled: true,
+        boundariesElement: "viewport"
+      }
+    }
+  });
+  const getMenuItemProps = jest.fn().mockReturnValue({
+    "aria-label": "test menu list item label",
+    onClick: handleMenuClose
+  });
 
   LOCAL_STORAGE_STATE_SPY.mockReturnValue({
     keys,
@@ -44,10 +67,10 @@ describe("Menu module tests.", () => {
     toggleLightDarkTheme
   });
   MENU_STATE_SPY.mockReturnValue({
-    label: "",
-    anchorRef: useRef(null),
+    label: "test menu toggle button label",
+    anchorRef,
     isOpen: false,
-    menuListItems: [{ label: "test", href: "123" }],
+    menuListItems: [{ label: "test menu list item label" }],
     handleMenuClose,
     handleMenuToggle,
     getMenuToggleProps,
@@ -60,36 +83,74 @@ describe("Menu module tests.", () => {
   test("MenuView renders correctly.", async () => {
     const { container } = render(<MenuView />);
     expect(container).toBeTruthy();
-
-    await findByLabelText(container, "Github links menu", { exact: true });
-    expect(
-      queryByText(container, "Check out frontend source code", { exact: true })
+    await findByLabelText(container, "test menu toggle button label", {
+      exact: true
+    });
+  });
+  test("MenuView relevant handler functions are called when popper is not shown.", async () => {
+    const { container } = render(<MenuView />);
+    expect(container).toBeTruthy();
+    userEvent.click(
+      await findByLabelText(container, "test menu toggle button label", {
+        exact: true
+      })
     );
+    expect(handleMenuToggle).toHaveBeenCalledTimes(1);
+    userEvent.click(document.body); // click outside.
+    expect(handleMenuClose).toHaveBeenCalledTimes(0);
   });
 
-  test("MenuView renders correctly when theme is set to light mode.", async () => {
-    THEME_STATE_SPY.mockReturnValueOnce({
-      theme: GlobalHooks.MuiTheme.Light,
-      setMuiTheme,
-      toggleLightDarkTheme
+  test("MenuView popper renders when isOpen is set to true", async () => {
+    MENU_STATE_SPY.mockReturnValueOnce({
+      label: "test menu toggle button label",
+      anchorRef,
+      isOpen: true,
+      menuListItems: [{ label: "test menu list item label" }],
+      handleMenuClose,
+      handleMenuToggle,
+      getMenuToggleProps,
+      getPopperProps,
+      getMenuItemProps
     });
     const { container } = render(<MenuView />);
     expect(container).toBeTruthy();
 
-    userEvent.click(
-      await findByLabelText(
-        container,
-        "Toggle light/dark mode - Currently light mode.",
-        { exact: true }
-      )
-    );
-    expect(handleThemeSwitchClick).toHaveBeenCalledTimes(3);
+    await findByLabelText(container, "test menu toggle button label", {
+      exact: true
+    });
+    await screen.findByLabelText("test popper label", {
+      exact: true
+    });
+    await screen.findByLabelText("test menu list item label", {
+      exact: true
+    });
+    await screen.findByText("test menu list item label", {
+      exact: true
+    });
+  });
 
-    await findByLabelText(container, "Contact the developer", { exact: true });
-    await findByText(
-      container,
-      "Source codes and contact can be found on the right.",
-      { exact: true }
+  test("MenuView popper relevant functions are called", async () => {
+    MENU_STATE_SPY.mockReturnValueOnce({
+      label: "test menu toggle button label",
+      anchorRef,
+      isOpen: true,
+      menuListItems: [{ label: "test menu list item label" }],
+      handleMenuClose,
+      handleMenuToggle,
+      getMenuToggleProps,
+      getPopperProps,
+      getMenuItemProps
+    });
+    const { container } = render(<MenuView />);
+
+    expect(container).toBeTruthy();
+    userEvent.click(
+      await screen.findByText("test menu list item label", { exact: true })
     );
+
+    expect(handleMenuClose).toHaveBeenCalledTimes(1);
+
+    userEvent.click(document.body); // click outside.
+    expect(handleMenuClose).toHaveBeenCalledTimes(2);
   });
 });

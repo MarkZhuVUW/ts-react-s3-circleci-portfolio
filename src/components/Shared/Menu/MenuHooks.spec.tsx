@@ -1,8 +1,8 @@
 import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import headerReducer from "./headerReducer";
-import { useHeader } from "./useHeader";
+import menuReducer from "./menuReducer";
+import { useMenu } from "./useMenu";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 
 const THEME_STATE_SPY = jest.spyOn(GlobalHooks, "useMuiTheme");
@@ -25,27 +25,30 @@ THEME_STATE_SPY.mockReturnValue({
   setMuiTheme,
   toggleLightDarkTheme
 });
-describe("useHeader hook tests.", () => {
-  test("handleThemeSwitchClick calls toggleLightDarkTheme function in ThemeProvider", async () => {
-    const { handleThemeSwitchClick } = renderHook(() => useHeader()).result
-      .current;
+describe("useMenu hook tests.", () => {
+  test("handleMenuToggle works", async () => {
+    const { handleMenuToggle } = renderHook(() => useMenu()).result.current;
+    const [{ actionDebug }] = renderHook(() =>
+      useReducerOnSteroid(menuReducer, { isOpen: false })
+    ).result.current;
     act(() => {
-      handleThemeSwitchClick();
+      handleMenuToggle();
     });
-    expect(toggleLightDarkTheme).toHaveBeenCalledTimes(1);
+
+    expect(actionDebug).toBe("MENU_TOGGLE");
   });
 });
 
-describe("headerReducer tests.", () => {
+describe("menuReducer tests.", () => {
   let initialState = {};
   let result = renderHook(() =>
-    useReducerOnSteroid(headerReducer, initialState)
+    useReducerOnSteroid(menuReducer, initialState)
   ).result;
   let dispatch = result.current[1];
   beforeEach(() => {
     initialState = {};
     result = renderHook(() =>
-      useReducerOnSteroid(headerReducer, initialState)
+      useReducerOnSteroid(menuReducer, initialState)
     ).result;
     dispatch = result.current[1];
   });
@@ -54,7 +57,7 @@ describe("headerReducer tests.", () => {
       dispatch({ type: "Hippity hoo blah" });
     });
     expect(result.error).toEqual(
-      Error("Unhandled header action type: Hippity hoo blah")
+      Error("Unhandled menu action type: Hippity hoo blah")
     );
   });
 });

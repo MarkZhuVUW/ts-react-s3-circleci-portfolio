@@ -9,7 +9,7 @@
     "react-router": "^5.2.0"
   },
   "scripts": {
-    "start": "webpack serve --config webpack.dev.config.ts",
+    "serve": "webpack serve --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",
     "test": "jest --ci --reporters=default --reporters=jest-junit",
     "single-test": "jest",

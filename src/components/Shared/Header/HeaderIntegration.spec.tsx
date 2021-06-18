@@ -1,8 +1,8 @@
 import {
   LocalStorageProvider,
-  ThemeProvider
-} from "@employer-tracker-ui/components/GlobalProviders";
-import { HeaderView } from "@employer-tracker-ui/components";
+  ThemeProvider,
+  HeaderView
+} from "@employer-tracker-ui/components";
 import { findByLabelText, findByText, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
