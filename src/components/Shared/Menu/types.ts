@@ -15,12 +15,20 @@ export type MenuToggleProps = {
   color: "inherit";
 };
 export type MenuItemRenderer = (
-  getMenuItemProps: () => MenuItemProps,
+  getMenuItemProps: (label: string) => MenuItemProps,
+  isOpen: boolean,
+  anchorRef: RefObject<HTMLButtonElement>,
   label: string,
   href?: string
 ) => ReactNode;
 export type MenuToggleRenderer = (
-  getMenuToggleProps: () => MenuToggleProps,
+  getMenuToggleProps: (
+    isOpen: boolean,
+    anchorRef: RefObject<HTMLButtonElement>,
+    label: string
+  ) => MenuToggleProps,
+  isOpen: boolean,
+  anchorRef: RefObject<HTMLButtonElement>,
   label: string
 ) => ReactNode;
 

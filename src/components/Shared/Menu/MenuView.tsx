@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 import {
   IconButton,
   Link,
@@ -16,6 +16,8 @@ import {
 import { useMenu } from "./useMenu";
 import GithubIcon from "@material-ui/icons/GitHub";
 import { MenuItemRenderer, MenuToggleRenderer } from "./types";
+import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
+import menuReducer, { MenuState } from "./menuReducer";
 
 // const useStyles = makeStyles((theme: Theme) =>
 //   createStyles({
@@ -36,30 +38,50 @@ const MenuView: FC<MenuViewProps> = ({
   popperProps
 }: MenuViewProps) => {
   // const classes = useStyles();
+
+  const [menuStates, dispatch] = useReducerOnSteroid(menuReducer, {
+    isOpen: false,
+    anchorRef: useRef<HTMLButtonElement>(null),
+    label: "Github links menu",
+    menuListItems: [
+      {
+        label: "Check out frontend source code",
+        href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
+      },
+      {
+        label: "Check out APLAKKA logging microservice source code",
+        href: "https://github.com/MarkZhuVUW/APLAKKA-spring-boot-logging-microservice"
+      },
+      {
+        label: "Check out general app backend microservice source code",
+        href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
+      }
+    ]
+  });
   const {
-    isOpen,
-    label,
-    menuListItems,
     handleMenuClose,
     getMenuToggleProps,
     getMenuItemProps,
     getPopperProps
-  } = useMenu();
+  } = useMenu(dispatch);
 
+  const { isOpen, label, anchorRef, menuListItems }: MenuState = menuStates;
   return (
     <Box display="flex">
       {menuToggleRenderer ? (
-        menuToggleRenderer(getMenuToggleProps, label)
+        menuToggleRenderer(getMenuToggleProps, isOpen, anchorRef, label)
       ) : (
         <Tooltip title={label}>
-          <IconButton {...getMenuToggleProps()}>
+          <IconButton {...getMenuToggleProps(isOpen, anchorRef, label)}>
             <GithubIcon fontSize="large" />
           </IconButton>
         </Tooltip>
       )}
       {isOpen && (
         <ClickAwayListener onClickAway={handleMenuClose}>
-          <Popper {...(popperProps || getPopperProps())}>
+          <Popper
+            {...(popperProps || getPopperProps(isOpen, anchorRef, label))}
+          >
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
@@ -77,11 +99,16 @@ const MenuView: FC<MenuViewProps> = ({
                     {menuListItems.map(({ label, href }, index) => (
                       <span key={`${label} ${index}`}>
                         {menuItemRenderer ? (
-                          menuItemRenderer(getMenuItemProps, label, href)
+                          menuItemRenderer(
+                            getMenuItemProps,
+                            isOpen,
+                            anchorRef,
+                            label
+                          )
                         ) : (
                           <span>
                             <Link href={href} color="inherit">
-                              <MenuItem {...getMenuItemProps()}>
+                              <MenuItem {...getMenuItemProps(label)}>
                                 <Typography>{label}</Typography>
                               </MenuItem>
                             </Link>

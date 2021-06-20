@@ -1,18 +1,21 @@
-import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
-import { RefObject, useRef } from "react";
-import menuReducer, { MenuActionTypes, MenuState } from "./menuReducer";
+import { RefObject } from "react";
+import { MenuActionTypes } from "./menuReducer";
 import { MenuItemProps, MenuToggleProps, PopperProps } from "./types";
 
 type MenuControls = {
-  label: string;
-  anchorRef: RefObject<HTMLButtonElement>;
-  isOpen: boolean;
-  menuListItems: Array<{ href?: string; label: string }>;
   handleMenuClose: (event: React.MouseEvent<EventTarget>) => void;
   handleMenuToggle: () => void;
-  getMenuToggleProps: () => MenuToggleProps;
-  getPopperProps: () => PopperProps;
-  getMenuItemProps: () => MenuItemProps;
+  getMenuToggleProps: (
+    isOpen: boolean,
+    anchorRef: RefObject<HTMLButtonElement>,
+    label: string
+  ) => MenuToggleProps;
+  getPopperProps: (
+    isOpen: boolean,
+    anchorRef: RefObject<HTMLButtonElement>,
+    label: string
+  ) => PopperProps;
+  getMenuItemProps: (label: string) => MenuItemProps;
 };
 
 /**
@@ -20,29 +23,7 @@ type MenuControls = {
  * @param reducer Defaults to using the menuReducer but user can specify their own reducer.
  * @returns The controls of the MenuView component.
  */
-export const useMenu = (reducer = menuReducer): MenuControls => {
-  const initialStates = {
-    isOpen: false,
-    anchorRef: useRef<HTMLButtonElement>(null),
-    label: "Github links menu",
-    menuListItems: [
-      {
-        label: "Check out frontend source code",
-        href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
-      },
-      {
-        label: "Check out APLAKKA logging microservice source code",
-        href: "https://github.com/MarkZhuVUW/APLAKKA-spring-boot-logging-microservice"
-      },
-      {
-        label: "Check out general app backend microservice source code",
-        href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
-      }
-    ]
-  };
-
-  const [menuState, dispatch] = useReducerOnSteroid(reducer, initialStates);
-  const { anchorRef, isOpen, label, menuListItems }: MenuState = menuState;
+export const useMenu = (dispatch: React.Dispatch<any>): MenuControls => {
   const handleMenuClose = (event: React.MouseEvent<EventTarget>) => {
     dispatch({ type: MenuActionTypes.MENU_CLOSE, payload: { event } });
   };
@@ -51,7 +32,11 @@ export const useMenu = (reducer = menuReducer): MenuControls => {
     dispatch({ type: MenuActionTypes.MENU_TOGGLE });
   };
 
-  const getMenuToggleProps = (): MenuToggleProps => ({
+  const getMenuToggleProps = (
+    isOpen: boolean,
+    anchorRef: RefObject<HTMLButtonElement>,
+    label: string
+  ): MenuToggleProps => ({
     ref: anchorRef,
     "aria-controls": isOpen ? "menu-list-grow" : undefined,
     "aria-haspopup": true,
@@ -60,7 +45,11 @@ export const useMenu = (reducer = menuReducer): MenuControls => {
     color: "inherit"
   });
 
-  const getPopperProps = (): PopperProps => ({
+  const getPopperProps = (
+    isOpen: boolean,
+    anchorRef: RefObject<HTMLButtonElement>,
+    label: string
+  ): PopperProps => ({
     open: isOpen,
     anchorEl: anchorRef.current,
     role: "dialog",
@@ -78,16 +67,12 @@ export const useMenu = (reducer = menuReducer): MenuControls => {
     "aria-label": `${label} popup`
   });
 
-  const getMenuItemProps = (): MenuItemProps => ({
+  const getMenuItemProps = (label: string): MenuItemProps => ({
     "aria-label": label,
     onClick: handleMenuClose,
     role: "menuitem"
   });
   return {
-    label,
-    anchorRef,
-    isOpen,
-    menuListItems,
     handleMenuClose,
     handleMenuToggle,
     getMenuToggleProps,

@@ -9,8 +9,7 @@ import {
   Toolbar,
   Theme,
   Tooltip,
-  Link,
-  MenuItem
+  Link
 } from "@material-ui/core";
 import {
   MuiTheme,
@@ -19,7 +18,7 @@ import {
 import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
-import { MenuView } from "@employer-tracker-ui/components/Shared";
+import { MenuView } from "@employer-tracker-ui/components";
 import { useHeader } from "./useHeader";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -91,11 +90,7 @@ const HeaderView: FC = () => {
         </Box>
 
         <Box>
-          <MenuView
-            menuItemRenderer={(getMenuItemProps, label) => (
-              <MenuItem {...getMenuItemProps()}>label</MenuItem>
-            )}
-          />
+          <MenuView />
         </Box>
       </Toolbar>
     </AppBar>

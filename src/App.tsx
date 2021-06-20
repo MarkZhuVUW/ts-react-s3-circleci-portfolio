@@ -1,9 +1,9 @@
 import {
   LocalStorageProvider,
-  ThemeProvider
-} from "@employer-tracker-ui/components/GlobalProviders";
+  ThemeProvider,
+  AuthView
+} from "@employer-tracker-ui/components";
 import React, { FC } from "react";
-import AuthView from "@employer-tracker-ui/components/Auth";
 
 const App: FC = () => (
   <LocalStorageProvider>

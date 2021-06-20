@@ -1,23 +1,20 @@
-import {
-  findByLabelText,
-  findByText,
-  render,
-  screen
-} from "@testing-library/react";
+import { findByLabelText, render, screen } from "@testing-library/react";
 import React, { useRef } from "react";
 import userEvent from "@testing-library/user-event";
 import MenuView from "./MenuView";
 import * as MenuHook from "./useMenu";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 import { renderHook } from "@testing-library/react-hooks";
+import * as ReducerHook from "@employer-tracker-ui/Utils/DebugUtils";
+import { MenuState } from "./menuReducer";
 /** ------------------- Mocks and spies----------------- */
 
 /** ------------------- Mocks and spies----------------- */
 
 describe("Menu module tests.", () => {
   const THEME_STATE_SPY = jest.spyOn(GlobalHooks, "useMuiTheme");
-  const MENU_STATE_SPY = jest.spyOn(MenuHook, "useMenu");
-
+  const MENU_HANDERS_SPY = jest.spyOn(MenuHook, "useMenu");
+  const REDUCER_STATE_SPY = jest.spyOn(ReducerHook, "useReducerOnSteroid");
   const LOCAL_STORAGE_STATE_SPY = jest.spyOn(GlobalHooks, "useLocalStorage");
   const toggleLightDarkTheme = jest.fn();
   const setMuiTheme = jest.fn();
@@ -66,11 +63,7 @@ describe("Menu module tests.", () => {
     setMuiTheme,
     toggleLightDarkTheme
   });
-  MENU_STATE_SPY.mockReturnValue({
-    label: "test menu toggle button label",
-    anchorRef,
-    isOpen: false,
-    menuListItems: [{ label: "test menu list item label" }],
+  MENU_HANDERS_SPY.mockReturnValue({
     handleMenuClose,
     handleMenuToggle,
     getMenuToggleProps,
@@ -101,11 +94,15 @@ describe("Menu module tests.", () => {
   });
 
   test("MenuView popper renders when isOpen is set to true", async () => {
-    MENU_STATE_SPY.mockReturnValueOnce({
+    const menuState: MenuState = {
       label: "test menu toggle button label",
       anchorRef,
       isOpen: true,
-      menuListItems: [{ label: "test menu list item label" }],
+      menuListItems: [{ label: "test menu list item label" }]
+    };
+
+    REDUCER_STATE_SPY.mockReturnValueOnce([menuState, () => ({})]);
+    MENU_HANDERS_SPY.mockReturnValueOnce({
       handleMenuClose,
       handleMenuToggle,
       getMenuToggleProps,
@@ -130,11 +127,15 @@ describe("Menu module tests.", () => {
   });
 
   test("MenuView popper relevant functions are called", async () => {
-    MENU_STATE_SPY.mockReturnValueOnce({
+    const menuState: MenuState = {
       label: "test menu toggle button label",
       anchorRef,
       isOpen: true,
-      menuListItems: [{ label: "test menu list item label" }],
+      menuListItems: [{ label: "test menu list item label" }]
+    };
+
+    REDUCER_STATE_SPY.mockReturnValueOnce([menuState, () => ({})]);
+    MENU_HANDERS_SPY.mockReturnValueOnce({
       handleMenuClose,
       handleMenuToggle,
       getMenuToggleProps,
