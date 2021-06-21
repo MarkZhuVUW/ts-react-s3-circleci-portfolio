@@ -16,20 +16,11 @@ export type MenuToggleProps = {
 };
 export type MenuItemRenderer = (
   getMenuItemProps: (label: string) => MenuItemProps,
-  isOpen: boolean,
-  anchorRef: RefObject<HTMLButtonElement>,
   label: string,
   href?: string
 ) => ReactNode;
 export type MenuToggleRenderer = (
-  getMenuToggleProps: (
-    isOpen: boolean,
-    anchorRef: RefObject<HTMLButtonElement>,
-    label: string
-  ) => MenuToggleProps,
-  isOpen: boolean,
-  anchorRef: RefObject<HTMLButtonElement>,
-  label: string
+  getMenuToggleProps: () => MenuToggleProps
 ) => ReactNode;
 
 export type PopperProps = {

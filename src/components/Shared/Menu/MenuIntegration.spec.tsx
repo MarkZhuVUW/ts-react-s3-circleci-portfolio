@@ -28,8 +28,8 @@ describe("Menu integration tests.", () => {
   test("MenuView menuToggleRenderer render prop works.", async () => {
     const { container } = render(
       <MenuView
-        menuToggleRenderer={(getMenuToggleProps, label) => (
-          <Button {...getMenuToggleProps()}>{label} 123</Button>
+        menuToggleRenderer={(getMenuToggleProps, isOpen) => (
+          <Button {...getMenuToggleProps(isOpen)}>{label} 123</Button>
         )}
       />
     );
@@ -57,7 +57,7 @@ describe("Menu integration tests.", () => {
     const { container } = render(
       <MenuView
         menuItemRenderer={(getMenuItemProps, label, href) => (
-          <MenuItem {...getMenuItemProps()}>
+          <MenuItem {...getMenuItemProps(label)}>
             {label} 123 {href}
           </MenuItem>
         )}

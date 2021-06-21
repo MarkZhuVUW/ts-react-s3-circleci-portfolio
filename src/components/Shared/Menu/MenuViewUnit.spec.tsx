@@ -2,10 +2,9 @@ import { findByLabelText, render, screen } from "@testing-library/react";
 import React, { useRef } from "react";
 import userEvent from "@testing-library/user-event";
 import MenuView from "./MenuView";
-import * as MenuHook from "./useMenu";
+import * as MenuHook from "./useMenuReducer";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 import { renderHook } from "@testing-library/react-hooks";
-import * as ReducerHook from "@employer-tracker-ui/Utils/DebugUtils";
 import { MenuState } from "./menuReducer";
 /** ------------------- Mocks and spies----------------- */
 
@@ -13,8 +12,7 @@ import { MenuState } from "./menuReducer";
 
 describe("Menu module tests.", () => {
   const THEME_STATE_SPY = jest.spyOn(GlobalHooks, "useMuiTheme");
-  const MENU_HANDERS_SPY = jest.spyOn(MenuHook, "useMenu");
-  const REDUCER_STATE_SPY = jest.spyOn(ReducerHook, "useReducerOnSteroid");
+  const MENU_HANDERS_SPY = jest.spyOn(MenuHook, "useMenuReducer");
   const LOCAL_STORAGE_STATE_SPY = jest.spyOn(GlobalHooks, "useLocalStorage");
   const toggleLightDarkTheme = jest.fn();
   const setMuiTheme = jest.fn();
@@ -64,6 +62,12 @@ describe("Menu module tests.", () => {
     toggleLightDarkTheme
   });
   MENU_HANDERS_SPY.mockReturnValue({
+    menuStates: {
+      label: "test menu toggle button label",
+      anchorRef,
+      isOpen: true,
+      menuListItems: [{ label: "test menu list item label" }]
+    },
     handleMenuClose,
     handleMenuToggle,
     getMenuToggleProps,
@@ -94,15 +98,15 @@ describe("Menu module tests.", () => {
   });
 
   test("MenuView popper renders when isOpen is set to true", async () => {
-    const menuState: MenuState = {
+    const menuStates: MenuState = {
       label: "test menu toggle button label",
       anchorRef,
       isOpen: true,
       menuListItems: [{ label: "test menu list item label" }]
     };
 
-    REDUCER_STATE_SPY.mockReturnValueOnce([menuState, () => ({})]);
     MENU_HANDERS_SPY.mockReturnValueOnce({
+      menuStates,
       handleMenuClose,
       handleMenuToggle,
       getMenuToggleProps,

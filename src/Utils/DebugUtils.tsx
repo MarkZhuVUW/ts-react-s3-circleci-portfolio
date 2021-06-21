@@ -78,14 +78,12 @@ const attachMiddlewares =
 
 /** A logger afterware which logs the action and the states after the action is done. */
 export const logger = (action: any, afterState: any) => {
+  if (!action || !afterState) {
+    return;
+  }
   console.log(afterState);
   console.log(action);
   console.log(
     "-------------------------------------------------------------------"
   );
-};
-
-/** A logger afterware which logs only the action type. */
-export const actionTypeLogger = (action: any) => {
-  console.log(action.type);
 };

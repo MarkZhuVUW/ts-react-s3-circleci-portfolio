@@ -28,6 +28,7 @@ const menuReducer = (prevStates: MenuState, action: MenuAction): MenuState => {
     case MenuActionTypes.MENU_CLOSE:
       return menuClose(prevStates, action);
     case MenuActionTypes.MENU_TOGGLE: {
+      console.log(menuToggle(prevStates));
       return menuToggle(prevStates);
     }
     default:
