@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 import {
   IconButton,
   Link,
@@ -30,24 +30,45 @@ type MenuViewProps = {
   menuToggleRenderer?: MenuToggleRenderer;
   popperProps?: PopperProps;
 };
+
 const MenuView: FC<MenuViewProps> = ({
   menuItemRenderer,
   menuToggleRenderer,
   popperProps
 }: MenuViewProps) => {
   // const classes = useStyles();
-  const {
-    menuStates,
-    handleMenuClose,
-    getMenuToggleProps,
-    getMenuItemProps,
-    getPopperProps
-  } = useMenuReducer();
+  const [
+    {
+      menuStates,
+      handleMenuClose,
+      getMenuToggleProps,
+      getMenuItemProps,
+      getPopperProps
+    }
+  ] = useMenuReducer({
+    isOpen: false,
+    anchorRef: useRef<HTMLButtonElement>(null),
+    label: "Github links menu",
+    menuListItems: [
+      {
+        label: "Check out frontend source code",
+        href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
+      },
+      {
+        label: "Check out APLAKKA logging microservice source code",
+        href: "https://github.com/MarkZhuVUW/APLAKKA-spring-boot-logging-microservice"
+      },
+      {
+        label: "Check out general app backend microservice source code",
+        href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
+      }
+    ]
+  });
   const { isOpen, label, menuListItems } = menuStates;
   return (
     <Box display="flex">
       {menuToggleRenderer ? (
-        menuToggleRenderer(getMenuToggleProps)
+        menuToggleRenderer(getMenuToggleProps, label)
       ) : (
         <Tooltip title={label}>
           <IconButton {...getMenuToggleProps()}>

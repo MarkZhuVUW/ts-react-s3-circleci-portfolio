@@ -1,6 +1,10 @@
 import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
-import { useRef } from "react";
-import menuReducer, { MenuActionTypes, MenuState } from "./menuReducer";
+import { Dispatch } from "react";
+import menuReducer, {
+  MenuAction,
+  MenuActionTypes,
+  MenuState
+} from "./menuReducer";
 import { MenuItemProps, MenuToggleProps, PopperProps } from "./types";
 
 type MenuControls = {
@@ -17,26 +21,11 @@ type MenuControls = {
  * @param reducer Defaults to using the menuReducer but user can specify their own reducer.
  * @returns The controls of the MenuView component.
  */
-export const useMenuReducer = (reducer = menuReducer): MenuControls => {
-  const [menuStates, dispatch] = useReducerOnSteroid(reducer, {
-    isOpen: false,
-    anchorRef: useRef<HTMLButtonElement>(null),
-    label: "Github links menu",
-    menuListItems: [
-      {
-        label: "Check out frontend source code",
-        href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
-      },
-      {
-        label: "Check out APLAKKA logging microservice source code",
-        href: "https://github.com/MarkZhuVUW/APLAKKA-spring-boot-logging-microservice"
-      },
-      {
-        label: "Check out general app backend microservice source code",
-        href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
-      }
-    ]
-  });
+export const useMenuReducer = (
+  initialState: MenuState,
+  reducer = menuReducer
+): [MenuControls, Dispatch<MenuAction>] => {
+  const [menuStates, dispatch] = useReducerOnSteroid(reducer, initialState);
   const { isOpen, menuListItems, anchorRef, label }: MenuState = menuStates;
   const handleMenuClose = (event: React.MouseEvent<EventTarget>) => {
     dispatch({ type: MenuActionTypes.MENU_CLOSE, payload: { event } });
@@ -78,12 +67,15 @@ export const useMenuReducer = (reducer = menuReducer): MenuControls => {
     onClick: handleMenuClose,
     role: "menuitem"
   });
-  return {
-    menuStates: { isOpen, menuListItems, anchorRef, label },
-    handleMenuClose,
-    handleMenuToggle,
-    getMenuToggleProps,
-    getPopperProps,
-    getMenuItemProps
-  };
+  return [
+    {
+      menuStates: { isOpen, menuListItems, anchorRef, label },
+      handleMenuClose,
+      handleMenuToggle,
+      getMenuToggleProps,
+      getPopperProps,
+      getMenuItemProps
+    },
+    dispatch
+  ];
 };

@@ -20,7 +20,8 @@ export type MenuItemRenderer = (
   href?: string
 ) => ReactNode;
 export type MenuToggleRenderer = (
-  getMenuToggleProps: () => MenuToggleProps
+  getMenuToggleProps: () => MenuToggleProps,
+  label: string
 ) => ReactNode;
 
 export type PopperProps = {
