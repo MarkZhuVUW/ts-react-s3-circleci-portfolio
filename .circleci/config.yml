@@ -27,25 +27,9 @@ jobs:
           paths:
             - build
 
-  # dev:
-  #   docker:
-  #     - image: node:14.16.1-alpine
-  #   steps:
-  #     - checkout
-  #     - restore_cache: # at this stage we are 100% sure the saved cache is up to date.
-  #         key: dependency-cache-{{ checksum "package.json" }}
-  #     - run: npm run build
-  #     - persist_to_workspace:
-  #         root: ./
-  #         paths:
-  #           - build
-
   deploy:
-    # docker:
-    #   # I use amazon linux which has the built in aws cli and all I need is to install docker in order to do my deployment.
-    #   - image: docker:latest
     docker:
-      - image: alpine/git:latest 
+      - image: alpine/git:latest
     steps:
       - checkout
       - run: ls
@@ -58,35 +42,13 @@ jobs:
             pip3 install awscli --upgrade
       - run:
           name: Deploy build files to aws s3 bucket.
-          command: | 
-            aws s3 sync ./build s3://react-frontend-circleci 
-      # - run: 
-      #     name: Host static react website
-      #     command: |
-      #       aws s3 website s3://react-frontend-circleci  --index-document index.html      
-            
-      # - setup_remote_docker:
-      #     version: 19.03.13
-      # - run:
-      #     name: Login to aws-ecr
-      #     command: aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com
-      # - run:
-      #     name: build and push image to the ecr repo
-      #     command: |
-      #       docker build -f Dockerfile.prod -t portfolio-frontend .
-      #       docker tag portfolio-frontend:latest 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
-      #       docker push 236766577229.dkr.ecr.ap-southeast-2.amazonaws.com/portfolio-frontend:latest
-      # - run:
-      #     name: trigger aws create deployment on AWS CodeDeploy with aws cli
-      #     command: aws deploy create-deployment --cli-input-json file://scripts/create-deployment.json --region ap-southeast-2
+          command: |
+            aws s3 sync ./build s3://react-frontend-circleci
 
 workflows:
   test-build-deploy:
     jobs:
       - testnbuild
-      # - dev:
-      #     requires:
-      #       - testnbuild
       - deploy:
           requires:
             - testnbuild

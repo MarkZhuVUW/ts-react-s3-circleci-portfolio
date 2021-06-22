@@ -1,8 +1,6 @@
 import path from "path";
-import webpack from "webpack";
+import webpack, { EnvironmentPlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import ESLintPlugin from "eslint-webpack-plugin";
 
 const config: webpack.Configuration = {
   mode: "production",
@@ -35,17 +33,18 @@ const config: webpack.Configuration = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"]
+    extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "@employer-tracker-ui": path.resolve(__dirname, "src/")
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html"
     }),
-    new ForkTsCheckerWebpackPlugin({
-      async: false
-    }),
-    new ESLintPlugin({
-      extensions: ["js", "jsx", "ts", "tsx"]
+    new EnvironmentPlugin({
+      NODE_ENV: "production", // Set process.env.NODE_ENV to be 'development'
+      DEBUG: false
     })
   ]
 };

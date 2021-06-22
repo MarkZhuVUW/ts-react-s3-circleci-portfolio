@@ -1,5 +1,5 @@
 module.exports = {
-  roots: ["<rootDir>/tests"],
+  roots: ["<rootDir>/src"],
 
   // Jest transformations -- this adds support for TypeScript
   // using ts-jest
@@ -16,7 +16,10 @@ module.exports = {
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testRegex: "((\\.|/*.)(spec))\\.tsx?$",
   collectCoverage: true,
-
+  moduleNameMapper: {
+    "@employer-tracker-ui/(.*)$": "<rootDir>/src/$1"
+  },
+  moduleDirectories: ["node_modules", "src"],
   testResultsProcessor: "jest-junit",
   reporters: ["default", "jest-junit"]
 };
