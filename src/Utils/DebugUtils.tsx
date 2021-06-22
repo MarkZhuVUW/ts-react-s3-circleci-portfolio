@@ -32,8 +32,8 @@ export const useReducerOnSteroid = <R extends Reducer<any, any>>(
      * Curried function provides a way for us to do something like this:
      * In here I am "Attach"-ing middleware and afterware callbacks and I am "apply"-ing those callbacks in appropriate places...
      */
-    const applyAfterwares = attachAfterwares(afterwareCbs);
     const applyMiddlewares = attachMiddlewares(middlewareCbs);
+    const applyAfterwares = attachAfterwares(afterwareCbs);
 
     /**
      * A closure that runs all the middlewares after dispatch.
@@ -90,7 +90,7 @@ const attachMiddlewares =
 export const logger = <R extends Reducer<any, any>>(
   action: ReducerAction<R>,
   afterState: ReducerState<R>
-) => {
+): void => {
   if (!action || !afterState) {
     return;
   }
