@@ -17,7 +17,7 @@ type MenuControls = {
 };
 
 /**
- * A hook that handles states of the MenuView component.
+ * A hook that handles states and functions of the MenuView component.
  * @param reducer Defaults to using the menuReducer but user can specify their own reducer.
  * @returns The controls of the MenuView component.
  */
@@ -27,13 +27,10 @@ export const useMenuReducer = (
 ): [MenuControls, Dispatch<MenuAction>] => {
   const [menuStates, dispatch] = useReducerOnSteroid(reducer, initialState);
   const { isOpen, menuListItems, anchorRef, label }: MenuState = menuStates;
-  const handleMenuClose = (event: React.MouseEvent<EventTarget>) => {
+  const handleMenuClose = (event: React.MouseEvent<EventTarget>) =>
     dispatch({ type: MenuActionTypes.MENU_CLOSE, payload: { event } });
-  };
-
-  const handleMenuToggle = () => {
+  const handleMenuToggle = () =>
     dispatch({ type: MenuActionTypes.MENU_TOGGLE });
-  };
 
   const getMenuToggleProps = (): MenuToggleProps => ({
     ref: anchorRef,

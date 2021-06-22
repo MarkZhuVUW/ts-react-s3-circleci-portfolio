@@ -23,33 +23,33 @@ export type MenuState = {
  * @param action MenuAction.
  * @returns MenuState
  */
-const menuReducer = (prevStates: MenuState, action: MenuAction): MenuState => {
+const menuReducer = (prevState: MenuState, action: MenuAction): MenuState => {
   switch (action.type) {
     case MenuActionTypes.MENU_CLOSE:
-      return menuClose(prevStates, action);
+      return menuClose(prevState, action);
     case MenuActionTypes.MENU_TOGGLE: {
-      return menuToggle(prevStates);
+      return menuToggle(prevState);
     }
     default:
       throw new Error(`Unhandled menu action type: ${action.type}`);
   }
 };
 
-const menuClose = (prevStates: MenuState, action: MenuAction) => {
+const menuClose = (prevState: MenuState, action: MenuAction) => {
   if (
-    prevStates.anchorRef.current &&
-    prevStates.anchorRef.current.contains(
+    prevState.anchorRef.current &&
+    prevState.anchorRef.current.contains(
       action.payload?.event.target as HTMLElement
     )
   ) {
-    return prevStates;
+    return prevState;
   }
-  return { ...prevStates, isOpen: false };
+  return { ...prevState, isOpen: false };
 };
 
-const menuToggle = (prevStates: MenuState) => ({
-  ...prevStates,
-  isOpen: !prevStates.isOpen
+const menuToggle = (prevState: MenuState) => ({
+  ...prevState,
+  isOpen: !prevState.isOpen
 });
 
 export default menuReducer;
