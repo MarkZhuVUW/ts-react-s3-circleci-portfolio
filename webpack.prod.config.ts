@@ -1,6 +1,7 @@
 import path from "path";
 import webpack, { EnvironmentPlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import WorkboxPlugin from "workbox-webpack-plugin";
 
 const config: webpack.Configuration = {
   mode: "production",
@@ -40,11 +41,18 @@ const config: webpack.Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./public/index.html",
+      title: "Employer Tracker PWA"
     }),
     new EnvironmentPlugin({
-      NODE_ENV: "production", // Set process.env.NODE_ENV to be 'development'
+      NODE_ENV: "production", // Set process.env.NODE_ENV to be 'production'
       DEBUG: false
+    }),
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true
     })
   ]
 };

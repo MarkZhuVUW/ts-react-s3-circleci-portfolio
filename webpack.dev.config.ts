@@ -43,7 +43,8 @@ const config: Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./public/index.html",
+      title: "Employer Tracker PWA"
     }),
     new ForkTsCheckerWebpackPlugin({
       async: true // can set it to false to make webpack wait for typechecking to finish.
@@ -53,7 +54,7 @@ const config: Configuration = {
     }),
     new EnvironmentPlugin({
       NODE_ENV: "development", // Set process.env.NODE_ENV to be 'development'
-      DEBUG: false
+      DEBUG: true
     })
   ],
   devtool: "source-map",
