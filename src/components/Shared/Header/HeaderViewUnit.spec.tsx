@@ -34,9 +34,12 @@ describe("Header module tests.", () => {
     setMuiTheme,
     toggleLightDarkTheme
   });
-  afterAll(() => {
-    jest.clearAllMocks();
-  });
+
+
+
+
+
+  
   test("HeaderView renders correctly when theme is set to dark mode.", async () => {
     const { container } = render(<HeaderView />);
     expect(container).toBeTruthy();

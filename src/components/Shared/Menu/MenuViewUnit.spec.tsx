@@ -79,9 +79,7 @@ describe("Menu module tests.", () => {
     },
     dispatch
   ]);
-  afterAll(() => {
-    jest.clearAllMocks();
-  });
+
   test("MenuView renders correctly.", async () => {
     const { container } = render(<MenuView />);
     expect(container).toBeTruthy();
