@@ -60,13 +60,6 @@ const config: Configuration = {
     new EnvironmentPlugin({
       NODE_ENV: "development", // Set process.env.NODE_ENV to be 'development'
       DEBUG: true
-    }),
-    new WorkboxPlugin.GenerateSW({
-      // these options encourage the ServiceWorkers to get in there fast
-      // and not allow any straggling "old" SWs to hang around
-      clientsClaim: true,
-      skipWaiting: true,
-      maximumFileSizeToCacheInBytes: 999999999999999
     })
   ],
   devtool: "source-map",

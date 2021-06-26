@@ -12,9 +12,9 @@ a website frontend built with material ui, typescript, react and webpack with Je
 
 ### Code reuse
 
-Website deployed to: http://react-frontend-circleci.s3-website-ap-southeast-2.amazonaws.com
+Website deployed to an S3 bucket with Cloudfront as CDN: https://d2wep7c2n991he.cloudfront.net/
 
-## How to install dev environment and develop
+## How to install dev environment and contribute
 
 # Fork it (feel free to submit pull requests :) )
 
@@ -36,7 +36,7 @@ In the project directory, you can run:
 
 ## FAQ
 
-### Q. Husky pre-commit hooks are not running?
+### Q. Husky pre-commit hooks are not working?
 
 try:
 
