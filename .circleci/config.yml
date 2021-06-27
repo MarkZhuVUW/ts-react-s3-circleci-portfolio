@@ -52,9 +52,7 @@ workflows:
           filters:
             branches:
               ignore:
-                - master
-  deploy:
-    jobs:
+                - asdfasdfasdfsdabawerqwe # For some reason circle ci pipelines are not running on feature branches any more. This is to try to get it running on feature branches.
       - deploy:
           requires:
             - testnbuild
