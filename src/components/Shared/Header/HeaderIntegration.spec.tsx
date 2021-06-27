@@ -38,11 +38,6 @@ describe("HeaderView integtation tests.", () => {
       { exact: true }
     );
     await findByLabelText(container, "Contact the developer", { exact: true });
-    await findByText(
-      container,
-      "Source codes and contact can be found on the right.",
-      { exact: true }
-    );
   });
 
   test("HeaderView switch toggles theme.", async () => {
