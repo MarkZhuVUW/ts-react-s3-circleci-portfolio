@@ -1,0 +1,12 @@
+{
+  "applicationName": "AppECS-portfolio-app-hostService",
+  "deploymentGroupName": "DgpECS-portfolio-app-hostService",
+  "revision": {
+    "revisionType": "S3",
+    "s3Location": {
+      "bucket": "blue-green-portfolio-ecs-deployment-bucket",
+      "key": "codeDeployAppSpec.yml",
+      "bundleType": "YAML"
+    }
+  }
+}

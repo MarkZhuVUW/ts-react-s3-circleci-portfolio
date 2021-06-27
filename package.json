@@ -1,16 +1,18 @@
 {
-  "name": "portfolio",
+  "name": "employer-tracker",
   "version": "0.0.1",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-router": "^5.2.0"
   },
   "scripts": {
-    "start": "webpack serve --config webpack.dev.config.ts",
+    "serve": "webpack serve --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",
     "test": "jest --ci --reporters=default --reporters=jest-junit",
+    "single-test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint --fix . && prettier --write ."
   },
@@ -27,13 +29,16 @@
     "@babel/runtime": "^7.13.10",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^13.1.2",
+    "@testing-library/react-hooks": "^7.0.0",
+    "@testing-library/user-event": "^13.1.9",
     "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
     "@types/jest": "^26.0.22",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
+    "@types/react-test-renderer": "^17.0.1",
     "@types/webpack": "^5.28.0",
     "@types/webpack-dev-server": "^3.11.3",
+    "@types/workbox-webpack-plugin": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "babel-jest": "^26.6.3",
@@ -57,6 +62,7 @@
     "typescript": "^4.2.4",
     "webpack": "^5.31.0",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "workbox-webpack-plugin": "^6.1.5"
   }
 }

@@ -1,8 +1,7 @@
 import path from "path";
-import webpack from "webpack";
+import webpack, { EnvironmentPlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import ESLintPlugin from "eslint-webpack-plugin";
+import WorkboxPlugin from "workbox-webpack-plugin";
 
 const config: webpack.Configuration = {
   mode: "production",
@@ -35,17 +34,25 @@ const config: webpack.Configuration = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"]
+    extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "@employer-tracker-ui": path.resolve(__dirname, "src/")
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./public/index.html",
+      title: "Employer Tracker PWA"
     }),
-    new ForkTsCheckerWebpackPlugin({
-      async: false
+    new EnvironmentPlugin({
+      NODE_ENV: "production", // Set process.env.NODE_ENV to be 'production'
+      DEBUG: false
     }),
-    new ESLintPlugin({
-      extensions: ["js", "jsx", "ts", "tsx"]
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true
     })
   ]
 };
