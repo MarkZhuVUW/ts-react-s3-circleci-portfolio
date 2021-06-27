@@ -11,19 +11,21 @@ import {
   MenuItem,
   Typography,
   Box,
-  PopperProps
+  PopperProps,
+  makeStyles,
+  createStyles
 } from "@material-ui/core";
 import { useMenuReducer } from "./useMenuReducer";
 import GithubIcon from "@material-ui/icons/GitHub";
 import { MenuItemRenderer, MenuToggleRenderer } from "./types";
 
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     paper: {
-//       marginRight: theme.spacing(2)
-//     }
-//   })
-// );
+const useStyles = makeStyles(() =>
+  createStyles({
+    icon: {
+      height: "100%"
+    }
+  })
+);
 
 type MenuViewProps = {
   menuItemRenderer?: MenuItemRenderer;
@@ -36,7 +38,7 @@ const MenuView: FC<MenuViewProps> = ({
   menuToggleRenderer,
   popperProps
 }: MenuViewProps) => {
-  // const classes = useStyles();
+  const classes = useStyles();
   const [
     {
       menuStates,
@@ -72,7 +74,7 @@ const MenuView: FC<MenuViewProps> = ({
       ) : (
         <Tooltip title={label}>
           <IconButton {...getMenuToggleProps()}>
-            <GithubIcon fontSize="large" />
+            <GithubIcon className={classes.icon} fontSize="large" />
           </IconButton>
         </Tooltip>
       )}

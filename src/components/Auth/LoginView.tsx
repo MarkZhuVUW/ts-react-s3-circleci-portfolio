@@ -21,6 +21,7 @@ import { HeaderView } from "@employer-tracker-ui/components/Shared";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: { height: "100vh" },
     paper: {
       display: "flex",
       flexDirection: "column",
@@ -38,6 +39,12 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingBottom: theme.spacing(4),
         paddingLeft: theme.spacing(5),
         paddingRight: theme.spacing(5)
+      },
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2)
       }
     },
     avatar: {
@@ -51,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
     submit: {
       margin: theme.spacing(3, 0, 2)
     },
-    root: {},
+
     headerText: {
       marginLeft: "20%"
     },
@@ -59,10 +66,12 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "flex-start"
     },
     container: {
-      height: "71vh"
+      [theme.breakpoints.down("sm")]: {
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1)
+      }
     },
     appBar: {
-      height: "6vh",
       display: "flex",
       justifyContent: "center"
     }
