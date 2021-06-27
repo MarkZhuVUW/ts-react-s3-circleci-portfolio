@@ -46,7 +46,13 @@ jobs:
             aws s3 sync ./build s3://react-frontend-circleci --delete
 
 workflows:
-  test-build:
+  test-build-deploy:
     jobs:
       - testnbuild
-      - deploy
+      - deploy:
+          requires:
+            - testnbuild
+          filters:
+            branches:
+              only:
+                - master
