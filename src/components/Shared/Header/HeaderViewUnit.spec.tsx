@@ -2,7 +2,7 @@ import { findByLabelText, findByText, render } from "@testing-library/react";
 import React from "react";
 import userEvent from "@testing-library/user-event";
 import HeaderView from "./HeaderView";
-import * as HeaderHook from "./useHeader";
+import * as HeaderHook from "./useHeaderReducer";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 
 /** ------------------- Mocks and spies----------------- */
@@ -10,7 +10,7 @@ import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 /** ------------------- Mocks and spies----------------- */
 
 describe("Header module tests.", () => {
-  const HEADER_STATE_SPY = jest.spyOn(HeaderHook, "useHeader");
+  const HEADER_STATE_SPY = jest.spyOn(HeaderHook, "useHeaderReducer");
   const THEME_STATE_SPY = jest.spyOn(GlobalHooks, "useMuiTheme");
   const LOCAL_STORAGE_STATE_SPY = jest.spyOn(GlobalHooks, "useLocalStorage");
   const handleThemeSwitchClick = jest.fn();
@@ -35,11 +35,6 @@ describe("Header module tests.", () => {
     toggleLightDarkTheme
   });
 
-
-
-
-
-  
   test("HeaderView renders correctly when theme is set to dark mode.", async () => {
     const { container } = render(<HeaderView />);
     expect(container).toBeTruthy();

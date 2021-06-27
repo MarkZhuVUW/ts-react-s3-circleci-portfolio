@@ -2,7 +2,7 @@ import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
 import headerReducer from "./headerReducer";
-import { useHeader } from "./useHeader";
+import { useHeaderReducer } from "./useHeaderReducer";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 
 const THEME_STATE_SPY = jest.spyOn(GlobalHooks, "useMuiTheme");
@@ -25,10 +25,10 @@ THEME_STATE_SPY.mockReturnValue({
   setMuiTheme,
   toggleLightDarkTheme
 });
-describe("useHeader hook tests.", () => {
+describe("useHeaderReducer hook tests.", () => {
   test("handleThemeSwitchClick calls toggleLightDarkTheme function in ThemeProvider", async () => {
-    const { handleThemeSwitchClick } = renderHook(() => useHeader()).result
-      .current;
+    const { handleThemeSwitchClick } = renderHook(() => useHeaderReducer())
+      .result.current;
     act(() => {
       handleThemeSwitchClick();
     });

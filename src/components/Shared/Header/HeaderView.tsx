@@ -9,7 +9,10 @@ import {
   Toolbar,
   Theme,
   Tooltip,
-  Link
+  Link,
+  Typography,
+  Grid,
+  Hidden
 } from "@material-ui/core";
 import {
   MuiTheme,
@@ -19,7 +22,7 @@ import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
 import { MenuView } from "@employer-tracker-ui/components";
-import { useHeader } from "./useHeader";
+import { useHeaderReducer } from "./useHeaderReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,10 +36,12 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "flex-start"
     },
     appBar: {
-      height: "6vh",
       display: "flex",
       justifyContent: "center",
       position: "relative"
+    },
+    icon: {
+      height: "100%"
     }
   })
 );
@@ -44,26 +49,60 @@ const useStyles = makeStyles((theme: Theme) =>
 const HeaderView: FC = () => {
   const classes = useStyles();
   const { theme } = useMuiTheme();
-  const { handleThemeSwitchClick } = useHeader();
+  const { handleThemeSwitchClick } = useHeaderReducer();
 
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
         <Box flexWrap="nowrap" flexGrow="1">
-          <Slide direction="right" in={true} timeout={500}>
-            <Box
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              className={classes.headerText}
-            >
-              <span>Source codes and contact can be found on the right.</span>
-              {/* For decorative icons, set aira-hidden to true */}
-              <ArrowForwardIcon aria-hidden="true" fontSize="large" />
-              <ArrowForwardIcon aria-hidden="true" fontSize="large" />
-              <ArrowForwardIcon aria-hidden="true" fontSize="large" />
-            </Box>
-          </Slide>
+          {/* For decorative icons, set aira-hidden to true */}
+
+          <Hidden smUp>
+            <Slide direction="right" in={true} timeout={500}>
+              <Box
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                className={classes.headerText}
+              >
+                <Typography>Code</Typography>
+                <ArrowForwardIcon
+                  aria-hidden="true"
+                  fontSize="large"
+                  className={classes.icon}
+                />
+              </Box>
+            </Slide>
+          </Hidden>
+          <Hidden smDown>
+            <Slide direction="right" in={true} timeout={500}>
+              <Box
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                className={classes.headerText}
+              >
+                <Typography>
+                  Source codes and contact can be found on the right.
+                </Typography>
+                <ArrowForwardIcon
+                  aria-hidden="true"
+                  fontSize="large"
+                  className={classes.icon}
+                />
+                <ArrowForwardIcon
+                  aria-hidden="true"
+                  fontSize="large"
+                  className={classes.icon}
+                />
+                <ArrowForwardIcon
+                  aria-hidden="true"
+                  fontSize="large"
+                  className={classes.icon}
+                />
+              </Box>
+            </Slide>
+          </Hidden>
         </Box>
         <Box>
           <Tooltip title={`Toggle light/dark mode - Currently ${theme} mode.`}>
@@ -83,15 +122,15 @@ const HeaderView: FC = () => {
               color="inherit"
             >
               <IconButton aria-label="Contact the developer" color="inherit">
-                <EmailIcon fontSize="large" />
+                <EmailIcon className={classes.icon} fontSize="large" />
               </IconButton>
             </Link>
           </Tooltip>
         </Box>
 
-        <Box>
+        <Grid>
           <MenuView />
-        </Box>
+        </Grid>
       </Toolbar>
     </AppBar>
   );

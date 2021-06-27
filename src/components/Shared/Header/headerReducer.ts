@@ -1,30 +1,24 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Reducer } from "react";
 
-export enum HeaderActionTypes {
-  BLA = "BLA"
-}
+export enum HeaderActionTypes {}
 
 export type HeaderAction = {
   type: string;
   payload?: {};
 };
-export type HeaderState = {
-  bla: boolean;
-};
+export type HeaderState = {};
 /**
- * The default reducer for the useHeader hook.
+ * The default reducer for the useHeaderReducer hook.
  * @param prevStates Previous MenuState.
  * @param action MenuAction.
  * @returns MenuState
  */
 const headerReducer: Reducer<HeaderState, HeaderAction> = (
-  prevStates: HeaderState,
+  prevState: HeaderState,
   action: HeaderAction
 ): HeaderState => {
   switch (action.type) {
-    case HeaderActionTypes.BLA:
-      return { ...prevStates, bla: !prevStates.bla };
     default:
       throw new Error(`Unhandled header action type: ${action.type}`);
   }

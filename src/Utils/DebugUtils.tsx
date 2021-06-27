@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Dispatch,
@@ -16,15 +15,16 @@ import {
  * @param reducer
  * @param initialState
  */
-export const useReducerOnSteroid = (
-  reducer: Reducer<any, any>,
-  initialState: any,
-  middlewareCbs: Array<(action: any, state: any) => void> = [],
-  afterwareCbs: Array<(action: any, state: any) => void> = [logger]
-): [
-  ReducerState<Reducer<any, any>>,
-  Dispatch<ReducerAction<Reducer<any, any>>>
-] => {
+export const useReducerOnSteroid = <R extends Reducer<any, any>>(
+  reducer: R,
+  initialState: ReducerState<R>,
+  middlewareCbs: Array<
+    (action: ReducerAction<R>, state: ReducerState<R>) => void
+  > = [],
+  afterwareCbs: Array<
+    (action: ReducerAction<R>, state: ReducerState<R>) => void
+  > = [logger]
+): [ReducerState<R>, Dispatch<ReducerAction<R>>] => {
   if (process.env.NODE_ENV === "development") {
     const ref = useRef(null);
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -32,14 +32,16 @@ export const useReducerOnSteroid = (
      * Curried function provides a way for us to do something like this:
      * In here I am "Attach"-ing middleware and afterware callbacks and I am "apply"-ing those callbacks in appropriate places...
      */
-    const applyAfterwares = attachAfterwares(afterwareCbs);
     const applyMiddlewares = attachMiddlewares(middlewareCbs);
+    const applyAfterwares = attachAfterwares(afterwareCbs);
 
     /**
      * A closure that runs all the middlewares after dispatch.
      * @param action
      */
-    const dispatchWithMiddlewares = (action: any) => {
+    const dispatchWithMiddlewares: Dispatch<ReducerAction<R>> = (
+      action: ReducerAction<R>
+    ) => {
       // Apply middleware callbacks here.
       applyMiddlewares(action, state);
       dispatch(action);
@@ -48,7 +50,7 @@ export const useReducerOnSteroid = (
 
     // Apply afterwares here by listening to action change.
     useEffect(() => {
-      applyAfterwares(state, ref.current);
+      applyAfterwares(ref.current as ReducerAction<R>, state);
     }, [ref.current]);
     return [state, dispatchWithMiddlewares];
   }
@@ -61,8 +63,12 @@ export const useReducerOnSteroid = (
  * @param afterwareCbs Array of afterware callbacks.
  */
 const attachAfterwares =
-  (afterwareCbs: Array<(action: any, state: any) => void>) =>
-  (action: any, state: any) => {
+  <R extends Reducer<any, any>>(
+    afterwareCbs: Array<
+      (action: ReducerAction<R>, state: ReducerState<R>) => void
+    >
+  ) =>
+  (action: ReducerAction<R>, state: ReducerState<R>) => {
     afterwareCbs.forEach((afterwareCb) => afterwareCb(action, state));
   };
 
@@ -71,13 +77,20 @@ const attachAfterwares =
  * @param middlewareCbs Array of middleware callbacks.
  */
 const attachMiddlewares =
-  (middlewareCbs: Array<(action: any, state: any) => void>) =>
-  (action: any, state: any) => {
+  <R extends Reducer<any, any>>(
+    middlewareCbs: Array<
+      (action: ReducerAction<R>, state: ReducerState<R>) => void
+    >
+  ) =>
+  (action: ReducerAction<R>, state: ReducerState<R>) => {
     middlewareCbs.forEach((middlewareCb) => middlewareCb(action, state));
   };
 
 /** A logger afterware which logs the action and the states after the action is done. */
-export const logger = (action: any, afterState: any) => {
+export const logger = <R extends Reducer<any, any>>(
+  action: ReducerAction<R>,
+  afterState: ReducerState<R>
+): void => {
   if (!action || !afterState) {
     return;
   }

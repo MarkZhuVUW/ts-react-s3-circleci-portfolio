@@ -7,14 +7,19 @@ import {
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
+import WorkboxPlugin from "workbox-webpack-plugin";
+
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
 const config: Configuration = {
   mode: "development",
   output: {
-    filename: "bundle.js",
-    publicPath: "/"
+    publicPath: "/",
+    // used the [name] token to allow Webpack to name the files if our app is code split.
+    // We use [contenthash] token so that the bundle file name changes when its content changes,
+    // which busts the browser cache.
+    filename: "[name].[contenthash].js"
   },
   entry: "./src/index.tsx",
   module: {
@@ -43,7 +48,8 @@ const config: Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./public/index.html",
+      title: "Employer Tracker PWA"
     }),
     new ForkTsCheckerWebpackPlugin({
       async: true // can set it to false to make webpack wait for typechecking to finish.
@@ -53,7 +59,7 @@ const config: Configuration = {
     }),
     new EnvironmentPlugin({
       NODE_ENV: "development", // Set process.env.NODE_ENV to be 'development'
-      DEBUG: false
+      DEBUG: true
     })
   ],
   devtool: "source-map",

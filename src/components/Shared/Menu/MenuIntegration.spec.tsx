@@ -12,6 +12,7 @@ import {
 import React from "react";
 import { Button, MenuItem } from "@material-ui/core";
 import userEvent from "@testing-library/user-event";
+import { MenuToggleProps, MenuItemProps } from "./types";
 describe("Menu integration tests.", () => {
   test("Menu renders correctly with providers", async () => {
     const { container } = render(
@@ -28,9 +29,10 @@ describe("Menu integration tests.", () => {
   test("MenuView menuToggleRenderer render prop works.", async () => {
     const { container } = render(
       <MenuView
-        menuToggleRenderer={(getMenuToggleProps, label) => (
-          <Button {...getMenuToggleProps()}>{label} 123</Button>
-        )}
+        menuToggleRenderer={(
+          getMenuToggleProps: () => MenuToggleProps,
+          label: string
+        ) => <Button {...getMenuToggleProps()}>{label} 123</Button>}
       />
     );
     expect(container).toBeTruthy();
@@ -45,9 +47,7 @@ describe("Menu integration tests.", () => {
     });
     await screen.findByLabelText("Github links menu popup");
     await screen.findByText("Check out frontend source code");
-    await screen.findByText(
-      "Check out APLAKKA logging microservice source code"
-    );
+    await screen.findByText("Check out KAFKA logging microservice source code");
     await screen.findByText(
       "Check out general app backend microservice source code"
     );
@@ -56,7 +56,11 @@ describe("Menu integration tests.", () => {
   test("MenuView menuItemRenderer render prop works.", async () => {
     const { container } = render(
       <MenuView
-        menuItemRenderer={(getMenuItemProps, label, href) => (
+        menuItemRenderer={(
+          getMenuItemProps: (label: string) => MenuItemProps,
+          label: string,
+          href?: string
+        ) => (
           <MenuItem {...getMenuItemProps(label)}>
             {label} 123 {href}
           </MenuItem>
@@ -81,7 +85,7 @@ describe("Menu integration tests.", () => {
     );
     await findByText(
       container,
-      "Check out APLAKKA logging microservice source code 123 https://github.com/MarkZhuVUW/APLAKKA-spring-boot-logging-microservice",
+      "Check out KAFKA logging microservice source code 123 https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice",
       {
         exact: true
       }
