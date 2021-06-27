@@ -49,11 +49,6 @@ describe("Header module tests.", () => {
     expect(handleThemeSwitchClick).toHaveBeenCalledTimes(1);
 
     await findByLabelText(container, "Contact the developer", { exact: true });
-    await findByText(
-      container,
-      "Source codes and contact can be found on the right.",
-      { exact: true }
-    );
     await findByLabelText(container, "Github links menu", { exact: true });
   });
 
@@ -75,10 +70,5 @@ describe("Header module tests.", () => {
     );
     expect(handleThemeSwitchClick).toHaveBeenCalledTimes(2);
     await findByLabelText(container, "Contact the developer", { exact: true });
-    await findByText(
-      container,
-      "Source codes and contact can be found on the right.",
-      { exact: true }
-    );
   });
 });
