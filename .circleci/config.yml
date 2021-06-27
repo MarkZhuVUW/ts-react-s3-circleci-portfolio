@@ -48,7 +48,11 @@ jobs:
 workflows:
   test-build-deploy:
     jobs:
-      - testnbuild
+      - testnbuild:
+          filters:
+            branches:
+              ignore:
+                - /.*/
       - deploy:
           requires:
             - testnbuild
