@@ -51,8 +51,5 @@ workflows:
       - testnbuild
   deploy:
     jobs:
-      - deploy:
-          filters:
-            branches:
-              only:
-                - master
+      - deploy
+
