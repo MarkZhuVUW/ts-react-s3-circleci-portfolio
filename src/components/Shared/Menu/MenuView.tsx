@@ -11,13 +11,12 @@ import {
   MenuItem,
   Typography,
   Box,
-  PopperProps,
   makeStyles,
   createStyles
 } from "@material-ui/core";
 import { useMenuReducer } from "./useMenuReducer";
 import GithubIcon from "@material-ui/icons/GitHub";
-import { MenuItemRenderer, MenuToggleRenderer } from "./types";
+import { MenuItemRenderer, MenuToggleRenderer, PopperProps } from "./types";
 
 const useStyles = makeStyles(() =>
   createStyles({

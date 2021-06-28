@@ -47,14 +47,19 @@ export const useMenuReducer = (
     role: "dialog",
     transition: true,
     disablePortal: true,
+    placement: "bottom",
     modifiers: {
       flip: {
         enabled: true
       },
       preventOverflow: {
         enabled: true,
-        boundariesElement: "viewport"
+        boundariesElement: "scrollParent"
       }
+    },
+    arrow: {
+      enabled: true,
+      element: anchorRef.current
     },
     "aria-label": `${label} popup`
   });

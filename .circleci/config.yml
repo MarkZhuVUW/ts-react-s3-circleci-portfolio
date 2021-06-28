@@ -44,8 +44,8 @@ jobs:
           name: Remove existing build and deploy new build to aws s3 bucket.
           # No cache service-worker.js and index.html. Other files should be cached indefinitely.
           command: |
-            aws s3 sync ./build s3://markz-employer-tracker.net --exclude index.html --exclude service-worker.js --delete 
-            aws s3 sync --cache-control 'no-cache' ./build s3://markz-employer-tracker.net
+            aws s3 sync ./build s3://www.markz-employer-tracker.net --exclude index.html --exclude service-worker.js --delete 
+            aws s3 sync ./build s3://www.markz-employer-tracker.net --cache-control 'no-cache'
 
 workflows:
   test-build-deploy:

@@ -1,3 +1,4 @@
+import { PopperPlacementType } from "@material-ui/core";
 import { ReactNode, RefObject } from "react";
 
 export type MenuItemProps = {
@@ -26,6 +27,7 @@ export type MenuToggleRenderer = (
 
 export type PopperProps = {
   open: boolean;
+  placement?: PopperPlacementType | undefined;
   anchorEl: HTMLButtonElement | null;
   role: "dialog";
   transition: boolean;
@@ -36,8 +38,12 @@ export type PopperProps = {
     };
     preventOverflow: {
       enabled: boolean;
-      boundariesElement: "viewport";
+      boundariesElement: string;
     };
+  };
+  arrow: {
+    enabled: boolean;
+    element: HTMLButtonElement | null;
   };
   "aria-label": string;
 };
