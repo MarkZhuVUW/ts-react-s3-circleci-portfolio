@@ -43,15 +43,19 @@ jobs:
       - run:
           name: Deploy build files to aws s3 bucket.
           command: |
-            aws s3 sync --delete ./build s3://react-frontend-circleci 
+            aws s3 sync ./build s3://react-frontend-circleci --delete
 
 workflows:
-  test-build-deploy:
+  test-build:
     jobs:
-      - testnbuild
+      - testnbuild:
+          filters:
+            branches:
+              ignore:
+                - master
+  deploy:
+    jobs:
       - deploy:
-          requires:
-            - testnbuild
           filters:
             branches:
               only:
