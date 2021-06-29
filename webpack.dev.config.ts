@@ -49,7 +49,8 @@ const config: Configuration = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
-      title: "Employer Tracker PWA"
+      title: "Employer Tracker PWA",
+      favicon: "./public/favicon.ico"
     }),
     new ForkTsCheckerWebpackPlugin({
       async: true // can set it to false to make webpack wait for typechecking to finish.
