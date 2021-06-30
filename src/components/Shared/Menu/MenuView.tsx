@@ -3,9 +3,7 @@ import {
   IconButton,
   Link,
   Tooltip,
-  Grow,
-  Popper,
-  Paper,
+  Menu,
   ClickAwayListener,
   MenuList,
   MenuItem,
@@ -16,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { useMenuReducer } from "./useMenuReducer";
 import GithubIcon from "@material-ui/icons/GitHub";
-import { MenuItemRenderer, MenuToggleRenderer, PopperProps } from "./types";
+import { MenuItemRenderer, MenuToggleRenderer } from "./types";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -29,49 +27,41 @@ const useStyles = makeStyles(() =>
 type MenuViewProps = {
   menuItemRenderer?: MenuItemRenderer;
   menuToggleRenderer?: MenuToggleRenderer;
-  popperProps?: PopperProps;
 };
 
 const MenuView: FC<MenuViewProps> = ({
   menuItemRenderer,
-  menuToggleRenderer,
-  popperProps
+  menuToggleRenderer
 }: MenuViewProps) => {
   const classes = useStyles();
   const [
-    {
-      menuStates,
-      handleMenuClose,
-      getMenuToggleProps,
-      getMenuItemProps,
-      getPopperProps
-    }
+    { menuStates, handleMenuClose, getMenuToggleProps, getMenuItemProps }
   ] = useMenuReducer({
     isOpen: false,
     anchorRef: useRef<HTMLButtonElement>(null),
     label: "Github links menu",
     menuListItems: [
       {
-        label: "Check out frontend source code",
+        label: "Frontend source code",
         href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
       },
       {
-        label: "Check out KAFKA logging microservice source code",
+        label: "KAFKA logging microservice code",
         href: "https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice"
       },
       {
-        label: "Check out general app backend microservice source code",
+        label: "General app backend microservice code",
         href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
       }
     ]
   });
-  const { isOpen, label, menuListItems } = menuStates;
+  const { isOpen, label, menuListItems, anchorRef } = menuStates;
   return (
     <Box display="flex">
       {menuToggleRenderer ? (
         menuToggleRenderer(getMenuToggleProps, label)
       ) : (
-        <Tooltip title={label}>
+        <Tooltip title={`${label} toggle`}>
           <IconButton {...getMenuToggleProps()}>
             <GithubIcon className={classes.icon} fontSize="large" />
           </IconButton>
@@ -80,41 +70,31 @@ const MenuView: FC<MenuViewProps> = ({
 
       {isOpen && (
         <ClickAwayListener onClickAway={handleMenuClose}>
-          <Popper {...(popperProps || getPopperProps())}>
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin:
-                    placement === "bottom" ? "center top" : "bottom"
-                }}
-              >
-                <Paper>
-                  <MenuList
-                    autoFocusItem={isOpen}
-                    id="menu-list-grow"
-                    role="menu"
-                  >
-                    {menuListItems.map(({ label, href }, index) => (
-                      <span key={`${label} ${index}`}>
-                        {menuItemRenderer ? (
-                          menuItemRenderer(getMenuItemProps, label, href)
-                        ) : (
-                          <span>
-                            <Link href={href} color="inherit">
-                              <MenuItem {...getMenuItemProps(label)}>
-                                <Typography>{label}</Typography>
-                              </MenuItem>
-                            </Link>
-                          </span>
-                        )}
-                      </span>
-                    ))}
-                  </MenuList>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
+          <Menu
+            aria-label={`${label} popup`}
+            anchorEl={anchorRef.current}
+            keepMounted
+            open={isOpen}
+            onClose={handleMenuClose}
+            role="menu"
+            aria-controls="menu-list-grow"
+          >
+            <MenuList autoFocusItem={isOpen}>
+              {menuListItems.map(({ label, href }, index) => (
+                <span key={`${label} ${index}`}>
+                  {menuItemRenderer ? (
+                    menuItemRenderer(getMenuItemProps, label, href)
+                  ) : (
+                    <Link href={href} color="inherit">
+                      <MenuItem {...getMenuItemProps(label)}>
+                        <Typography noWrap>{label}</Typography>
+                      </MenuItem>
+                    </Link>
+                  )}
+                </span>
+              ))}
+            </MenuList>
+          </Menu>
         </ClickAwayListener>
       )}
     </Box>
