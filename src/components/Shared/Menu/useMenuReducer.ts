@@ -5,14 +5,13 @@ import menuReducer, {
   MenuActionTypes,
   MenuState
 } from "./menuReducer";
-import { MenuItemProps, MenuToggleProps, PopperProps } from "./types";
+import { MenuItemProps, MenuToggleProps } from "./types";
 
 type MenuControls = {
   menuStates: MenuState;
   handleMenuClose: (event: React.MouseEvent<EventTarget>) => void;
   handleMenuToggle: () => void;
   getMenuToggleProps: () => MenuToggleProps;
-  getPopperProps: () => PopperProps;
   getMenuItemProps: (label: string) => MenuItemProps;
 };
 
@@ -37,26 +36,8 @@ export const useMenuReducer = (
     "aria-controls": isOpen ? "menu-list-grow" : undefined,
     "aria-haspopup": true,
     onClick: handleMenuToggle,
-    "aria-label": label,
+    "aria-label": `${label} toggle`,
     color: "inherit"
-  });
-
-  const getPopperProps = (): PopperProps => ({
-    open: isOpen,
-    anchorEl: anchorRef.current,
-    role: "dialog",
-    transition: true,
-    disablePortal: true,
-    modifiers: {
-      flip: {
-        enabled: true
-      },
-      preventOverflow: {
-        enabled: true,
-        boundariesElement: "viewport"
-      }
-    },
-    "aria-label": `${label} popup`
   });
 
   const getMenuItemProps = (label: string): MenuItemProps => ({
@@ -70,7 +51,6 @@ export const useMenuReducer = (
       handleMenuClose,
       handleMenuToggle,
       getMenuToggleProps,
-      getPopperProps,
       getMenuItemProps
     },
     dispatch

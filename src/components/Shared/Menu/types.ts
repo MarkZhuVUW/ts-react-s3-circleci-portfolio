@@ -23,21 +23,3 @@ export type MenuToggleRenderer = (
   getMenuToggleProps: () => MenuToggleProps,
   label: string
 ) => ReactNode;
-
-export type PopperProps = {
-  open: boolean;
-  anchorEl: HTMLButtonElement | null;
-  role: "dialog";
-  transition: boolean;
-  disablePortal: boolean;
-  modifiers: {
-    flip: {
-      enabled: boolean;
-    };
-    preventOverflow: {
-      enabled: boolean;
-      boundariesElement: "viewport";
-    };
-  };
-  "aria-label": string;
-};

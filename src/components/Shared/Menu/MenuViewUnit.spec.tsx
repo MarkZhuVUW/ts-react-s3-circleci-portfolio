@@ -29,23 +29,7 @@ describe("Menu module tests.", () => {
     ref: anchorRef,
     onClick: handleMenuToggle
   });
-  const getPopperProps = jest.fn().mockReturnValue({
-    open: true,
-    "aria-label": "test popper label",
-    anchorEl: document.body,
-    role: "dialog",
-    transition: true,
-    disablePortal: true,
-    modifiers: {
-      flip: {
-        enabled: true
-      },
-      preventOverflow: {
-        enabled: true,
-        boundariesElement: "viewport"
-      }
-    }
-  });
+
   const getMenuItemProps = jest.fn().mockReturnValue({
     "aria-label": "test menu list item label",
     onClick: handleMenuClose
@@ -74,7 +58,6 @@ describe("Menu module tests.", () => {
       handleMenuClose,
       handleMenuToggle,
       getMenuToggleProps,
-      getPopperProps,
       getMenuItemProps
     },
     dispatch
@@ -114,7 +97,6 @@ describe("Menu module tests.", () => {
         handleMenuClose,
         handleMenuToggle,
         getMenuToggleProps,
-        getPopperProps,
         getMenuItemProps
       },
       dispatch
@@ -125,9 +107,7 @@ describe("Menu module tests.", () => {
     await findByLabelText(container, "test menu toggle button label", {
       exact: true
     });
-    await screen.findByLabelText("test popper label", {
-      exact: true
-    });
+
     await screen.findByLabelText("test menu list item label", {
       exact: true
     });
@@ -150,7 +130,6 @@ describe("Menu module tests.", () => {
         handleMenuClose,
         handleMenuToggle,
         getMenuToggleProps,
-        getPopperProps,
         getMenuItemProps
       },
       dispatch

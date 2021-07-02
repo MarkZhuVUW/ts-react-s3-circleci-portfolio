@@ -36,21 +36,21 @@ describe("Menu integration tests.", () => {
       />
     );
     expect(container).toBeTruthy();
-
-    userEvent.click(
-      await findByLabelText(container, "Github links menu", {
-        exact: true
-      })
-    );
     await findByText(container, "Github links menu 123", {
       exact: true
     });
-    await screen.findByLabelText("Github links menu popup");
-    await screen.findByText("Check out frontend source code");
-    await screen.findByText("Check out KAFKA logging microservice source code");
-    await screen.findByText(
-      "Check out general app backend microservice source code"
+    userEvent.click(
+      await findByLabelText(container, "Github links menu toggle", {
+        exact: true
+      })
     );
+
+    await screen.findByLabelText("Github links menu popup", { exact: true });
+    await screen.findByText("Frontend source code", { exact: true });
+    await screen.findByText("KAFKA logging microservice code", { exact: true });
+    await screen.findByText("General app backend microservice code", {
+      exact: true
+    });
   });
 
   test("MenuView menuItemRenderer render prop works.", async () => {
@@ -70,29 +70,26 @@ describe("Menu integration tests.", () => {
     expect(container).toBeTruthy();
 
     userEvent.click(
-      await findByLabelText(container, "Github links menu", {
+      await findByLabelText(container, "Github links menu toggle", {
         exact: true
       })
     );
-    await screen.findByLabelText("Github links menu popup");
+    await screen.findByLabelText("Github links menu popup", { exact: true });
 
-    await findByText(
-      container,
-      "Check out frontend source code 123 https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker",
+    await screen.findByText(
+      "Frontend source code 123 https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker",
       {
         exact: true
       }
     );
-    await findByText(
-      container,
-      "Check out KAFKA logging microservice source code 123 https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice",
+    await screen.findByText(
+      "KAFKA logging microservice code 123 https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice",
       {
         exact: true
       }
     );
-    await findByText(
-      container,
-      "Check out general app backend microservice source code 123 https://github.com/MarkZhuVUW/spring-boot-aws-microservice",
+    await screen.findByText(
+      "General app backend microservice code 123 https://github.com/MarkZhuVUW/spring-boot-aws-microservice",
       {
         exact: true
       }

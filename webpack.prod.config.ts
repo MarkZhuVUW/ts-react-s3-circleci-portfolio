@@ -42,7 +42,8 @@ const config: webpack.Configuration = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
-      title: "Employer Tracker PWA"
+      title: "Employer Tracker PWA",
+      favicon: "./public/favicon.ico"
     }),
     new EnvironmentPlugin({
       NODE_ENV: "production", // Set process.env.NODE_ENV to be 'production'

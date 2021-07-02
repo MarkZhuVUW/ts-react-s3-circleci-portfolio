@@ -34,15 +34,15 @@ describe("useMenuReducer hook tests", () => {
         label: "Github links menu",
         menuListItems: [
           {
-            label: "Check out frontend source code",
+            label: "Frontend source code",
             href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
           },
           {
-            label: "Check out KAFKA logging microservice source code",
+            label: "KAFKA logging microservice code",
             href: "https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice"
           },
           {
-            label: "Check out general app backend microservice source code",
+            label: "General app backend microservice code",
             href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
           }
         ]
@@ -65,15 +65,15 @@ describe("useMenuReducer hook tests", () => {
         label: "Github links menu",
         menuListItems: [
           {
-            label: "Check out frontend source code",
+            label: "Frontend source code",
             href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
           },
           {
-            label: "Check out KAFKA logging microservice source code",
+            label: "KAFKA logging microservice code",
             href: "https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice"
           },
           {
-            label: "Check out general app backend microservice source code",
+            label: "General app backend microservice code",
             href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
           }
         ]
@@ -98,15 +98,15 @@ describe("useMenuReducer hook tests", () => {
         label: "Github links menu",
         menuListItems: [
           {
-            label: "Check out frontend source code",
+            label: "Frontend source code",
             href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
           },
           {
-            label: "Check out KAFKA logging microservice source code",
+            label: "KAFKA logging microservice code",
             href: "https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice"
           },
           {
-            label: "Check out general app backend microservice source code",
+            label: "General app backend microservice code",
             href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
           }
         ]

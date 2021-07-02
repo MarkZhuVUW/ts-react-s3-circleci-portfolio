@@ -49,7 +49,9 @@ describe("Header module tests.", () => {
     expect(handleThemeSwitchClick).toHaveBeenCalledTimes(1);
 
     await findByLabelText(container, "Contact the developer", { exact: true });
-    await findByLabelText(container, "Github links menu", { exact: true });
+    await findByLabelText(container, "Github links menu toggle", {
+      exact: true
+    });
   });
 
   test("HeaderView renders correctly when theme is set to light mode.", async () => {
