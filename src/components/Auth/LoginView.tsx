@@ -113,7 +113,6 @@ const LoginView: FC<LoginViewProps> = ({
     <div className={classes.root}>
       <CssBaseline />
       <HeaderView />
-      test
       <Container maxWidth="md" fixed className={classes.container}>
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
@@ -121,7 +120,13 @@ const LoginView: FC<LoginViewProps> = ({
               Offline-friendly content served from Service worker or CloudFront
               or S3
             </Typography>
-            <form className={classes.form} noValidate onSubmit={() => null}>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={(event) => {
+                event.preventDefault();
+              }}
+            >
               <FormControl margin="normal" fullWidth>
                 <ValidationTextField
                   variant="outlined"
