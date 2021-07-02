@@ -2,7 +2,7 @@
 
 # ts-react-s3-circleci-employer-tracker
 
-an offline-friendly website frontend built with material ui, typescript, react and webpack with Jest unit testing, taking as much of the following as I can into consideration:
+an offline-friendly, cache-first website frontend built with material ui, typescript, react and webpack with Jest unit testing, taking as much of the following as I can into consideration:
 
 ### Extendability
 
