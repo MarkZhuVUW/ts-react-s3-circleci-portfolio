@@ -12,7 +12,8 @@ import {
   TextField,
   Theme,
   withStyles,
-  Zoom
+  Zoom,
+  Typography
 } from "@material-ui/core";
 
 import React, { FC } from "react";
@@ -116,7 +117,11 @@ const LoginView: FC<LoginViewProps> = ({
       <Container maxWidth="md" fixed className={classes.container}>
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
-            <form className={classes.form} noValidate>
+            <Typography>
+              Offline-friendly content served from Service worker or CloudFront
+              or S3
+            </Typography>
+            <form className={classes.form} noValidate onSubmit={() => null}>
               <FormControl margin="normal" fullWidth>
                 <ValidationTextField
                   variant="outlined"

@@ -2,7 +2,7 @@
 
 # ts-react-s3-circleci-employer-tracker
 
-a website frontend built with material ui, typescript, react and webpack with Jest unit testing, taking as much of the following as I can into consideration:
+an offline-friendly website frontend built with material ui, typescript, react and webpack with Jest unit testing, taking as much of the following as I can into consideration:
 
 ### Extendability
 
@@ -12,7 +12,9 @@ a website frontend built with material ui, typescript, react and webpack with Je
 
 ### Code reuse
 
-Website deployed to an S3 bucket with Cloudfront as CDN: https://d2wep7c2n991he.cloudfront.net/
+Website deployed to an S3 bucket with Cloudfront as CDN: https://www.markz-employer-tracker.net/
+`http` is redirected to `https`.
+`markz-employer-tracker.net` is redirected to `www.markz-employer-tracker.net`.
 
 ## How to install dev environment and contribute
 
