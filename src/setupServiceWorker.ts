@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "production") {
       );
       navigator.serviceWorker.ready.then(() => {
         console.log(
-          "This static react website is developed with a full cicd pipeline with Circle CI and it is being served offline-first and cache-first through CloudFront, Route 53 and S3."
+          "This static react website is developed with a full cicd pipeline with Circle CI and it is being served cache-first through CloudFront, Route 53 and S3."
         );
         console.log(
           "My linkedin profile: https://www.linkedin.com/in/mark-zhu-06b807145/"
