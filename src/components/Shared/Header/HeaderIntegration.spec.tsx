@@ -44,27 +44,19 @@ describe("HeaderView integtation tests.", () => {
   });
 
   test("HeaderView does not render properly without HeaderProvider", async () => {
-    const { container } = render(
-      <LocalStorageProvider>
-        <ThemeProvider>
-          <HeaderProvider>
-            <HeaderView />
-          </HeaderProvider>
-        </ThemeProvider>
-      </LocalStorageProvider>
-    );
+    const { container } = render(<HeaderView />);
     expect(container).toBeTruthy();
 
     expect(
       queryByText(container, "Toggle light/dark mode - Currently light mode.", {
         exact: true
       })
-    );
+    ).toBeFalsy();
     expect(
       queryByText(container, "Contact the developer", {
         exact: true
       })
-    );
+    ).toBeFalsy();
   });
 
   test("HeaderView switch toggles theme.", async () => {

@@ -6,6 +6,7 @@ import * as MenuHook from "./useMenuReducer";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 import { renderHook } from "@testing-library/react-hooks";
 import MenuProvider from "./MenuProvider";
+import { MenuState } from "./types";
 
 /** ------------------- Mocks and spies----------------- */
 
@@ -92,7 +93,7 @@ describe("Menu module tests.", () => {
   });
 
   test("MenuView popper renders when isOpen is set to true", async () => {
-    const menuStates: MenuHook.MenuState = {
+    const menuStates: MenuState = {
       label: "test menu toggle button label",
       anchorRef,
       isOpen: true,
@@ -129,7 +130,7 @@ describe("Menu module tests.", () => {
   });
 
   test("MenuView popper relevant functions are called", async () => {
-    const menuStates: MenuHook.MenuState = {
+    const menuStates: MenuState = {
       label: "test menu toggle button label",
       anchorRef,
       isOpen: true,

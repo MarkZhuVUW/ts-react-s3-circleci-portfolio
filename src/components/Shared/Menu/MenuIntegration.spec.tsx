@@ -31,16 +31,12 @@ describe("Menu integration tests.", () => {
   });
 
   test("Menu does not render properly without MenuProvider", async () => {
-    const { container } = render(
-      <MenuProvider>
-        <MenuView />
-      </MenuProvider>
-    );
+    const { container } = render(<MenuView />);
 
     expect(container).toBeTruthy();
     expect(
       queryByLabelText(container, "Github links menu toggle", { exact: true })
-    );
+    ).toBeFalsy();
   });
 
   test("MenuView menuToggleRenderer render prop works.", async () => {

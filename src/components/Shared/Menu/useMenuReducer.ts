@@ -1,25 +1,13 @@
 import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
 import { createContext, Dispatch, useContext } from "react";
-import { MenuItemProps, MenuToggleProps } from "./types";
-
-import { RefObject } from "react";
-
-export enum MenuActionTypes {
-  MENU_CLOSE = "MENU_CLOSE",
-  MENU_TOGGLE = "MENU_TOGGLE"
-}
-export type MenuAction = {
-  type: string;
-  payload?: {
-    event: React.MouseEvent<EventTarget>;
-  };
-};
-export type MenuState = {
-  anchorRef: RefObject<HTMLButtonElement> | null;
-  isOpen: boolean;
-  label: string;
-  menuListItems: Array<{ href?: string; label: string }>;
-};
+import {
+  MenuAction,
+  MenuActionTypes,
+  MenuControls,
+  MenuItemProps,
+  MenuState,
+  MenuToggleProps
+} from "./types";
 
 /**
  * The default reducer for the useMenu hook.
@@ -29,8 +17,6 @@ export type MenuState = {
  */
 const menuReducer = (prevState: MenuState, action: MenuAction): MenuState => {
   switch (action.type) {
-    case MenuActionTypes.MENU_CLOSE:
-      return menuClose(prevState, action);
     case MenuActionTypes.MENU_TOGGLE: {
       return menuToggle(prevState);
     }
@@ -39,32 +25,12 @@ const menuReducer = (prevState: MenuState, action: MenuAction): MenuState => {
   }
 };
 
-const menuClose = (prevState: MenuState, action: MenuAction) => {
-  if (
-    prevState.anchorRef?.current &&
-    prevState.anchorRef.current.contains(
-      action.payload?.event.target as HTMLElement
-    )
-  ) {
-    return prevState;
-  }
-  return { ...prevState, isOpen: false };
-};
-
 const menuToggle = (prevState: MenuState) => ({
   ...prevState,
   isOpen: !prevState.isOpen
 });
 
 export default menuReducer;
-
-type MenuControls = {
-  menuStates: MenuState;
-  handleMenuClose: (event: React.MouseEvent<EventTarget>) => void;
-  handleMenuToggle: () => void;
-  getMenuToggleProps: () => MenuToggleProps | null;
-  getMenuItemProps: (label: string) => MenuItemProps | null;
-};
 
 /**
  * A hook that handles states and functions of the MenuView component.
@@ -76,10 +42,20 @@ export const useMenuReducer = (
 ): [MenuControls, Dispatch<MenuAction>] => {
   const [menuStates, dispatch] = useReducerOnSteroid(menuReducer, initialState);
   const { isOpen, menuListItems, anchorRef, label }: MenuState = menuStates;
-  const handleMenuClose = (event: React.MouseEvent<EventTarget>) =>
-    dispatch({ type: MenuActionTypes.MENU_CLOSE, payload: { event } });
+  const handleMenuClose = (event: React.MouseEvent<EventTarget>) => {
+    if (
+      anchorRef?.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      dispatch({ type: MenuActionTypes.MENU_TOGGLE, payload: { isOpen } });
+    }
+    dispatch({ type: MenuActionTypes.MENU_TOGGLE, payload: { isOpen: false } });
+  };
   const handleMenuToggle = () =>
-    dispatch({ type: MenuActionTypes.MENU_TOGGLE });
+    dispatch({
+      type: MenuActionTypes.MENU_TOGGLE,
+      payload: { isOpen: !isOpen }
+    });
 
   const getMenuToggleProps = (): MenuToggleProps => ({
     ref: anchorRef,
@@ -111,21 +87,8 @@ export const MenuContext = createContext<MenuControls>({
   menuStates: {
     isOpen: false,
     anchorRef: null,
-    label: "Github links menu",
-    menuListItems: [
-      {
-        label: "Frontend source code",
-        href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
-      },
-      {
-        label: "KAFKA logging microservice code",
-        href: "https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice"
-      },
-      {
-        label: "General app backend microservice code",
-        href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
-      }
-    ]
+    label: "",
+    menuListItems: []
   },
   handleMenuClose: (event: React.MouseEvent<EventTarget>) => {
     console.warn(`No MenuContext.Provider. Event: ${event}`);

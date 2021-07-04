@@ -1,16 +1,13 @@
-import React, { ReactNode, useRef } from "react";
+import React, { useRef } from "react";
 import { FC } from "react";
 import { useMenuReducer, MenuContext } from "./useMenuReducer";
 import { CssBaseline } from "@material-ui/core";
-
-type MenuProviderProps = {
-  children?: ReactNode;
-};
+import { MenuProviderProps, MenuState } from "./types";
 
 const MenuProvider: FC<MenuProviderProps> = ({
   children
 }: MenuProviderProps) => {
-  const initialState = {
+  const initialState: MenuState = {
     isOpen: false,
     anchorRef: useRef<HTMLButtonElement>(null),
     label: "Github links menu",

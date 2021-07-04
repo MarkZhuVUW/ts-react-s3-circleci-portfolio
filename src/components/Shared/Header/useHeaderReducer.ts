@@ -1,16 +1,10 @@
-/* eslint-disable @typescript-eslint/ban-types */
-
 import { useMuiTheme } from "@employer-tracker-ui/components/GlobalProviders";
 import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
 import { createContext, Dispatch, Reducer, useContext } from "react";
+import { HeaderAction, HeaderControls, HeaderState } from "./types";
 
 export enum HeaderActionTypes {}
 
-export type HeaderAction = {
-  type: string;
-  payload?: {};
-};
-export type HeaderState = {};
 /**
  * The default reducer for the useHeaderReducer hook.
  * @param prevStates Previous MenuState.
@@ -26,8 +20,6 @@ export const headerReducer: Reducer<HeaderState, HeaderAction> = (
       throw new Error(`Unhandled header action type: ${action.type}`);
   }
 };
-
-type HeaderControls = { handleThemeSwitchClick: () => void };
 
 export const useHeaderReducer = (
   initialState: HeaderState

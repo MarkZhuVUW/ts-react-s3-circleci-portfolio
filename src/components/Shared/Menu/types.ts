@@ -23,3 +23,36 @@ export type MenuToggleRenderer = (
   getMenuToggleProps: () => MenuToggleProps | null,
   label: string
 ) => ReactNode;
+
+export enum MenuActionTypes {
+  MENU_TOGGLE = "MENU_TOGGLE"
+}
+export type MenuAction = {
+  type: string;
+  payload?: {
+    isOpen: boolean;
+  };
+};
+export type MenuState = {
+  anchorRef: RefObject<HTMLButtonElement> | null;
+  isOpen: boolean;
+  label: string;
+  menuListItems: Array<{ href?: string; label: string }>;
+};
+
+export type MenuControls = {
+  menuStates: MenuState;
+  handleMenuClose: (event: React.MouseEvent<EventTarget>) => void;
+  handleMenuToggle: () => void;
+  getMenuToggleProps: () => MenuToggleProps | null;
+  getMenuItemProps: (label: string) => MenuItemProps | null;
+};
+
+export type MenuViewProps = {
+  menuItemRenderer?: MenuItemRenderer;
+  menuToggleRenderer?: MenuToggleRenderer;
+};
+
+export type MenuProviderProps = {
+  children?: ReactNode;
+};

@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { useMenu } from "./useMenuReducer";
 import GithubIcon from "@material-ui/icons/GitHub";
-import { MenuItemRenderer, MenuToggleRenderer } from "./types";
+import { MenuViewProps } from "./types";
 const useStyles = makeStyles(() =>
   createStyles({
     icon: {
@@ -22,11 +22,6 @@ const useStyles = makeStyles(() =>
     }
   })
 );
-
-type MenuViewProps = {
-  menuItemRenderer?: MenuItemRenderer;
-  menuToggleRenderer?: MenuToggleRenderer;
-};
 
 const MenuView: FC<MenuViewProps> = ({
   menuItemRenderer,
