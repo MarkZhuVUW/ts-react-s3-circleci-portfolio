@@ -1,9 +1,10 @@
-import { findByLabelText, findByText, render } from "@testing-library/react";
+import { findByLabelText, render } from "@testing-library/react";
 import React from "react";
 import userEvent from "@testing-library/user-event";
 import HeaderView from "./HeaderView";
 import * as HeaderHook from "./useHeaderReducer";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
+import HeaderProvider from "./HeaderProvider";
 
 /** ------------------- Mocks and spies----------------- */
 
@@ -20,9 +21,12 @@ describe("Header module tests.", () => {
   const getItem = jest.fn();
   const setItem = jest.fn();
   const removeItem = jest.fn();
-  HEADER_STATE_SPY.mockReturnValue({
-    handleThemeSwitchClick
-  });
+  HEADER_STATE_SPY.mockReturnValue([
+    {
+      handleThemeSwitchClick
+    },
+    jest.fn()
+  ]);
   LOCAL_STORAGE_STATE_SPY.mockReturnValue({
     keys,
     getItem,
@@ -36,7 +40,11 @@ describe("Header module tests.", () => {
   });
 
   test("HeaderView renders correctly when theme is set to dark mode.", async () => {
-    const { container } = render(<HeaderView />);
+    const { container } = render(
+      <HeaderProvider>
+        <HeaderView />
+      </HeaderProvider>
+    );
     expect(container).toBeTruthy();
 
     userEvent.click(
@@ -60,7 +68,11 @@ describe("Header module tests.", () => {
       setMuiTheme,
       toggleLightDarkTheme
     });
-    const { container } = render(<HeaderView />);
+    const { container } = render(
+      <HeaderProvider>
+        <HeaderView />
+      </HeaderProvider>
+    );
     expect(container).toBeTruthy();
 
     userEvent.click(

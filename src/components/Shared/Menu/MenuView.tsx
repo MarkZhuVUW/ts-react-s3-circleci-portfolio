@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react";
+import React, { FC } from "react";
 import {
   IconButton,
   Link,
@@ -12,10 +12,9 @@ import {
   makeStyles,
   createStyles
 } from "@material-ui/core";
-import { useMenuReducer } from "./useMenuReducer";
+import { useMenu } from "./useMenuReducer";
 import GithubIcon from "@material-ui/icons/GitHub";
 import { MenuItemRenderer, MenuToggleRenderer } from "./types";
-
 const useStyles = makeStyles(() =>
   createStyles({
     icon: {
@@ -34,27 +33,8 @@ const MenuView: FC<MenuViewProps> = ({
   menuToggleRenderer
 }: MenuViewProps) => {
   const classes = useStyles();
-  const [
-    { menuStates, handleMenuClose, getMenuToggleProps, getMenuItemProps }
-  ] = useMenuReducer({
-    isOpen: false,
-    anchorRef: useRef<HTMLButtonElement>(null),
-    label: "Github links menu",
-    menuListItems: [
-      {
-        label: "Frontend source code",
-        href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-employer-tracker"
-      },
-      {
-        label: "KAFKA logging microservice code",
-        href: "https://github.com/MarkZhuVUW/KAFKA-spring-boot-logging-microservice"
-      },
-      {
-        label: "General app backend microservice code",
-        href: "https://github.com/MarkZhuVUW/spring-boot-aws-microservice"
-      }
-    ]
-  });
+  const { menuStates, handleMenuClose, getMenuToggleProps, getMenuItemProps } =
+    useMenu();
   const { isOpen, label, menuListItems, anchorRef } = menuStates;
   return (
     <Box display="flex">
@@ -72,7 +52,7 @@ const MenuView: FC<MenuViewProps> = ({
         <ClickAwayListener onClickAway={handleMenuClose}>
           <Menu
             aria-label={`${label} popup`}
-            anchorEl={anchorRef.current}
+            anchorEl={anchorRef?.current}
             keepMounted
             open={isOpen}
             onClose={handleMenuClose}

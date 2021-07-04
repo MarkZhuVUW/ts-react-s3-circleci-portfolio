@@ -19,6 +19,7 @@ import {
 import React, { FC } from "react";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { HeaderView } from "@employer-tracker-ui/components/Shared";
+import { HeaderProvider } from "../Shared/Header";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -112,13 +113,15 @@ const LoginView: FC<LoginViewProps> = ({
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <HeaderView />
+      <HeaderProvider>
+        <HeaderView />
+      </HeaderProvider>
       <Container maxWidth="md" fixed className={classes.container}>
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
             <Typography>
-              Offline-friendly content served from Service worker or CloudFront
-              or S3
+              Offline-first, cache-first content served from service worker or
+              CloudFront or S3
             </Typography>
             <form
               className={classes.form}

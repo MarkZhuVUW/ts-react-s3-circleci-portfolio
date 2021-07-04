@@ -1,7 +1,5 @@
-import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import headerReducer from "./headerReducer";
 import { useHeaderReducer } from "./useHeaderReducer";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 
@@ -27,34 +25,11 @@ THEME_STATE_SPY.mockReturnValue({
 });
 describe("useHeaderReducer hook tests.", () => {
   test("handleThemeSwitchClick calls toggleLightDarkTheme function in ThemeProvider", async () => {
-    const { handleThemeSwitchClick } = renderHook(() => useHeaderReducer())
+    const [{ handleThemeSwitchClick }] = renderHook(() => useHeaderReducer({}))
       .result.current;
     act(() => {
       handleThemeSwitchClick();
     });
     expect(toggleLightDarkTheme).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe("headerReducer tests.", () => {
-  let initialState = {};
-  let result = renderHook(() =>
-    useReducerOnSteroid(headerReducer, initialState)
-  ).result;
-  let dispatch = result.current[1];
-  beforeEach(() => {
-    initialState = {};
-    result = renderHook(() =>
-      useReducerOnSteroid(headerReducer, initialState)
-    ).result;
-    dispatch = result.current[1];
-  });
-  test("Hippity hoo blah action", async () => {
-    act(() => {
-      dispatch({ type: "Hippity hoo blah" });
-    });
-    expect(result.error).toEqual(
-      Error("Unhandled header action type: Hippity hoo blah")
-    );
   });
 });

@@ -7,7 +7,7 @@ export type MenuItemProps = {
 };
 
 export type MenuToggleProps = {
-  ref: RefObject<HTMLButtonElement>;
+  ref: RefObject<HTMLButtonElement> | null;
   "aria-controls": string | undefined;
   "aria-haspopup": true;
   onClick: (event: React.MouseEvent<EventTarget>) => void;
@@ -15,11 +15,11 @@ export type MenuToggleProps = {
   color: "inherit";
 };
 export type MenuItemRenderer = (
-  getMenuItemProps: (label: string) => MenuItemProps,
+  getMenuItemProps: (label: string) => MenuItemProps | null,
   label: string,
   href?: string
 ) => ReactNode;
 export type MenuToggleRenderer = (
-  getMenuToggleProps: () => MenuToggleProps,
+  getMenuToggleProps: () => MenuToggleProps | null,
   label: string
 ) => ReactNode;

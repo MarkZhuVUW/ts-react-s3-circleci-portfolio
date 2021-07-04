@@ -6,6 +6,7 @@ import {
 import {
   findByLabelText,
   findByText,
+  queryByLabelText,
   render,
   screen
 } from "@testing-library/react";
@@ -13,12 +14,15 @@ import React from "react";
 import { Button, MenuItem } from "@material-ui/core";
 import userEvent from "@testing-library/user-event";
 import { MenuToggleProps, MenuItemProps } from "./types";
+import MenuProvider from "./MenuProvider";
 describe("Menu integration tests.", () => {
   test("Menu renders correctly with providers", async () => {
     const { container } = render(
       <LocalStorageProvider>
         <ThemeProvider>
-          <MenuView />
+          <MenuProvider>
+            <MenuView />
+          </MenuProvider>
         </ThemeProvider>
       </LocalStorageProvider>
     );
@@ -26,14 +30,29 @@ describe("Menu integration tests.", () => {
     expect(container).toBeTruthy();
   });
 
+  test("Menu does not render properly without MenuProvider", async () => {
+    const { container } = render(
+      <MenuProvider>
+        <MenuView />
+      </MenuProvider>
+    );
+
+    expect(container).toBeTruthy();
+    expect(
+      queryByLabelText(container, "Github links menu toggle", { exact: true })
+    );
+  });
+
   test("MenuView menuToggleRenderer render prop works.", async () => {
     const { container } = render(
-      <MenuView
-        menuToggleRenderer={(
-          getMenuToggleProps: () => MenuToggleProps,
-          label: string
-        ) => <Button {...getMenuToggleProps()}>{label} 123</Button>}
-      />
+      <MenuProvider>
+        <MenuView
+          menuToggleRenderer={(
+            getMenuToggleProps: () => MenuToggleProps | null,
+            label: string
+          ) => <Button {...getMenuToggleProps()}>{label} 123</Button>}
+        />
+      </MenuProvider>
     );
     expect(container).toBeTruthy();
     await findByText(container, "Github links menu 123", {
@@ -55,17 +74,19 @@ describe("Menu integration tests.", () => {
 
   test("MenuView menuItemRenderer render prop works.", async () => {
     const { container } = render(
-      <MenuView
-        menuItemRenderer={(
-          getMenuItemProps: (label: string) => MenuItemProps,
-          label: string,
-          href?: string
-        ) => (
-          <MenuItem {...getMenuItemProps(label)}>
-            {label} 123 {href}
-          </MenuItem>
-        )}
-      />
+      <MenuProvider>
+        <MenuView
+          menuItemRenderer={(
+            getMenuItemProps: (label: string) => MenuItemProps | null,
+            label: string,
+            href?: string
+          ) => (
+            <MenuItem {...getMenuItemProps(label)}>
+              {label} 123 {href}
+            </MenuItem>
+          )}
+        />
+      </MenuProvider>
     );
     expect(container).toBeTruthy();
 

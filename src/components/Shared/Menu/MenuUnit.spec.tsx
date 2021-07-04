@@ -5,7 +5,7 @@ import MenuView from "./MenuView";
 import * as MenuHook from "./useMenuReducer";
 import * as GlobalHooks from "@employer-tracker-ui/components/GlobalProviders";
 import { renderHook } from "@testing-library/react-hooks";
-import { MenuState } from "./menuReducer";
+import MenuProvider from "./MenuProvider";
 
 /** ------------------- Mocks and spies----------------- */
 
@@ -64,14 +64,22 @@ describe("Menu module tests.", () => {
   ]);
 
   test("MenuView renders correctly.", async () => {
-    const { container } = render(<MenuView />);
+    const { container } = render(
+      <MenuProvider>
+        <MenuView />
+      </MenuProvider>
+    );
     expect(container).toBeTruthy();
     await findByLabelText(container, "test menu toggle button label", {
       exact: true
     });
   });
   test("MenuView relevant handler functions are called when popper is not shown.", async () => {
-    const { container } = render(<MenuView />);
+    const { container } = render(
+      <MenuProvider>
+        <MenuView />
+      </MenuProvider>
+    );
     expect(container).toBeTruthy();
     userEvent.click(
       await findByLabelText(container, "test menu toggle button label", {
@@ -84,7 +92,7 @@ describe("Menu module tests.", () => {
   });
 
   test("MenuView popper renders when isOpen is set to true", async () => {
-    const menuStates: MenuState = {
+    const menuStates: MenuHook.MenuState = {
       label: "test menu toggle button label",
       anchorRef,
       isOpen: true,
@@ -101,7 +109,11 @@ describe("Menu module tests.", () => {
       },
       dispatch
     ]);
-    const { container } = render(<MenuView />);
+    const { container } = render(
+      <MenuProvider>
+        <MenuView />
+      </MenuProvider>
+    );
     expect(container).toBeTruthy();
 
     await findByLabelText(container, "test menu toggle button label", {
@@ -117,7 +129,7 @@ describe("Menu module tests.", () => {
   });
 
   test("MenuView popper relevant functions are called", async () => {
-    const menuStates: MenuState = {
+    const menuStates: MenuHook.MenuState = {
       label: "test menu toggle button label",
       anchorRef,
       isOpen: true,
@@ -135,7 +147,11 @@ describe("Menu module tests.", () => {
       dispatch
     ]);
 
-    const { container } = render(<MenuView />);
+    const { container } = render(
+      <MenuProvider>
+        <MenuView />
+      </MenuProvider>
+    );
 
     expect(container).toBeTruthy();
     userEvent.click(

@@ -22,7 +22,8 @@ import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
 import { MenuView } from "@employer-tracker-ui/components";
-import { useHeaderReducer } from "./useHeaderReducer";
+import { useHeader } from "./useHeaderReducer";
+import { MenuProvider } from "../Menu";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const HeaderView: FC = () => {
   const classes = useStyles();
   const { theme } = useMuiTheme();
-  const { handleThemeSwitchClick } = useHeaderReducer();
+  const { handleThemeSwitchClick } = useHeader();
 
   return (
     <AppBar className={classes.appBar}>
@@ -129,7 +130,9 @@ const HeaderView: FC = () => {
         </Box>
 
         <Grid>
-          <MenuView />
+          <MenuProvider>
+            <MenuView />
+          </MenuProvider>
         </Grid>
       </Toolbar>
     </AppBar>
