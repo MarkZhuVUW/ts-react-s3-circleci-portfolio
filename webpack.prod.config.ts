@@ -49,8 +49,7 @@ const config: webpack.Configuration = {
       DEBUG: false
     }),
     new WorkboxPlugin.GenerateSW({
-      // these options encourage the ServiceWorkers to get in there fast
-      // and not allow any straggling "old" SWs to hang around
+      // These make sure that only one version of the website is running.
       clientsClaim: true,
       skipWaiting: true
     })
