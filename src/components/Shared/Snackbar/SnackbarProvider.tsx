@@ -8,10 +8,11 @@ const SnackbarProvider: FC<SnackbarProviderProps> = ({
   children
 }: SnackbarProviderProps) => {
   const initialState: SnackbarState = {
-    open: true,
-    label: "New version notification snack bar",
-    message: "New version available, please refresh to get the latest content.",
-    severity: "info"
+    open: false,
+    label: "",
+    message: "",
+    severity: undefined,
+    type: undefined
   };
   return (
     <SnackbarContext.Provider

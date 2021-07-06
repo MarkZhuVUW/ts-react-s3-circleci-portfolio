@@ -42,10 +42,10 @@ jobs:
             pip3 install awscli --upgrade
       - run:
           name: Remove existing build and deploy new build to aws s3 bucket.
-          # No caching for service-worker.js and index.html. Other files are cached one year (31536000 seconds).
+          # 24 hour cache for service-worker.js and index.html to save money. Other files are cached one year (31536000 seconds).
           command: |
             aws s3 sync ./build s3://www.markz-employer-tracker.net --exclude index.html --exclude service-worker.js --acl public-read --cache-control max-age=31536000,public --delete 
-            aws s3 sync ./build s3://www.markz-employer-tracker.net --include index.html --include service-worker.js --acl public-read --cache-control 'no-cache'
+            aws s3 sync ./build s3://www.markz-employer-tracker.net --include index.html --include service-worker.js --acl public-read --cache-control max-age=86400,public
 
 workflows:
   test-build-deploy:
@@ -54,6 +54,6 @@ workflows:
       - deploy:
           requires:
             - testnbuild
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
