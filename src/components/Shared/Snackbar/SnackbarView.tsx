@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const SnackbarView: FC = () => {
   const classes = useStyles();
-
-  const { snackbarStates, handleSnackbarClose } = useSnackbar();
+  const { snackbarStates, handleSnackbarClose, handleReloadButtonClick } =
+    useSnackbar();
   const { open, message, severity, label, type } = snackbarStates;
   const Alert: FC<AlertProps> = (props: AlertProps) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -32,9 +32,9 @@ const SnackbarView: FC = () => {
             severity={severity}
             action={
               <Button
-                onClick={() => {
-                  window.location.reload();
-                }}
+                variant="contained"
+                color="secondary"
+                onClick={handleReloadButtonClick}
               >
                 Reload
               </Button>
@@ -43,13 +43,15 @@ const SnackbarView: FC = () => {
             <Typography>{message}</Typography>
           </Alert>
         );
+
       default:
-        return null;
+        return null; //Unreachable code.
     }
   };
   return (
     <div className={classes.root}>
-      {open && (
+      {open && type && (
+        // <Slide direction="up" in={true} timeout={500}>
         <Snackbar
           aria-label={label}
           key={label}
@@ -58,6 +60,7 @@ const SnackbarView: FC = () => {
         >
           <>{renderingSwitch()}</>
         </Snackbar>
+        // </Slide>
       )}
     </div>
   );

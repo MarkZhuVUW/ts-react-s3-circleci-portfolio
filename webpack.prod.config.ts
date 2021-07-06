@@ -49,9 +49,7 @@ const config: webpack.Configuration = {
       DEBUG: false
     }),
     new WorkboxPlugin.GenerateSW({
-      // These make sure that only one version of the website is running.
-      clientsClaim: true,
-      skipWaiting: true
+      maximumFileSizeToCacheInBytes: 20971520 // 20 MB
     })
   ]
 };

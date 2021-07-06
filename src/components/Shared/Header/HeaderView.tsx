@@ -12,7 +12,7 @@ import {
   Link,
   Typography,
   Grid,
-  Hidden
+  useMediaQuery
 } from "@material-ui/core";
 import {
   MuiTheme,
@@ -51,14 +51,14 @@ const HeaderView: FC = () => {
   const classes = useStyles();
   const { theme } = useMuiTheme();
   const { handleThemeSwitchClick } = useHeader();
-
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
         <Box flexWrap="nowrap" flexGrow="1">
           {/* For decorative icons, set aira-hidden to true */}
 
-          <Hidden smUp>
+          {isSmallScreen && (
             <Slide direction="right" in={true} timeout={500}>
               <Box
                 display="flex"
@@ -74,8 +74,8 @@ const HeaderView: FC = () => {
                 />
               </Box>
             </Slide>
-          </Hidden>
-          <Hidden smDown>
+          )}
+          {!isSmallScreen && (
             <Slide direction="right" in={true} timeout={500}>
               <Box
                 display="flex"
@@ -103,7 +103,7 @@ const HeaderView: FC = () => {
                 />
               </Box>
             </Slide>
-          </Hidden>
+          )}
         </Box>
         <Box>
           <Tooltip title={`Toggle light/dark mode - Currently ${theme} mode.`}>

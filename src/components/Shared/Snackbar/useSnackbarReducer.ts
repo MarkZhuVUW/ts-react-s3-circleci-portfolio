@@ -58,12 +58,7 @@ export const useSnackbarReducer = (
 
   useEffect(() => {
     if (wbInstance) {
-      wbInstance.addEventListener("waiting", (event) => {
-        if (!event.isUpdate) {
-          // Do nothing on first service worker installation.
-          return;
-        }
-
+      wbInstance.addEventListener("waiting", () => {
         // Dispatch event to show snackbar reminding user to reload.
         dispatch({
           type: SnackbarActionTypes.Snackbar_OPEN,
@@ -71,30 +66,30 @@ export const useSnackbarReducer = (
             open: true,
             label: "New version notification snack bar",
             message:
-              "New version available, please close all tabs of this website and refresh to get the latest content.",
+              "New version available, click the reload button to get the latest version but it may break existing tabs.",
             severity: "info",
             type: SnackbarTypes.newVersion
           }
         });
       });
 
-      wbInstance.addEventListener("installed", () => {
-        dispatch({
-          type: SnackbarActionTypes.Snackbar_OPEN,
-          payload: {
-            open: true,
-            label: "test snackbar",
-            message: "test message",
-            severity: "success",
-            type: SnackbarTypes.test
-          }
-        });
-      });
-      return wbInstance.removeEventListener("installed", (listener) => {
+      // Clean up the waiting event listener in case user decides to not reload the page.
+      return wbInstance.removeEventListener("waiting", (listener) => {
         console.warn(`removed listener: ${listener} `);
       });
     }
   }, []);
+
+  const handleReloadButtonClick = () => {
+    if (wbInstance) {
+      // skipWaiting to activate the new service worker when there is new build files.
+      wbInstance.messageSkipWaiting();
+      // No need to clean up this listener as we are page reloading in its handler callback.
+      wbInstance.addEventListener("controlling", () => {
+        window.location.reload();
+      });
+    }
+  };
   const handleSnackbarClose = (
     event?: React.SyntheticEvent,
     reason?: string
@@ -111,7 +106,8 @@ export const useSnackbarReducer = (
   return [
     {
       snackbarStates: { open, label, message, severity, type },
-      handleSnackbarClose
+      handleSnackbarClose,
+      handleReloadButtonClick
     },
     dispatch
   ];
@@ -129,6 +125,9 @@ export const SnackbarContext = createContext<SnackbarControls>({
     console.warn(`No SnackbarContext.Provider. Event: ${event}`);
   },
   handleSnackbarOpen: () => {
+    console.warn("No SnackbarContext.Provider");
+  },
+  handleReloadButtonClick: () => {
     console.warn("No SnackbarContext.Provider");
   }
 });

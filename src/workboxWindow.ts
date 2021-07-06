@@ -1,3 +1,5 @@
 import { Workbox } from "workbox-window";
+
+// Return false if browser does not support service worker, otherwise return the workbox window instance.
 export const wbInstance =
-  process.env.NODE_ENV === "production" && new Workbox("/service-worker.js");
+  "serviceWorker" in navigator && new Workbox("/service-worker.js");

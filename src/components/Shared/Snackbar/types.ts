@@ -27,6 +27,7 @@ export type SnackbarControls = {
   snackbarStates: SnackbarState;
   handleSnackbarClose: (event: SyntheticEvent<Element, Event>) => void;
   handleSnackbarOpen?: () => void;
+  handleReloadButtonClick: () => void;
 };
 
 export type SnackbarProviderProps = {

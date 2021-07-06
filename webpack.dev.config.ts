@@ -61,6 +61,9 @@ const config: Configuration = {
     new EnvironmentPlugin({
       NODE_ENV: "development", // Set process.env.NODE_ENV to be 'development'
       DEBUG: true
+    }),
+    new WorkboxPlugin.GenerateSW({
+      maximumFileSizeToCacheInBytes: 20971520 // 20 MB
     })
   ],
   devtool: "source-map",
