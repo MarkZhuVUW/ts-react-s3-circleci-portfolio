@@ -10,6 +10,7 @@ export type {
   SnackbarState,
   SnackbarActionTypes,
   SnackbarControls,
-  SnackbarProviderProps
+  SnackbarProviderProps,
+  SnackbarTypes
 } from "./types";
 export { default as SnackbarProvider } from "./SnackbarProvider";

@@ -27,6 +27,7 @@ describe("Header module tests.", () => {
     },
     jest.fn()
   ]);
+
   LOCAL_STORAGE_STATE_SPY.mockReturnValue({
     keys,
     getItem,

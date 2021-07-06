@@ -19,8 +19,8 @@ export type SnackbarState = {
   open: boolean | undefined;
   label: string;
   message: string;
-  severity: "info" | "warning" | "error" | "success" | undefined;
-  type: SnackbarTypes | undefined;
+  severity: "info" | "warning" | "error" | "success";
+  type: SnackbarTypes;
 };
 
 export type SnackbarControls = {
@@ -34,5 +34,6 @@ export type SnackbarProviderProps = {
 };
 
 export enum SnackbarTypes {
-  newVersion = "new version"
+  newVersion = "new version",
+  test = "test"
 }

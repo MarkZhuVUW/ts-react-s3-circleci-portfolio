@@ -1,11 +1,5 @@
 import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
-import {
-  createContext,
-  Dispatch,
-  SyntheticEvent,
-  useContext,
-  useEffect
-} from "react";
+import { createContext, Dispatch, useContext, useEffect } from "react";
 import {
   SnackbarAction,
   SnackbarActionTypes,
@@ -28,6 +22,9 @@ const snackbarReducer = (
     case SnackbarActionTypes.Snackbar_TOGGLE: {
       return snackbarToggle(prevState, action);
     }
+    case SnackbarActionTypes.Snackbar_OPEN: {
+      return snackbarOpen(prevState, action);
+    }
     default:
       throw new Error(`Unhandled Snackbar action type: ${action.type}`);
   }
@@ -38,6 +35,10 @@ const snackbarToggle = (prevState: SnackbarState, action: SnackbarAction) => ({
   open: action.payload.open
 });
 
+const snackbarOpen = (prevState: SnackbarState, action: SnackbarAction) => ({
+  ...prevState,
+  ...action.payload
+});
 export default snackbarReducer;
 
 /**
@@ -57,15 +58,17 @@ export const useSnackbarReducer = (
 
   useEffect(() => {
     if (wbInstance) {
-      wbInstance.addEventListener("installed", (event) => {
+      wbInstance.addEventListener("waiting", (event) => {
         if (!event.isUpdate) {
           // Do nothing on first service worker installation.
           return;
         }
+
         // Dispatch event to show snackbar reminding user to reload.
         dispatch({
           type: SnackbarActionTypes.Snackbar_OPEN,
           payload: {
+            open: true,
             label: "New version notification snack bar",
             message:
               "New version available, please close all tabs of this website and refresh to get the latest content.",
@@ -74,11 +77,24 @@ export const useSnackbarReducer = (
           }
         });
       });
+
+      wbInstance.addEventListener("installed", () => {
+        dispatch({
+          type: SnackbarActionTypes.Snackbar_OPEN,
+          payload: {
+            open: true,
+            label: "test snackbar",
+            message: "test message",
+            severity: "success",
+            type: SnackbarTypes.test
+          }
+        });
+      });
       return wbInstance.removeEventListener("installed", (listener) => {
         console.warn(`removed listener: ${listener} `);
       });
     }
-  });
+  }, []);
   const handleSnackbarClose = (
     event?: React.SyntheticEvent,
     reason?: string
@@ -106,10 +122,10 @@ export const SnackbarContext = createContext<SnackbarControls>({
     open: false,
     label: "",
     message: "",
-    severity: undefined,
-    type: undefined
+    severity: "info",
+    type: SnackbarTypes.newVersion
   },
-  handleSnackbarClose: (event: SyntheticEvent<Element, Event>) => {
+  handleSnackbarClose: () => {
     console.warn(`No SnackbarContext.Provider. Event: ${event}`);
   },
   handleSnackbarOpen: () => {

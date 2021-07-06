@@ -1,22 +1,15 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <head>
     <meta charset="utf-8" />
     <title>Employer Tracker</title>
   </head>
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <body>
     <div id="root"></div>
   </body>
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/service-worker.js");
-      });
-    }
-  </script>
 </html>

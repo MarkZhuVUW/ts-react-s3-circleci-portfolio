@@ -48,7 +48,7 @@ const config: Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/indexDev.html",
+      template: "./public/index.html",
       title: "Employer Tracker PWA",
       favicon: "./public/favicon.ico"
     }),
