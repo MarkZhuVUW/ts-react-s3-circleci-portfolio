@@ -1,10 +1,27 @@
 import path from "path";
-import webpack, { EnvironmentPlugin } from "webpack";
+import webpack, { Compiler, EnvironmentPlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import WorkboxPlugin from "workbox-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
+
 const config: webpack.Configuration = {
   mode: "production",
   entry: "./src/index.tsx",
+  optimization: {
+    minimizer: [
+      (compiler: Compiler): void => {
+        // Override the terser plugin to remove all comments including the license.txt file.
+        new TerserPlugin({
+          terserOptions: {
+            format: {
+              comments: false
+            }
+          },
+          extractComments: false
+        }).apply(compiler);
+      }
+    ]
+  },
   output: {
     path: path.resolve(__dirname, "build"),
     // used the [name] token to allow Webpack to name the files if our app is code split.
