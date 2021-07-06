@@ -2,7 +2,6 @@ import path from "path";
 import webpack, { EnvironmentPlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import WorkboxPlugin from "workbox-webpack-plugin";
-
 const config: webpack.Configuration = {
   mode: "production",
   entry: "./src/index.tsx",
