@@ -48,7 +48,7 @@ const config: Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/indexDev.html",
+      template: "./public/index.html",
       title: "Employer Tracker PWA",
       favicon: "./public/favicon.ico"
     }),
@@ -61,6 +61,9 @@ const config: Configuration = {
     new EnvironmentPlugin({
       NODE_ENV: "development", // Set process.env.NODE_ENV to be 'development'
       DEBUG: true
+    }),
+    new WorkboxPlugin.GenerateSW({
+      maximumFileSizeToCacheInBytes: 20971520 // 20 MB
     })
   ],
   devtool: "source-map",

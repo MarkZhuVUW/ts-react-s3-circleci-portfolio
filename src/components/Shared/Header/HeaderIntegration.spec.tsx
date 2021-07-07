@@ -3,16 +3,19 @@ import {
   ThemeProvider,
   HeaderView
 } from "@employer-tracker-ui/components";
-import { findByLabelText, findByText, render } from "@testing-library/react";
+import { findByLabelText, queryByText, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
+import HeaderProvider from "./HeaderProvider";
 
 describe("HeaderView integtation tests.", () => {
   test("HeaderView integrated with all dependencies render correctly.", async () => {
     const { container } = render(
       <LocalStorageProvider>
         <ThemeProvider>
-          <HeaderView />
+          <HeaderProvider>
+            <HeaderView />
+          </HeaderProvider>
         </ThemeProvider>
       </LocalStorageProvider>
     );
@@ -40,11 +43,29 @@ describe("HeaderView integtation tests.", () => {
     await findByLabelText(container, "Contact the developer", { exact: true });
   });
 
+  test("HeaderView does not render properly without HeaderProvider", async () => {
+    const { container } = render(<HeaderView />);
+    expect(container).toBeTruthy();
+
+    expect(
+      queryByText(container, "Toggle light/dark mode - Currently light mode.", {
+        exact: true
+      })
+    ).toBeFalsy();
+    expect(
+      queryByText(container, "Contact the developer", {
+        exact: true
+      })
+    ).toBeFalsy();
+  });
+
   test("HeaderView switch toggles theme.", async () => {
     const { container } = render(
       <LocalStorageProvider>
         <ThemeProvider>
-          <HeaderView />
+          <HeaderProvider>
+            <HeaderView />
+          </HeaderProvider>
         </ThemeProvider>
       </LocalStorageProvider>
     );

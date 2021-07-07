@@ -4,9 +4,11 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router": "^5.2.0"
+    "react-router": "^5.2.0",
+    "workbox-window": "^6.1.5"
   },
   "scripts": {
     "serve": "webpack serve --config webpack.dev.config.ts",
@@ -14,7 +16,7 @@
     "test": "jest --ci --reporters=default --reporters=jest-junit",
     "single-test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint --fix . && prettier --write ."
+    "lint": "eslint --fix . && prettier --wriste ."
   },
   "jest-junit": {
     "outputDirectory": "./test-results",
@@ -36,6 +38,7 @@
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "@types/react-test-renderer": "^17.0.1",
+    "@types/terser-webpack-plugin": "^5.0.4",
     "@types/webpack": "^5.28.0",
     "@types/webpack-dev-server": "^3.11.3",
     "@types/workbox-webpack-plugin": "^5.1.7",
@@ -43,7 +46,6 @@
     "@typescript-eslint/parser": "^4.21.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
-    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -57,6 +59,7 @@
     "jest-junit": "^12.0.0",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
+    "terser-webpack-plugin": "^5.1.4",
     "ts-jest": "^26.5.4",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4",

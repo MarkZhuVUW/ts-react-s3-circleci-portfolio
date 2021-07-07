@@ -12,7 +12,7 @@ import {
   Link,
   Typography,
   Grid,
-  Hidden
+  useMediaQuery
 } from "@material-ui/core";
 import {
   MuiTheme,
@@ -22,7 +22,8 @@ import React, { FC } from "react";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
 import { MenuView } from "@employer-tracker-ui/components";
-import { useHeaderReducer } from "./useHeaderReducer";
+import { useHeader } from "./useHeaderReducer";
+import { MenuProvider } from "../Menu";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,15 +50,15 @@ const useStyles = makeStyles((theme: Theme) =>
 const HeaderView: FC = () => {
   const classes = useStyles();
   const { theme } = useMuiTheme();
-  const { handleThemeSwitchClick } = useHeaderReducer();
-
+  const { handleThemeSwitchClick } = useHeader();
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
         <Box flexWrap="nowrap" flexGrow="1">
           {/* For decorative icons, set aira-hidden to true */}
 
-          <Hidden smUp>
+          {isSmallScreen && (
             <Slide direction="right" in={true} timeout={500}>
               <Box
                 display="flex"
@@ -73,8 +74,8 @@ const HeaderView: FC = () => {
                 />
               </Box>
             </Slide>
-          </Hidden>
-          <Hidden smDown>
+          )}
+          {!isSmallScreen && (
             <Slide direction="right" in={true} timeout={500}>
               <Box
                 display="flex"
@@ -102,7 +103,7 @@ const HeaderView: FC = () => {
                 />
               </Box>
             </Slide>
-          </Hidden>
+          )}
         </Box>
         <Box>
           <Tooltip title={`Toggle light/dark mode - Currently ${theme} mode.`}>
@@ -129,7 +130,9 @@ const HeaderView: FC = () => {
         </Box>
 
         <Grid>
-          <MenuView />
+          <MenuProvider>
+            <MenuView />
+          </MenuProvider>
         </Grid>
       </Toolbar>
     </AppBar>

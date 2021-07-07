@@ -1,5 +1,16 @@
 import MenuView from "./MenuView";
 export default MenuView;
-export { MenuActionTypes } from "./menuReducer";
-export { useMenuReducer } from "./useMenuReducer";
-export type { MenuAction, MenuState } from "./menuReducer";
+export { useMenuReducer, MenuContext, useMenu } from "./useMenuReducer";
+export type {
+  MenuAction,
+  MenuState,
+  MenuItemProps,
+  MenuToggleProps,
+  MenuItemRenderer,
+  MenuToggleRenderer,
+  MenuActionTypes,
+  MenuControls,
+  MenuViewProps,
+  MenuProviderProps
+} from "./types";
+export { default as MenuProvider } from "./MenuProvider";

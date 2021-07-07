@@ -1,19 +1,36 @@
 import { useReducerOnSteroid } from "@employer-tracker-ui/Utils";
-import { Dispatch } from "react";
-import menuReducer, {
+import { createContext, Dispatch, useContext } from "react";
+import {
   MenuAction,
   MenuActionTypes,
-  MenuState
-} from "./menuReducer";
-import { MenuItemProps, MenuToggleProps } from "./types";
+  MenuControls,
+  MenuItemProps,
+  MenuState,
+  MenuToggleProps
+} from "./types";
 
-type MenuControls = {
-  menuStates: MenuState;
-  handleMenuClose: (event: React.MouseEvent<EventTarget>) => void;
-  handleMenuToggle: () => void;
-  getMenuToggleProps: () => MenuToggleProps;
-  getMenuItemProps: (label: string) => MenuItemProps;
+/**
+ * The default reducer for the useMenu hook.
+ * @param prevStates Previous states object.
+ * @param action MenuAction.
+ * @returns MenuState
+ */
+const menuReducer = (prevState: MenuState, action: MenuAction): MenuState => {
+  switch (action.type) {
+    case MenuActionTypes.MENU_TOGGLE: {
+      return menuToggle(prevState);
+    }
+    default:
+      throw new Error(`Unhandled menu action type: ${action.type}`);
+  }
 };
+
+const menuToggle = (prevState: MenuState) => ({
+  ...prevState,
+  isOpen: !prevState.isOpen
+});
+
+export default menuReducer;
 
 /**
  * A hook that handles states and functions of the MenuView component.
@@ -21,15 +38,24 @@ type MenuControls = {
  * @returns The controls of the MenuView component.
  */
 export const useMenuReducer = (
-  initialState: MenuState,
-  reducer = menuReducer
+  initialState: MenuState
 ): [MenuControls, Dispatch<MenuAction>] => {
-  const [menuStates, dispatch] = useReducerOnSteroid(reducer, initialState);
+  const [menuStates, dispatch] = useReducerOnSteroid(menuReducer, initialState);
   const { isOpen, menuListItems, anchorRef, label }: MenuState = menuStates;
-  const handleMenuClose = (event: React.MouseEvent<EventTarget>) =>
-    dispatch({ type: MenuActionTypes.MENU_CLOSE, payload: { event } });
+  const handleMenuClose = (event: React.MouseEvent<EventTarget>) => {
+    if (
+      anchorRef?.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      dispatch({ type: MenuActionTypes.MENU_TOGGLE, payload: { isOpen } });
+    }
+    dispatch({ type: MenuActionTypes.MENU_TOGGLE, payload: { isOpen: false } });
+  };
   const handleMenuToggle = () =>
-    dispatch({ type: MenuActionTypes.MENU_TOGGLE });
+    dispatch({
+      type: MenuActionTypes.MENU_TOGGLE,
+      payload: { isOpen: !isOpen }
+    });
 
   const getMenuToggleProps = (): MenuToggleProps => ({
     ref: anchorRef,
@@ -56,3 +82,28 @@ export const useMenuReducer = (
     dispatch
   ];
 };
+
+export const MenuContext = createContext<MenuControls>({
+  menuStates: {
+    isOpen: false,
+    anchorRef: null,
+    label: "",
+    menuListItems: []
+  },
+  handleMenuClose: (event: React.MouseEvent<EventTarget>) => {
+    console.warn(`No MenuContext.Provider. Event: ${event}`);
+  },
+  handleMenuToggle: () => {
+    console.warn("No MenuContext.Provider");
+  },
+  getMenuToggleProps: () => {
+    console.warn("No MenuContext.Provider");
+    return null;
+  },
+  getMenuItemProps: (label: string) => {
+    console.warn(`No MenuContext.Provider. Label: ${label} `);
+    return null;
+  }
+});
+
+export const useMenu = (): MenuControls => useContext(MenuContext);

@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { FC, useState } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 import { LightTheme, DarkTheme } from "@employer-tracker-ui/Themes";
 import {
@@ -70,7 +69,6 @@ const ThemeProvider: FC<ThemeProviderProps> = ({
       <ThemeContext.Provider
         value={{ theme, setMuiTheme, toggleLightDarkTheme }}
       >
-        <CssBaseline />
         {children}
       </ThemeContext.Provider>
     </MuiThemeProvider>
