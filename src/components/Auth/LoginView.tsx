@@ -120,8 +120,8 @@ const LoginView: FC<LoginViewProps> = ({
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
             <Typography>
-              Cache-first content served from service worker or CloudFront or S3
-              123ff112ffdsadsasdf
+              Cache-first content served from service worker or CloudFront or
+              S3123
             </Typography>
             <form
               className={classes.form}
