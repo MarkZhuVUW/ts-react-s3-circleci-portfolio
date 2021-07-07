@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
-import { Collapse, IconButton, useMediaQuery } from "@material-ui/core";
+import { Collapse, IconButton } from "@material-ui/core";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import { makeStyles, Theme, Typography, Button, Box } from "@material-ui/core";
 import { useSnackbar } from "./useSnackbarReducer";

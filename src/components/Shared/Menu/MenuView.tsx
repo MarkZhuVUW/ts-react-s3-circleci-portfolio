@@ -45,6 +45,7 @@ const MenuView: FC<MenuViewProps> = ({
 
       <ClickAwayListener
         mouseEvent={isOpen && "onClick"} // if isOpen is false, disable listener
+        touchEvent={isOpen && "onTouchStart"}
         onClickAway={handleMenuClose}
       >
         <Menu
