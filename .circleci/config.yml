@@ -13,14 +13,14 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run:
-          name: "Run Jest tests"
-          command: npm test
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: coverage
-          destination: coverage
+      # - run:
+      #     name: "Run Jest tests"
+      #     command: npm test
+      # - store_test_results:
+      #     path: test-results
+      # - store_artifacts:
+      #     path: coverage
+      #     destination: coverage
       - run: npm run build
       - persist_to_workspace:
           root: ./
