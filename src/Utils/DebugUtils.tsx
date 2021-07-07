@@ -59,7 +59,7 @@ export const useReducerOnSteroid = <R extends Reducer<any, any>>(
 };
 
 /**
- * A beautiful curried function that takes in an array of afterware callbacks and returns a function that runs all the afterwares.
+ * A beautiful curried function that takes in an array of afterware callbacks and returns a function that applies all the afterwares.
  * @param afterwareCbs Array of afterware callbacks.
  */
 const attachAfterwares =
@@ -73,7 +73,7 @@ const attachAfterwares =
   };
 
 /**
- * A beautiful curried function that takes in an array of middleware callbacks and returns a function that runs all the middlewares.
+ * A beautiful curried function that takes in an array of middleware callbacks and returns a function that applies all the middlewares.
  * @param middlewareCbs Array of middleware callbacks.
  */
 const attachMiddlewares =
@@ -94,8 +94,8 @@ export const logger = <R extends Reducer<any, any>>(
   if (!action || !afterState) {
     return;
   }
-  console.log(afterState);
   console.log(action);
+  console.log(afterState);
   console.log(
     "-------------------------------------------------------------------"
   );

@@ -19,10 +19,10 @@ const snackbarReducer = (
   action: SnackbarAction
 ): SnackbarState => {
   switch (action.type) {
-    case SnackbarActionTypes.Snackbar_TOGGLE: {
+    case SnackbarActionTypes.SNACKBAR_TOGGLE: {
       return snackbarToggle(prevState, action);
     }
-    case SnackbarActionTypes.Snackbar_OPEN: {
+    case SnackbarActionTypes.SNACKBAR_OPEN: {
       return snackbarOpen(prevState, action);
     }
     default:
@@ -61,7 +61,7 @@ export const useSnackbarReducer = (
       wbInstance.addEventListener("waiting", () => {
         // Dispatch event to show snackbar reminding user to reload.
         dispatch({
-          type: SnackbarActionTypes.Snackbar_OPEN,
+          type: SnackbarActionTypes.SNACKBAR_OPEN,
           payload: {
             open: true,
             label: "New version notification snack bar",
@@ -75,7 +75,9 @@ export const useSnackbarReducer = (
 
       // Clean up the waiting event listener in case user decides to not reload the page.
       return wbInstance.removeEventListener("waiting", (listener) => {
-        console.warn(`removed listener: ${listener} `);
+        if (process.env.NODE_ENV === "development") {
+          console.warn(`removed listener: ${listener} `);
+        }
       });
     }
   }, []);
@@ -94,12 +96,16 @@ export const useSnackbarReducer = (
     event?: React.SyntheticEvent,
     reason?: string
   ) => {
+    console.log(event);
     if (reason === "clickaway") {
       return;
     }
+
     dispatch({
-      type: SnackbarActionTypes.Snackbar_TOGGLE,
-      payload: { open: false }
+      type: SnackbarActionTypes.SNACKBAR_TOGGLE,
+      payload: {
+        open: false
+      }
     });
   };
 
@@ -123,9 +129,6 @@ export const SnackbarContext = createContext<SnackbarControls>({
   },
   handleSnackbarClose: () => {
     console.warn(`No SnackbarContext.Provider. Event: ${event}`);
-  },
-  handleSnackbarOpen: () => {
-    console.warn("No SnackbarContext.Provider");
   },
   handleReloadButtonClick: () => {
     console.warn("No SnackbarContext.Provider");

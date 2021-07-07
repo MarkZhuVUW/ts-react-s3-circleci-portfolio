@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { FC } from "react";
 import { useMenuReducer, MenuContext } from "./useMenuReducer";
-import { CssBaseline } from "@material-ui/core";
 import { MenuProviderProps, MenuState } from "./types";
 
 const MenuProvider: FC<MenuProviderProps> = ({
@@ -29,7 +28,6 @@ const MenuProvider: FC<MenuProviderProps> = ({
 
   return (
     <MenuContext.Provider value={{ ...useMenuReducer(initialState)[0] }}>
-      <CssBaseline />
       {children}
     </MenuContext.Provider>
   );

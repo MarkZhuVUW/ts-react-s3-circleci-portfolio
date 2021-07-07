@@ -1,7 +1,6 @@
 import React from "react";
 import { FC } from "react";
 import { useSnackbarReducer, SnackbarContext } from "./useSnackbarReducer";
-import { CssBaseline } from "@material-ui/core";
 import { SnackbarProviderProps, SnackbarState, SnackbarTypes } from "./types";
 
 const SnackbarProvider: FC<SnackbarProviderProps> = ({
@@ -9,9 +8,11 @@ const SnackbarProvider: FC<SnackbarProviderProps> = ({
 }: SnackbarProviderProps) => {
   const initialState: SnackbarState = {
     open: false,
-    label: "",
-    message: "",
+    label: "New version notification snack bar",
+    message:
+      "New version available, click the reload button to get the latest version but it may break existing tabs.",
     severity: "info",
+
     type: SnackbarTypes.newVersion
   };
 
@@ -19,7 +20,6 @@ const SnackbarProvider: FC<SnackbarProviderProps> = ({
     <SnackbarContext.Provider
       value={{ ...useSnackbarReducer(initialState)[0] }}
     >
-      <CssBaseline />
       {children}
     </SnackbarContext.Provider>
   );

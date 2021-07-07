@@ -2,7 +2,6 @@ import {
   Button,
   Container,
   createStyles,
-  CssBaseline,
   FormControl,
   Grid,
   IconButton,
@@ -112,7 +111,6 @@ const LoginView: FC<LoginViewProps> = ({
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <HeaderProvider>
         <HeaderView />
       </HeaderProvider>

@@ -43,35 +43,36 @@ const MenuView: FC<MenuViewProps> = ({
         </Tooltip>
       )}
 
-      {isOpen && (
-        <ClickAwayListener onClickAway={handleMenuClose}>
-          <Menu
-            aria-label={`${label} popup`}
-            anchorEl={anchorRef?.current}
-            keepMounted
-            open={isOpen}
-            onClose={handleMenuClose}
-            role="menu"
-            aria-controls="menu-list-grow"
-          >
-            <MenuList autoFocusItem={isOpen}>
-              {menuListItems.map(({ label, href }, index) => (
-                <span key={`${label} ${index}`}>
-                  {menuItemRenderer ? (
-                    menuItemRenderer(getMenuItemProps, label, href)
-                  ) : (
-                    <Link href={href} color="inherit">
-                      <MenuItem {...getMenuItemProps(label)}>
-                        <Typography noWrap>{label}</Typography>
-                      </MenuItem>
-                    </Link>
-                  )}
-                </span>
-              ))}
-            </MenuList>
-          </Menu>
-        </ClickAwayListener>
-      )}
+      <ClickAwayListener
+        mouseEvent={isOpen && "onClick"} // if isOpen is false, disable listener
+        onClickAway={handleMenuClose}
+      >
+        <Menu
+          aria-label={`${label} popup`}
+          anchorEl={anchorRef?.current}
+          keepMounted
+          open={isOpen}
+          onClose={handleMenuClose}
+          role="menu"
+          aria-controls="menu-list-grow"
+        >
+          <MenuList autoFocusItem={isOpen}>
+            {menuListItems.map(({ label, href }, index) => (
+              <span key={`${label} ${index}`}>
+                {menuItemRenderer ? (
+                  menuItemRenderer(getMenuItemProps, label, href)
+                ) : (
+                  <Link href={href} color="inherit">
+                    <MenuItem {...getMenuItemProps(label)}>
+                      <Typography noWrap>{label}</Typography>
+                    </MenuItem>
+                  </Link>
+                )}
+              </span>
+            ))}
+          </MenuList>
+        </Menu>
+      </ClickAwayListener>
     </Box>
   );
 };

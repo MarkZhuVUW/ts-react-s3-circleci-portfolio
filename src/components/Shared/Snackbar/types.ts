@@ -1,13 +1,13 @@
 import { ReactNode, SyntheticEvent } from "react";
 
 export enum SnackbarActionTypes {
-  Snackbar_OPEN = "Snackbar_OPEN",
-  Snackbar_TOGGLE = "Snackbar_TOGGLE"
+  SNACKBAR_OPEN = "SNACKBAR_OPEN",
+  SNACKBAR_TOGGLE = "SNACKBAR_TOGGLE"
 }
 export type SnackbarAction = {
   type: string;
   payload: {
-    open?: boolean;
+    open: boolean;
     label?: string;
     severity?: "info" | "warning" | "error" | "success";
     message?: string;
@@ -16,7 +16,7 @@ export type SnackbarAction = {
 };
 
 export type SnackbarState = {
-  open: boolean | undefined;
+  open: boolean;
   label: string;
   message: string;
   severity: "info" | "warning" | "error" | "success";
@@ -26,7 +26,6 @@ export type SnackbarState = {
 export type SnackbarControls = {
   snackbarStates: SnackbarState;
   handleSnackbarClose: (event: SyntheticEvent<Element, Event>) => void;
-  handleSnackbarOpen?: () => void;
   handleReloadButtonClick: () => void;
 };
 
@@ -35,6 +34,5 @@ export type SnackbarProviderProps = {
 };
 
 export enum SnackbarTypes {
-  newVersion = "new version",
-  test = "test"
+  newVersion = "New Version snackbar"
 }
