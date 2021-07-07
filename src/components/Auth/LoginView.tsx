@@ -121,7 +121,7 @@ const LoginView: FC<LoginViewProps> = ({
           <Paper className={classes.paper}>
             <Typography>
               Cache-first content served from service worker or CloudFront or S3
-              test 1
+              123123123123
             </Typography>
             <form
               className={classes.form}
