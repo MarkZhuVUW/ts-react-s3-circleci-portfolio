@@ -12,7 +12,7 @@ an offline-friendly, cache-first website frontend built with material ui, typesc
 
 ### Code reuse
 
-Website deployed to an S3 bucket with Cloudfront as CDN: https://www.markz-employer-tracker.net/
+Website deployed to an S3 bucket with Cloudfront as CDN: https://www.markz-employer-tracker.net/ and https://markz-employer-tracker.net/
 `http` is redirected to `https`.
 
 Initially I wanted to redirect `markz-employer-tracker.net` to `www.markz-employer-tracker.net` then I realized that it generates too many S3 bucket and CloudFront requests which makes hosting the website much more expensive. Now I am not redirecting but rather I am routing traffic from both `markz-employer-tracker.net` and `www.markz-employer-tracker.net` to a single CloudFront distribution using Route 53.
