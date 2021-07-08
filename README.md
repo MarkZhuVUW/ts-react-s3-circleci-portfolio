@@ -25,7 +25,7 @@ In the project directory, you can run:
 
 ### `npm install`
 
-### `npm start`
+### `npm run serve`
 
 - Runs the app in webpack development mode with live reloading.
 
