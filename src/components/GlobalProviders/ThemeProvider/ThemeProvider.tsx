@@ -44,8 +44,9 @@ const ThemeProvider: FC<ThemeProviderProps> = ({
   children
 }: ThemeProviderProps) => {
   const { getItem, setItem } = useLocalStorage();
+
   const [theme, setTheme] = useState(
-    JSON.parse(getItem(localStorageKeys.THEME) || "") === MuiTheme.Dark
+    getItem(localStorageKeys.THEME) === JSON.stringify(MuiTheme.Dark)
       ? MuiTheme.Dark
       : MuiTheme.Light
   );
