@@ -26,7 +26,6 @@ export enum MuiTheme {
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: MuiTheme.Light,
-
   setMuiTheme: (theme) => {
     console.warn(`Failed to set theme = ${theme}, no theme provider`);
   },
@@ -46,7 +45,7 @@ const ThemeProvider: FC<ThemeProviderProps> = ({
 }: ThemeProviderProps) => {
   const { getItem, setItem } = useLocalStorage();
   const [theme, setTheme] = useState(
-    getItem(localStorageKeys.THEME) === MuiTheme.Dark
+    JSON.parse(getItem(localStorageKeys.THEME) || "") === MuiTheme.Dark
       ? MuiTheme.Dark
       : MuiTheme.Light
   );
