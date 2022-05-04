@@ -8,3 +8,4 @@ export {
   useMuiTheme,
   default as ThemeProvider
 } from "./ThemeProvider";
+export { useRoute, default as RouteProvider } from "./RouteProvider";

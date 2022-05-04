@@ -1,0 +1,6 @@
+[default]
+region = ap-southeast-2
+output = json
+[profile update]
+role_arn = arn:aws:iam::142621353074:role/ECSS3UpdateRole
+source_profile = default

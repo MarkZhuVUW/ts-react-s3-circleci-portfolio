@@ -1,21 +1,33 @@
 import {
+  AuthProvider,
+  HeaderProvider,
+  HeaderView,
   LocalStorageProvider,
-  ThemeProvider,
-  AuthView
-} from "@employer-tracker-ui/components";
+  RouteProvider,
+  ThemeProvider
+} from "@portfolio-ui/components";
 import React, { FC } from "react";
-import SnackbarView, { SnackbarProvider } from "./components/Shared/Snackbar";
+import { SnackbarView, SnackbarProvider } from "./components";
 import { CssBaseline } from "@material-ui/core";
 
-const App: FC = () => (
-  <LocalStorageProvider>
-    <ThemeProvider>
-      <CssBaseline />
-      <AuthView />
-      <SnackbarProvider>
-        <SnackbarView />
-      </SnackbarProvider>
-    </ThemeProvider>
-  </LocalStorageProvider>
-);
+const App: FC = () => {
+  return (
+    <div>
+      <LocalStorageProvider>
+        <ThemeProvider>
+          <CssBaseline />
+          <HeaderProvider>
+            <HeaderView />
+          </HeaderProvider>
+          <AuthProvider>
+            <RouteProvider />
+          </AuthProvider>
+          <SnackbarProvider>
+            <SnackbarView />
+          </SnackbarProvider>
+        </ThemeProvider>
+      </LocalStorageProvider>
+    </div>
+  );
+};
 export default App;

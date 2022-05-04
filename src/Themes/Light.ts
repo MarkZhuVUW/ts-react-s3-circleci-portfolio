@@ -8,7 +8,7 @@ const LightTheme = createMuiTheme({
       main: blue[500]
     },
     background: {
-      default: "#E9EAED" // set the blank background color of all components to be light grey
+      default: "#E0E0E0" // set the blank background color of all components to be light grey
     }
   }
 });

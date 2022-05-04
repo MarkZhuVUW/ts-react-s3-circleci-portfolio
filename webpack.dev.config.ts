@@ -43,13 +43,13 @@ const config: Configuration = {
   resolve: {
     extensions: [".tsx", ".ts", ".js", "json"],
     alias: {
-      "@employer-tracker-ui": path.resolve(__dirname, "src/")
+      "@portfolio-ui": path.resolve(__dirname, "src/")
     }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
-      title: "Employer Tracker PWA",
+      title: "Portfolio PWA",
       favicon: "./public/favicon.ico"
     }),
     new ForkTsCheckerWebpackPlugin({
@@ -69,6 +69,7 @@ const config: Configuration = {
   devtool: "source-map",
   devServer: {
     contentBase: path.join(__dirname, "build"),
+    publicPath: "/",
     historyApiFallback: true,
     port: 4000,
     open: true,

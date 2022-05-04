@@ -2,33 +2,30 @@ import {
   Button,
   Container,
   createStyles,
-  FormControl,
   Grid,
-  IconButton,
-  InputAdornment,
   makeStyles,
   Paper,
-  TextField,
   Theme,
-  withStyles,
   Zoom,
-  Typography
+  Typography,
+  Tooltip,
+  IconButton
 } from "@material-ui/core";
 
 import React, { FC } from "react";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { HeaderView } from "@employer-tracker-ui/components/Shared";
-import { HeaderProvider } from "../Shared/Header";
+
+import { useAuth } from "./useAuthReducer";
+import GithubIcon from "@material-ui/icons/GitHub";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: { height: "100vh" },
+    root: { height: "100%" },
     paper: {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      marginTop: "23vh",
+      marginTop: "10vh",
       [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(8),
@@ -51,11 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
     avatar: {
       margin: theme.spacing(1)
     },
-    form: {
-      width: "100%", // Fix IE 11 issue.,
-      marginTop: theme.spacing(1),
-      flexDirection: "column"
-    },
     submit: {
       margin: theme.spacing(3, 0, 2)
     },
@@ -75,110 +67,51 @@ const useStyles = makeStyles((theme: Theme) =>
     appBar: {
       display: "flex",
       justifyContent: "center"
+    },
+    icon: {
+      height: "100%"
     }
   })
 );
-const ValidationTextField = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      "& input:valid + fieldset": {
-        borderWidth: 1
-      },
-      "& input:invalid + fieldset": {
-        borderColor: "red",
-        borderWidth: 1
-      },
-      "& input:valid:focus + fieldset": {
-        borderLeftWidth: 6,
-        borderRightWidth: 6,
-        borderDownWidth: 6,
-        padding: "4px !important", // override inline-style
-        borderColor: "#73A7FF"
-      },
-      appBarSpacer: theme.mixins.toolbar
-    }
-  })
-)(TextField);
 
-type LoginViewProps = {
-  showPassword: boolean;
-  setShowPassword: (showPassword: boolean) => void;
-};
-const LoginView: FC<LoginViewProps> = ({
-  showPassword,
-  setShowPassword
-}: LoginViewProps) => {
+const LoginView: FC = () => {
   const classes = useStyles();
+  const { authStates, handleSkipButtonClick } = useAuth();
+
+  const { skipButtonLabel, githubAuthLabel } = authStates;
+
   return (
     <div className={classes.root}>
-      <HeaderProvider>
-        <HeaderView />
-      </HeaderProvider>
       <Container maxWidth="md" fixed className={classes.container}>
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
             <Typography>
               Cache-first content served from service worker or CloudFront or S3
             </Typography>
-            <form
-              className={classes.form}
-              noValidate
-              onSubmit={(event) => {
-                event.preventDefault();
-              }}
-            >
-              <FormControl margin="normal" fullWidth>
-                <ValidationTextField
-                  variant="outlined"
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  inputProps={{ "aria-label": "Email Address" }}
-                  autoFocus
-                />
-              </FormControl>
-              <FormControl margin="normal" fullWidth>
-                <ValidationTextField
-                  variant="outlined"
-                  id="password"
-                  label="Password"
-                  name="password"
-                  autoComplete="current-password"
-                  type={showPassword ? "text" : "password"}
-                  inputProps={{ "aria-label": "Password" }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle login password visibility"
-                          onClick={() => setShowPassword(!showPassword)}
-                          onMouseDown={(event) => event.preventDefault()}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </FormControl>
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Log In
-              </Button>
-
-              <Grid container alignItems="center" justify="center">
-                <Grid item>
-                  <p style={{ fontWeight: "bold" }}>Register</p>
-                </Grid>
+            <Grid container alignItems="center" justify="center">
+              <Grid item>
+                <Tooltip title={githubAuthLabel}>
+                  <IconButton>
+                    <GithubIcon className={classes.icon} fontSize="large" />
+                  </IconButton>
+                </Tooltip>
               </Grid>
-            </form>
+            </Grid>
+
+            <Grid container alignItems="center" justify="center">
+              <Grid item>
+                <Tooltip title={skipButtonLabel}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleSkipButtonClick}
+                  >
+                    Skip Login
+                  </Button>
+                </Tooltip>
+              </Grid>
+            </Grid>
           </Paper>
         </Zoom>
       </Container>

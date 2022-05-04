@@ -18,85 +18,109 @@ import {
 export const useReducerOnSteroid = <R extends Reducer<any, any>>(
   reducer: R,
   initialState: ReducerState<R>,
+  beforewareCbs: any = [reRenderChecker],
   middlewareCbs: Array<
-    (action: ReducerAction<R>, state: ReducerState<R>) => void
+    (action: ReducerAction<R> | null, state: ReducerState<R>) => void
   > = [],
   afterwareCbs: Array<
-    (action: ReducerAction<R>, state: ReducerState<R>) => void
+    (action: ReducerAction<R> | null, state: ReducerState<R>) => void
   > = [logger]
 ): [ReducerState<R>, Dispatch<ReducerAction<R>>] => {
-  if (process.env.NODE_ENV === "development") {
-    const ref = useRef(null);
-    const [state, dispatch] = useReducer(reducer, initialState);
-    /**
-     * Curried function provides a way for us to do something like this:
-     * In here I am "Attach"-ing middleware and afterware callbacks and I am "apply"-ing those callbacks in appropriate places...
-     */
-    const applyMiddlewares = attachMiddlewares(middlewareCbs);
-    const applyAfterwares = attachAfterwares(afterwareCbs);
-
-    /**
-     * A closure that runs all the middlewares after dispatch.
-     * @param action
-     */
-    const dispatchWithMiddlewares: Dispatch<ReducerAction<R>> = (
-      action: ReducerAction<R>
-    ) => {
-      // Apply middleware callbacks here.
-      applyMiddlewares(action, state);
-      dispatch(action);
-      ref.current = action;
-    };
-
-    // Apply afterwares here by listening to action change.
-    useEffect(() => {
-      applyAfterwares(ref.current as ReducerAction<R>, state);
-    }, [ref.current]);
-    return [state, dispatchWithMiddlewares];
+  if (process.env.NODE_ENV !== "development") {
+    return useReducer(reducer, initialState); // return infant useReducer in prod mode.
   }
+  const ref = useRef(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  /**
+   * Curried function provides a way for us to do something like this:
+   * In here I am "Attach"-ing middleware and afterware callbacks and I am "apply"-ing those callbacks in appropriate places...
+   */
+  const applyBeforewares = attachBeforewares(beforewareCbs);
+  const applyMiddlewares = attachSoftwares(middlewareCbs);
+  const applyAfterwares = attachSoftwares(afterwareCbs);
 
-  return useReducer(reducer, initialState); // return infant useReducer in prod mode.
+  applyBeforewares(reducer);
+
+  /**
+   * A closure that runs all the middlewares after dispatch.
+   * @param action
+   */
+  const dispatchWithMiddlewares: Dispatch<ReducerAction<R>> = (
+    action: ReducerAction<R>
+  ) => {
+    // Apply middleware callbacks here.
+    applyMiddlewares(action, state);
+    dispatch(action);
+    ref.current = action;
+  };
+
+  // Apply afterwares here by listening to action change.
+  useEffect(() => {
+    applyAfterwares(ref.current as ReducerAction<R>, state);
+  }, [ref.current]);
+  return [state, dispatchWithMiddlewares];
 };
 
 /**
- * A beautiful curried function that takes in an array of afterware callbacks and returns a function that applies all the afterwares.
- * @param afterwareCbs Array of afterware callbacks.
+ * Takes in an array of beforeware callbacks and returns a function that applies all the beforeware.
+ * @param beforewareCbs Array of beforeware callbacks.
  */
-const attachAfterwares =
-  <R extends Reducer<any, any>>(
-    afterwareCbs: Array<
-      (action: ReducerAction<R>, state: ReducerState<R>) => void
-    >
-  ) =>
-  (action: ReducerAction<R>, state: ReducerState<R>) => {
-    afterwareCbs.forEach((afterwareCb) => afterwareCb(action, state));
+const attachBeforewares =
+  <R extends Reducer<any, any>>(cbs: Array<(reducer: R) => void>) =>
+  (reducer: R) => {
+    cbs.forEach((cbs) => cbs(reducer));
   };
 
 /**
- * A beautiful curried function that takes in an array of middleware callbacks and returns a function that applies all the middlewares.
- * @param middlewareCbs Array of middleware callbacks.
+ * Takes in an array of softwares callbacks and returns a function that applies all the softwares.
+ * @param softwareCbs Array of software callbacks.
  */
-const attachMiddlewares =
+const attachSoftwares =
   <R extends Reducer<any, any>>(
-    middlewareCbs: Array<
-      (action: ReducerAction<R>, state: ReducerState<R>) => void
+    cbs: Array<
+      (action: ReducerAction<R> | null, state: ReducerState<R>) => void
     >
   ) =>
-  (action: ReducerAction<R>, state: ReducerState<R>) => {
-    middlewareCbs.forEach((middlewareCb) => middlewareCb(action, state));
+  (action: ReducerAction<R> | null, state: ReducerState<R>) => {
+    cbs.forEach((cbs) => cbs(action, state));
   };
 
-/** A logger afterware which logs the action and the states after the action is done. */
+/** A logger afterware which logs the states after the action. */
 export const logger = <R extends Reducer<any, any>>(
-  action: ReducerAction<R>,
+  action: ReducerAction<R> | null,
   afterState: ReducerState<R>
 ): void => {
   if (!action || !afterState) {
     return;
   }
+  console.log("**********************************************************");
+
+  console.log(
+    "--------------------------Action-----------------------------------"
+  );
+
   console.log(action);
+  console.log(
+    "--------------------------Action-----------------------------------"
+  );
+
+  console.log(
+    "--------------------------After State-----------------------------------"
+  );
   console.log(afterState);
   console.log(
-    "-------------------------------------------------------------------"
+    "--------------------------After State------------------------------"
   );
+  console.log("**********************************************************");
+};
+
+// beforeware to check if a component is re-rendered
+export const reRenderChecker = <R extends Reducer<any, any>>(
+  reducer: R
+): void => {
+  console.log(
+    `<<${reducer.name.replace(/^\w/, (c) => c.toUpperCase())}>>` + " rendered"
+  );
+  // log the name of the function so we know which custom hook was called
+  // which reveals which components are re-rendered
 };

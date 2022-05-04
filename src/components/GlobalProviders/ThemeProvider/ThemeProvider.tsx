@@ -2,11 +2,11 @@ import React, { ReactNode } from "react";
 import { FC, useState } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 
-import { LightTheme, DarkTheme } from "@employer-tracker-ui/Themes";
+import { LightTheme, DarkTheme } from "@portfolio-ui/Themes";
 import {
   useLocalStorage,
   localStorageKeys
-} from "@employer-tracker-ui/components/GlobalProviders";
+} from "@portfolio-ui/components/GlobalProviders";
 
 import { createContext, useContext } from "react";
 

@@ -1,10 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import LoginView from "./LoginView";
 
 const AuthView: FC = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  return (
-    <LoginView showPassword={showPassword} setShowPassword={setShowPassword} />
-  );
+  return <LoginView />;
 };
 export default AuthView;

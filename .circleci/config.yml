@@ -28,8 +28,8 @@ jobs:
             - build
 
   deploy:
-    docker:
-      - image: alpine/git:latest
+    machine:
+      image: ubuntu-2004:202111-02
     steps:
       - checkout
       - run: ls
@@ -38,15 +38,21 @@ jobs:
       - run:
           name: Install aws cli through python to always get the latest verison
           command: |
-            apk add python3 py-pip
-            pip3 install awscli --upgrade
+            sudo apt-get update
+            sudo apt-get install awscli
       - run:
-          name: Remove existing build and deploy new build to aws s3 bucket.
+          name: AWS configure
+          command: |
+            mkdir ~/.aws
+            chmod -R 755 ~/.aws
+            cp .circleci/aws_config ~/.aws/config
+      - run:
+          name: Assume role, Remove existing build and deploy new build to aws s3 bucket.
           # no cache for service-worker.js and index.html. Other files are cached one year (31536000 seconds) to save money.
           command: |
-            aws s3 sync ./build s3://www.markz-employer-tracker.net --exclude index.html --exclude service-worker.js --acl public-read --cache-control max-age=31536000,public --delete 
-            aws s3 sync ./build s3://www.markz-employer-tracker.net --include index.html --include service-worker.js --acl public-read --cache-control 'no-cache'
-
+            cd ./scripts
+            chmod +x deploy-s3.sh
+            ./deploy-s3.sh
 workflows:
   test-build-deploy:
     jobs:
@@ -54,6 +60,3 @@ workflows:
       - deploy:
           requires:
             - testnbuild
-          filters:
-            branches:
-              only: master

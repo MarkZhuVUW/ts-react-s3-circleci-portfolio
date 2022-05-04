@@ -17,7 +17,7 @@ module.exports = {
   testRegex: "((\\.|/*.)(spec))\\.tsx?$",
   collectCoverage: true,
   moduleNameMapper: {
-    "@employer-tracker-ui/(.*)$": "<rootDir>/src/$1"
+    "@portfolio-ui/(.*)$": "<rootDir>/src/$1"
   },
   moduleDirectories: ["node_modules", "src"],
   testResultsProcessor: "jest-junit",

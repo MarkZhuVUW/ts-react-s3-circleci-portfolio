@@ -29,7 +29,7 @@ const config: webpack.Configuration = {
     // which busts the browser cache.
     filename: "[name].[contenthash].js",
     clean: true, // Clean the output directory before emit.
-    publicPath: ""
+    publicPath: "/"
   },
   module: {
     rules: [
@@ -52,13 +52,13 @@ const config: webpack.Configuration = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
-      "@employer-tracker-ui": path.resolve(__dirname, "src/")
+      "@portfolio-ui": path.resolve(__dirname, "src/")
     }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
-      title: "Employer Tracker PWA",
+      title: "Portfolio PWA",
       favicon: "./public/favicon.ico"
     }),
     new EnvironmentPlugin({
