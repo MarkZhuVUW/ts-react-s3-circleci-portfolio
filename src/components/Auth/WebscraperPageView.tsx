@@ -86,7 +86,7 @@ const WebscraperPageView: FC = () => {
         justify="center"
         spacing={1}
       >
-        {searchItems.length === 0 && (
+        {searchItems.length === 0 && !errorCode && (
           <Typography>No item to display.</Typography>
         )}
         {Object.values(searchItems).map((searchItem) => (
@@ -97,7 +97,7 @@ const WebscraperPageView: FC = () => {
       </Grid>
       <div style={{ marginTop: "30px" }}></div>
       <Grid container alignItems="center" justify="center" spacing={1}>
-        {errorCode}
+        <Typography variant="h4">{errorCode}</Typography>
       </Grid>
       <Grid container alignItems="center" justify="center" spacing={1}>
         {errorMsg}

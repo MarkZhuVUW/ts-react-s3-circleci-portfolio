@@ -41,6 +41,7 @@ const handleSelectOnlineShop = (
 ): APIState => {
   return {
     ...prevState,
+    ...action.payload,
     selectedOnlineShop: action.payload.selectedOnlineShop
       ? action.payload.selectedOnlineShop
       : OnlineShopDto.COUNTDOWN
@@ -52,6 +53,7 @@ const handleGetSearchResultsAction = (
   action: APIAction
 ): APIState => ({
   ...prevState,
+  ...action.payload,
   searchItems:
     action.payload.response &&
     action.payload.response.data &&
@@ -65,6 +67,7 @@ const handleSetLoading = (
   action: APIAction
 ): APIState => ({
   ...prevState,
+  ...action.payload,
   isLoading: action.payload.isLoading === true ? true : false
 });
 
@@ -101,14 +104,14 @@ export const useAPIReducer = (
         (response: GetSearchResultsResponse) => {
           dispatch({
             type: APIActionTypes.GetSearchResults,
-            payload: { response: response }
+            payload: { response: response, errorCode: "", errorMsg: "" }
           });
           dispatch({
             type: APIActionTypes.SetLoading,
             payload: { isLoading: false }
           });
         },
-        (reason: string) => {
+        (reason: any) => {
           console.log(JSON.stringify(reason));
 
           const data: OnlineShoppingItemDTO[] = [];
@@ -117,7 +120,7 @@ export const useAPIReducer = (
             payload: {
               isLoading: false,
               errorCode: "500",
-              errorMsg: JSON.stringify(reason),
+              errorMsg: reason["message"],
               response: {
                 data: {
                   data
