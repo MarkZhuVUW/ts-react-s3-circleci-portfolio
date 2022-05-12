@@ -114,7 +114,6 @@ export const useAPIReducer = (
         (reason: any) => {
           console.log(JSON.stringify(reason));
 
-          const data: OnlineShoppingItemDTO[] = [];
           dispatch({
             type: APIActionTypes.SetLoading,
             payload: {
@@ -123,7 +122,7 @@ export const useAPIReducer = (
               errorMsg: reason["message"],
               response: {
                 data: {
-                  data
+                  data: []
                 }
               }
             }

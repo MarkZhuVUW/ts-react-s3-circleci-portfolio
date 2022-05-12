@@ -64,7 +64,11 @@ const WebscraperPageView: FC = () => {
         </FormControl>
         <FormControl className={classes.formControl}>
           <TextField
-            helperText={`What are you looking for in ${selectedOnlineShop}?`}
+            helperText={
+              selectedOnlineShop === OnlineShopDto.GOOGLE_SHOPPING
+                ? "You are getting Google search results in Northcote, Auckland."
+                : `What are you looking for in ${selectedOnlineShop}?`
+            }
             id="demo-helper-text-misaligned"
             label="Search String"
             onChange={handleGetSearchResults}
