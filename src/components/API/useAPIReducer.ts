@@ -51,6 +51,22 @@ const handleSelectOnlineShop = (
 const handleGetSearchResultsAction = (
   prevState: APIState,
   action: APIAction
+): APIState => {
+  return {
+    ...prevState,
+    ...action.payload,
+    searchItems:
+      action.payload.response &&
+      action.payload.response.data &&
+      action.payload.response.data.data
+        ? action.payload.response.data.data
+        : []
+  };
+};
+
+const handleSetLoading = (
+  prevState: APIState,
+  action: APIAction
 ): APIState => ({
   ...prevState,
   ...action.payload,
@@ -59,15 +75,7 @@ const handleGetSearchResultsAction = (
     action.payload.response.data &&
     action.payload.response.data.data
       ? action.payload.response.data.data
-      : []
-});
-
-const handleSetLoading = (
-  prevState: APIState,
-  action: APIAction
-): APIState => ({
-  ...prevState,
-  ...action.payload,
+      : [],
   isLoading: action.payload.isLoading === true ? true : false
 });
 
