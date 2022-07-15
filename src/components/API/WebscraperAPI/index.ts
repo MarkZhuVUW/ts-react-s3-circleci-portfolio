@@ -3,7 +3,7 @@ export { default as SearchItemCard } from "./SearchItemCard";
 export { WebscraperAPIActions, OnlineShopDto } from "./webscraperAPITypes";
 export type {
   GetSearchResultsResponse,
-  GetSearchResultsParams,
+  ScrapeSearchResultsParams,
   OnlineShoppingItemDTO,
-  GetSearchResultsRequest
+  ScrapeSearchResultsRequest
 } from "./webscraperAPITypes";

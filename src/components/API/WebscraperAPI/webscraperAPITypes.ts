@@ -3,8 +3,11 @@ export type GetSearchResultsResponse = {
     data: Array<OnlineShoppingItemDTO>;
   };
 };
-export type GetSearchResultsRequest = {
-  params: GetSearchResultsParams;
+
+export type GetSearchResultsRequest = Record<string, never>;
+
+export type ScrapeSearchResultsRequest = {
+  params: ScrapeSearchResultsParams;
 };
 
 export type OnlineShoppingItemDTO = {
@@ -25,14 +28,16 @@ export enum OnlineShopDto {
   GOOGLE_SHOPPING = "GOOGLE_SHOPPING"
 }
 
-export type GetSearchResultsParams = {
+export type ScrapeSearchResultsParams = {
   onlineShopName: OnlineShopDto;
   searchString: string;
 };
 
 export enum WebscraperAPIActions {
-  GetSearchResults = "GetSearchResults",
+  ScrapeSearchResults = "ScrapeSearchResults",
   SelectOnlineShop = "SelectOnlineShop",
   SetLoading = "SetLoading",
-  SetAPIFired = "SetAPIFired"
+  SetAPIFired = "SetAPIFired",
+  ShowFavoriteItems = "ShowFavoriteItems",
+  FavoriteItem = "FavoriteItem"
 }

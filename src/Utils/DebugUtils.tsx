@@ -114,13 +114,13 @@ export const logger = <R extends Reducer<any, any>>(
   console.log("**********************************************************");
 };
 
-// beforeware to check if a component is re-rendered
+// beforeware to check if a hook is called
 export const reRenderChecker = <R extends Reducer<any, any>>(
   reducer: R
 ): void => {
   console.log(
-    `<<${reducer.name.replace(/^\w/, (c) => c.toUpperCase())}>>` + " rendered"
+    `<<${reducer.name.replace(/^\w/, (c) => c.toUpperCase())}>>` + " called"
   );
   // log the name of the function so we know which custom hook was called
-  // which reveals which components are re-rendered
+  // which reveals which react hooks are called
 };

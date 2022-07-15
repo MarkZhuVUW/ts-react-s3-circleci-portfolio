@@ -60,3 +60,6 @@ workflows:
       - deploy:
           requires:
             - testnbuild
+          filters:
+            branches:
+              only: master

@@ -86,7 +86,8 @@ const LoginView: FC = () => {
         <Zoom timeout={500} in={true}>
           <Paper className={classes.paper}>
             <Typography>
-              Cache-first content served from service worker or CloudFront or S3
+              Cache-first content served from service worker or CloudFront from
+              S3
             </Typography>
 
             <Grid container alignItems="center" justify="center">

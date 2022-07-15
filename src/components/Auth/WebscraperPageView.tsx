@@ -1,9 +1,10 @@
 import {
   Box,
+  Checkbox,
   CircularProgress,
   createStyles,
-  Divider,
   FormControl,
+  FormControlLabel,
   Grid,
   makeStyles,
   MenuItem,
@@ -38,10 +39,19 @@ const useStyles = makeStyles((theme: Theme) =>
 const WebscraperPageView: FC = () => {
   const classes = useStyles();
 
-  const { apiStates, handleOnlineShopChange, handleGetSearchResults } =
-    useAPI();
-  const { searchItems, selectedOnlineShop, isLoading, errorCode, errorMsg } =
-    apiStates;
+  const {
+    apiStates,
+    handleOnlineShopChange,
+    handleGetSearchResults,
+    handleScrapeSearchResults
+  } = useAPI();
+  const {
+    searchItems,
+    selectedOnlineShop,
+    isLoading,
+    errorMsg,
+    showFavoriteItems
+  } = apiStates;
 
   return (
     <Box className={classes.container}>
@@ -64,10 +74,14 @@ const WebscraperPageView: FC = () => {
         </FormControl>
         <FormControl className={classes.formControl}>
           <TextField
-            helperText={`What are you looking for in ${selectedOnlineShop}?`}
+            helperText={
+              selectedOnlineShop === OnlineShopDto.GOOGLE_SHOPPING
+                ? "You are getting Google search results in Northcote, Auckland."
+                : `What are you looking for in ${selectedOnlineShop}?`
+            }
             id="demo-helper-text-misaligned"
             label="Search String"
-            onChange={handleGetSearchResults}
+            onChange={handleScrapeSearchResults}
             disabled={isLoading}
           />
         </FormControl>
@@ -76,6 +90,18 @@ const WebscraperPageView: FC = () => {
             <CircularProgress color="primary" />
           </Grid>
         )}
+        <FormControlLabel
+          className={classes.formControl}
+          control={
+            <Checkbox
+              checked={showFavoriteItems}
+              onChange={handleGetSearchResults}
+              name="showFavoriteItems"
+              color="primary"
+            />
+          }
+          label="Show Fav-ed items"
+        />
       </Grid>
       <div style={{ marginTop: "60px" }}></div>
 
@@ -96,9 +122,6 @@ const WebscraperPageView: FC = () => {
         ))}
       </Grid>
       <div style={{ marginTop: "30px" }}></div>
-      <Grid container alignItems="center" justify="center" spacing={1}>
-        {errorCode}
-      </Grid>
       <Grid container alignItems="center" justify="center" spacing={1}>
         {errorMsg}
       </Grid>

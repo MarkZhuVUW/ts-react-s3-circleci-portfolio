@@ -9,8 +9,8 @@ const APIProvider: FC<APIProviderProps> = ({ children }: APIProviderProps) => {
     searchItems: [],
     selectedOnlineShop: OnlineShopDto.COUNTDOWN,
     isLoading: false,
-    errorCode: "",
-    errorMsg: ""
+    errorMsg: "",
+    showFavoriteItems: false
   };
 
   return (

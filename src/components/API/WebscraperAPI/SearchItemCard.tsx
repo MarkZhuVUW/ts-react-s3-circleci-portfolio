@@ -15,6 +15,7 @@ import React, { FC } from "react";
 import { OnlineShoppingItemDTO } from "./webscraperAPITypes";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
+import { useAPI } from "../useAPIReducer";
 
 type SearchItemCardProps = {
   onlineShoppingItemDto: OnlineShoppingItemDTO;
@@ -35,6 +36,7 @@ const SearchItemCard: FC<SearchItemCardProps> = ({
   onlineShoppingItemDto
 }: SearchItemCardProps) => {
   const classes = useStyles();
+  const { handleFavoriteIconClick } = useAPI();
 
   return (
     <Card>
@@ -67,7 +69,12 @@ const SearchItemCard: FC<SearchItemCardProps> = ({
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton
+          aria-label="add to favorites"
+          onClick={() => {
+            handleFavoriteIconClick(onlineShoppingItemDto);
+          }}
+        >
           {!onlineShoppingItemDto.isSaved && <FavoriteOutlinedIcon />}
           {onlineShoppingItemDto.isSaved && <FavoriteIcon color="secondary" />}
         </IconButton>

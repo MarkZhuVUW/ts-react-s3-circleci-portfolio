@@ -17,25 +17,30 @@ export type APIAction = {
     response?: GetSearchResultsResponse;
     selectedOnlineShop?: OnlineShopDto;
     isLoading?: boolean;
-    errorCode?: string;
     errorMsg?: string;
+    showFavoriteItems?: boolean;
+    tempFavoritedItem?: OnlineShoppingItemDTO;
   };
 };
 export type APIState = {
   searchItems: Array<OnlineShoppingItemDTO>;
   selectedOnlineShop: OnlineShopDto;
   isLoading: boolean;
-  errorCode: string;
   errorMsg: string;
+  showFavoriteItems: boolean;
 };
 
 export type APIControls = {
   apiStates: APIState;
-  handleGetSearchResults: (
-    event: ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => void;
+  handleGetSearchResults: () => void;
   handleOnlineShopChange: (
     event: ChangeEvent<{ name?: string | undefined; value: unknown }>
+  ) => void;
+  handleScrapeSearchResults: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void;
+  handleFavoriteIconClick: (
+    onlineShoppingItemDTO: OnlineShoppingItemDTO
   ) => void;
 };
 

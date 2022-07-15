@@ -9,12 +9,16 @@ import {
 import { APIAction, APIActionTypes, APIControls, APIState } from "./types";
 import {
   getSearchResults,
-  GetSearchResultsRequest,
   GetSearchResultsResponse,
-  OnlineShopDto,
-  OnlineShoppingItemDTO
+  OnlineShopDto
 } from "./WebscraperAPI";
 import debounce from "lodash.debounce";
+import {
+  GetSearchResultsRequest,
+  OnlineShoppingItemDTO,
+  ScrapeSearchResultsRequest
+} from "./WebscraperAPI/webscraperAPITypes";
+import { scrapeSearchResults } from "./WebscraperAPI/WebscraperAPI";
 
 /**
  * The default reducer for the useAPI hook.
@@ -24,30 +28,66 @@ import debounce from "lodash.debounce";
  */
 const apiReducer = (prevState: APIState, action: APIAction): APIState => {
   switch (action.type) {
-    case APIActionTypes.GetSearchResults:
-      return handleGetSearchResultsAction(prevState, action);
+    case APIActionTypes.ScrapeSearchResults:
+      return handleScrapeSearchResultsAction(prevState, action);
     case APIActionTypes.SelectOnlineShop:
       return handleSelectOnlineShop(prevState, action);
     case APIActionTypes.SetLoading:
       return handleSetLoading(prevState, action);
+    case APIActionTypes.ShowFavoriteItems:
+      return handleShowFavoriteItems(prevState, action);
+    case APIActionTypes.FavoriteItem:
+      return handleFavoriteItem(prevState, action);
     default:
       throw new Error(`Unhandled API action type: ${action.type}`);
   }
 };
 
+const handleFavoriteItem = (
+  prevState: APIState,
+  action: APIAction
+): APIState => ({
+  ...prevState,
+  // Replace item in searchItems with the item in payload.
+  searchItems: prevState.searchItems.map((item) => {
+    const tempFavoritedItem = action.payload.tempFavoritedItem;
+
+    if (
+      item.uuid === tempFavoritedItem?.uuid &&
+      item.name === tempFavoritedItem.name &&
+      item.onlineShopName === tempFavoritedItem.onlineShopName
+    ) {
+      return tempFavoritedItem;
+    }
+    return item;
+  })
+});
+
+const handleShowFavoriteItems = (
+  prevState: APIState,
+  action: APIAction
+): APIState => ({
+  ...prevState,
+  showFavoriteItems: !prevState.showFavoriteItems,
+  searchItems:
+    action.payload.response &&
+    action.payload.response.data &&
+    action.payload.response.data.data
+      ? action.payload.response.data.data
+      : []
+});
+
 const handleSelectOnlineShop = (
   prevState: APIState,
   action: APIAction
-): APIState => {
-  return {
-    ...prevState,
-    selectedOnlineShop: action.payload.selectedOnlineShop
-      ? action.payload.selectedOnlineShop
-      : OnlineShopDto.COUNTDOWN
-  };
-};
+): APIState => ({
+  ...prevState,
+  selectedOnlineShop: action.payload.selectedOnlineShop
+    ? action.payload.selectedOnlineShop
+    : OnlineShopDto.COUNTDOWN
+});
 
-const handleGetSearchResultsAction = (
+const handleScrapeSearchResultsAction = (
   prevState: APIState,
   action: APIAction
 ): APIState => ({
@@ -78,15 +118,60 @@ export default apiReducer;
 export const useAPIReducer = (
   initialState: APIState
 ): [APIControls, Dispatch<APIAction>] => {
-  const handleGetSearchResults = (
+  const handleScrapeSearchResults = (
     event: ChangeEvent<{ name?: string | undefined; value: unknown }>
   ) => {
-    const getSearchResultsRequest: GetSearchResultsRequest = {
+    const scrapeSearchResultsRequest: ScrapeSearchResultsRequest = {
       params: {
         onlineShopName: selectedOnlineShop,
         searchString: event.target.value as string
       }
     };
+    debouncedScrapeSearchResults(scrapeSearchResultsRequest);
+  };
+  const debouncedScrapeSearchResults = useCallback(
+    debounce((scrapeSearchResultsRequest) => {
+      dispatch({
+        type: APIActionTypes.SetLoading,
+        payload: { isLoading: true }
+      });
+      scrapeSearchResults(
+        scrapeSearchResultsRequest,
+        (response: GetSearchResultsResponse) => {
+          dispatch({
+            type: APIActionTypes.ScrapeSearchResults,
+            payload: {
+              response: response,
+              errorMsg: ""
+            }
+          });
+          dispatch({
+            type: APIActionTypes.SetLoading,
+            payload: { isLoading: false }
+          });
+        },
+        (reason: any) => {
+          console.log(JSON.stringify(reason));
+
+          dispatch({
+            type: APIActionTypes.SetLoading,
+            payload: {
+              isLoading: false,
+              errorMsg: reason["message"],
+              response: {
+                data: {
+                  data: []
+                }
+              }
+            }
+          });
+        }
+      );
+    }, 800),
+    []
+  );
+  const handleGetSearchResults = () => {
+    const getSearchResultsRequest: GetSearchResultsRequest = {};
     debouncedGetSearchResults(getSearchResultsRequest);
   };
 
@@ -100,27 +185,28 @@ export const useAPIReducer = (
         getSearchResultsRequest,
         (response: GetSearchResultsResponse) => {
           dispatch({
-            type: APIActionTypes.GetSearchResults,
-            payload: { response: response }
+            type: APIActionTypes.ShowFavoriteItems,
+            payload: {
+              response: response,
+              errorMsg: ""
+            }
           });
           dispatch({
             type: APIActionTypes.SetLoading,
             payload: { isLoading: false }
           });
         },
-        (reason: string) => {
+        (reason: any) => {
           console.log(JSON.stringify(reason));
 
-          const data: OnlineShoppingItemDTO[] = [];
           dispatch({
             type: APIActionTypes.SetLoading,
             payload: {
               isLoading: false,
-              errorCode: "500",
-              errorMsg: JSON.stringify(reason),
+              errorMsg: reason["message"],
               response: {
                 data: {
-                  data
+                  data: []
                 }
               }
             }
@@ -140,13 +226,26 @@ export const useAPIReducer = (
     });
   };
 
+  const handleFavoriteIconClick = (
+    onlineShoppingItemDto: OnlineShoppingItemDTO
+  ) => {
+    dispatch({
+      type: APIActionTypes.SelectOnlineShop,
+      payload: {
+        tempFavoritedItem: {
+          ...onlineShoppingItemDto,
+          isSaved: !onlineShoppingItemDto.isSaved
+        }
+      }
+    });
+  };
   const [apiStates, dispatch] = useReducerOnSteroid(apiReducer, initialState);
   const {
     searchItems,
     selectedOnlineShop,
     isLoading,
-    errorCode,
-    errorMsg
+    errorMsg,
+    showFavoriteItems
   }: APIState = apiStates;
 
   return [
@@ -155,11 +254,13 @@ export const useAPIReducer = (
         searchItems,
         selectedOnlineShop,
         isLoading,
-        errorCode,
-        errorMsg
+        errorMsg,
+        showFavoriteItems
       },
+      handleScrapeSearchResults,
+      handleOnlineShopChange,
       handleGetSearchResults,
-      handleOnlineShopChange
+      handleFavoriteIconClick
     },
     dispatch
   ];
@@ -170,18 +271,24 @@ export const APIContext = createContext<APIControls>({
     searchItems: [],
     selectedOnlineShop: OnlineShopDto.COUNTDOWN,
     isLoading: false,
-    errorCode: "",
-    errorMsg: ""
+    errorMsg: "",
+    showFavoriteItems: false
   },
-  handleGetSearchResults: (
-    event: ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => {
-    console.warn(`No APIContext.Provider. textfield change event: ${event}`);
+  handleGetSearchResults: () => {
+    console.warn(`No APIContext.Provider.`);
   },
   handleOnlineShopChange: (
     event: ChangeEvent<{ name?: string | undefined; value: unknown }>
   ) => {
     console.warn(`No APIContext.Provider. change event: ${event}`);
+  },
+  handleScrapeSearchResults: (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.warn(`No APIContext.Provider. change event: ${event}`);
+  },
+  handleFavoriteIconClick: (onlineShoppingItemDto: OnlineShoppingItemDTO) => {
+    console.warn(
+      `No APIContext.Provider. onlineShoppingItemDto: ${onlineShoppingItemDto}`
+    );
   }
 });
 

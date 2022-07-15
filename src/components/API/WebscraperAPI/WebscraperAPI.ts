@@ -1,6 +1,7 @@
 import axios from "axios";
 import APIUrl from "../APIUrl";
 import {
+  ScrapeSearchResultsRequest,
   GetSearchResultsRequest,
   GetSearchResultsResponse
 } from "./webscraperAPITypes";
@@ -10,7 +11,6 @@ const webscraperAPIAxios = axios.create({
     process.env.NODE_ENV === "development"
       ? "http://localhost:80/webscraper-api"
       : APIUrl.WEBSCRAPER_API,
-  // baseURL: "http://localhost:80/webscraper-api",
 
   headers: {
     "Content-type": "application/json",
@@ -24,7 +24,18 @@ export const getSearchResults = (
   catchCb: (reason: string) => void
 ): void => {
   webscraperAPIAxios
-    .get("/search", { params: request.params })
+    .get("/search/items", { params: request.params })
+    .then(thenCb)
+    .catch(catchCb);
+};
+
+export const scrapeSearchResults = (
+  request: ScrapeSearchResultsRequest,
+  thenCb: (response: GetSearchResultsResponse) => void,
+  catchCb: (reason: string) => void
+): void => {
+  webscraperAPIAxios
+    .get("/scrape/items", { params: request.params })
     .then(thenCb)
     .catch(catchCb);
 };
