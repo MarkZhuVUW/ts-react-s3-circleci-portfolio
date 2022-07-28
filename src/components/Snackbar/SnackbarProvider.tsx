@@ -10,7 +10,7 @@ const SnackbarProvider: FC<SnackbarProviderProps> = ({
     open: false,
     label: "New version notification snack bar",
     message:
-      "New version available, click the reload button to get the latest version but it may break existing tabs.",
+      "New version available, click the reload button to get the latest version.",
     severity: "info",
 
     type: SnackbarTypes.newVersion
