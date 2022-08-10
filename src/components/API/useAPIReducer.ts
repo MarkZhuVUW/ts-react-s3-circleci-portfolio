@@ -84,7 +84,7 @@ const handleSelectOnlineShop = (
   ...prevState,
   selectedOnlineShop: action.payload.selectedOnlineShop
     ? action.payload.selectedOnlineShop
-    : OnlineShopDto.COUNTDOWN
+    : OnlineShopDto.GOOGLE_SHOPPING
 });
 
 const handleScrapeSearchResultsAction = (
@@ -269,7 +269,7 @@ export const useAPIReducer = (
 export const APIContext = createContext<APIControls>({
   apiStates: {
     searchItems: [],
-    selectedOnlineShop: OnlineShopDto.COUNTDOWN,
+    selectedOnlineShop: OnlineShopDto.GOOGLE_SHOPPING,
     isLoading: false,
     errorMsg: "",
     showFavoriteItems: false

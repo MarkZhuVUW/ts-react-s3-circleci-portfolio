@@ -22,9 +22,6 @@ export type OnlineShoppingItemDTO = {
 };
 
 export enum OnlineShopDto {
-  COUNTDOWN = "COUNTDOWN",
-  PET_CO = "PET_CO",
-  THE_WAREHOUSE = "THE_WAREHOUSE",
   GOOGLE_SHOPPING = "GOOGLE_SHOPPING"
 }
 

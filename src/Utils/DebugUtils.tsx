@@ -118,9 +118,7 @@ export const logger = <R extends Reducer<any, any>>(
 export const reRenderChecker = <R extends Reducer<any, any>>(
   reducer: R
 ): void => {
-  console.log(
-    `<<${reducer.name.replace(/^\w/, (c) => c.toUpperCase())}>>` + " called"
-  );
+  console.log(`<${reducer.name.replace(/^\w/, (c) => c.toUpperCase())} />`);
   // log the name of the function so we know which custom hook was called
   // which reveals which react hooks are called
 };

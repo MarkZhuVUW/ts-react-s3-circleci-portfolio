@@ -14,8 +14,8 @@ import {
   Typography
 } from "@material-ui/core";
 import React, { FC } from "react";
-import { useAPI } from "../API";
-import { OnlineShopDto, SearchItemCard } from "../API/WebscraperAPI";
+import { OnlineShopDto, SearchItemCard } from ".";
+import { useAPI } from "../useAPIReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

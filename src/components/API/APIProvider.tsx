@@ -7,7 +7,7 @@ import { OnlineShopDto } from "./WebscraperAPI";
 const APIProvider: FC<APIProviderProps> = ({ children }: APIProviderProps) => {
   const initialState: APIState = {
     searchItems: [],
-    selectedOnlineShop: OnlineShopDto.COUNTDOWN,
+    selectedOnlineShop: OnlineShopDto.GOOGLE_SHOPPING,
     isLoading: false,
     errorMsg: "",
     showFavoriteItems: false
