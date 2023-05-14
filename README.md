@@ -2,15 +2,7 @@
 
 # ts-react-s3-circleci-portfolio
 
-an offline-friendly, cache-first website frontend built with material ui, typescript, react and webpack with Jest unit testing, taking as much of the following as I can into consideration:
-
-### Extendability
-
-### Scalability
-
-### Unit-testability
-
-### Code reuse
+an offline-friendly, cache-first website frontend built with material ui, typescript, react and webpack with Jest unit testing
 
 Highlights:
 
