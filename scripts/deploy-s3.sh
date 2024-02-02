@@ -10,7 +10,7 @@ aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
 
 export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
 $(aws sts assume-role \
---role-arn arn:aws:iam::142621353074:role/ECSS3UpdateRole \
+--role-arn arn:aws:iam::780816973348:role/ECSS3UpdateRole \
 --role-session-name S3SyncSiteBucketRoleSession \
 --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
 --output text))

@@ -9,15 +9,19 @@ const MenuProvider: FC<MenuProviderProps> = ({
   const initialState: MenuState = {
     isOpen: false,
     anchorRef: useRef<HTMLButtonElement>(null),
-    label: "Github links menu",
+    label: "Code Github links",
     menuListItems: [
       {
-        label: "Frontend source code with CICD",
+        label: "Frontend React SPA",
         href: "https://github.com/MarkZhuVUW/ts-react-s3-circleci-portfolio"
       },
       {
-        label: "AWS CDK powered Spring Boot webscraper microservice with CICD",
+        label: "Spring Boot Webscraper Service",
         href: "https://github.com/MarkZhuVUW/spring-boot-web-scraper-service"
+      },
+      {
+        label: "AWS CDK Infra Code",
+        href: "https://github.com/MarkZhuVUW/aws-cdk-all"
       }
     ]
   };

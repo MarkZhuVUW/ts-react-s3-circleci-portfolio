@@ -83,24 +83,7 @@ const HeaderView: FC = () => {
                 alignItems="center"
                 className={classes.headerText}
               >
-                <Typography>
-                  Source codes and contact can be found on the right.
-                </Typography>
-                <ArrowForwardIcon
-                  aria-hidden="true"
-                  fontSize="large"
-                  className={classes.icon}
-                />
-                <ArrowForwardIcon
-                  aria-hidden="true"
-                  fontSize="large"
-                  className={classes.icon}
-                />
-                <ArrowForwardIcon
-                  aria-hidden="true"
-                  fontSize="large"
-                  className={classes.icon}
-                />
+                <Typography>Portfolio</Typography>
               </Box>
             </Slide>
           )}

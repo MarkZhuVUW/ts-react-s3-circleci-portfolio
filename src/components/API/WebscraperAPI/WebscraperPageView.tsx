@@ -109,7 +109,7 @@ const WebscraperPageView: FC = () => {
               color="primary"
             />
           }
-          label="Show Fav-ed items"
+          label="Show favourite items"
         />
       </Grid>
       <div style={{ marginTop: "60px" }}></div>
