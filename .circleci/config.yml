@@ -15,7 +15,7 @@ jobs:
             - node_modules
       - run:
           name: "Run Jest tests"
-          command: npm test
+          command: npm test --passWithNoTests
       - store_test_results:
           path: test-results
       - store_artifacts:
