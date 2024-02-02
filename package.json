@@ -17,7 +17,7 @@
   "scripts": {
     "serve": "webpack serve --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",
-    "test": "jest --ci --reporters=default --reporters=jest-junit",
+    "test": "jest --ci --reporters=default --reporters=jest-junit --passWithNoTests",
     "single-test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint --fix . && prettier --wriste ."
