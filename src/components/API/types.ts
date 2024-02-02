@@ -1,14 +1,12 @@
 import { ChangeEvent, ReactNode } from "react";
 import {
-  OnlineShopDto,
-  WebscraperAPIActions,
-  OnlineShoppingItemDTO,
-  GetSearchResultsResponse
+  GetSearchResultsResponse,
+  OnlineShoppingItemDTO
 } from "./WebscraperAPI";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export const APIActionTypes = {
-  ...WebscraperAPIActions
+import { OnlineShopDto, WebscraperAPIActions } from "./WebscraperAPI/types";
+export const APIActions = {
+  WebscraperAPIActions: { ...WebscraperAPIActions }
 };
 
 export type APIAction = {
@@ -36,9 +34,7 @@ export type APIControls = {
   handleOnlineShopChange: (
     event: ChangeEvent<{ name?: string | undefined; value: unknown }>
   ) => void;
-  handleScrapeSearchResults: (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => void;
+  handleScrapeSearchResults: (searchString: string) => void;
   handleFavoriteIconClick: (
     onlineShoppingItemDTO: OnlineShoppingItemDTO
   ) => void;

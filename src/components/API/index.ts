@@ -1,10 +1,8 @@
-import APIView from "./APIView";
-export default APIView;
 export { useAPIReducer, APIContext, useAPI } from "./useAPIReducer";
 export type {
   APIAction,
   APIState,
-  APIActionTypes,
+  APIActions,
   APIControls,
   APIProviderProps
 } from "./types";

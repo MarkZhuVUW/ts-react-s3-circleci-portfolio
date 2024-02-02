@@ -66,7 +66,10 @@ const config: Configuration = {
       maximumFileSizeToCacheInBytes: 20971520 // 20 MB
     })
   ],
-  devtool: "source-map",
+  devtool: "eval-source-map",
+  optimization: {
+    splitChunks: false
+  },
   devServer: {
     contentBase: path.join(__dirname, "build"),
     publicPath: "/",

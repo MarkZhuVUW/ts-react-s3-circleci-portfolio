@@ -1,9 +1,8 @@
-export { getSearchResults } from "./WebscraperAPI";
 export { default as SearchItemCard } from "./SearchItemCard";
-export { WebscraperAPIActions, OnlineShopDto } from "./webscraperAPITypes";
+export { getSearchResults } from "./WebscraperAPI";
 export type {
   GetSearchResultsResponse,
-  ScrapeSearchResultsParams,
   OnlineShoppingItemDTO,
+  ScrapeSearchResultsParams,
   ScrapeSearchResultsRequest
-} from "./webscraperAPITypes";
+} from "./types";

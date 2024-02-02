@@ -13,9 +13,10 @@ import {
   Theme,
   Typography
 } from "@material-ui/core";
-import React, { FC } from "react";
-import { OnlineShopDto, SearchItemCard } from ".";
+import React, { FC, useState } from "react";
+import { OnlineShopDto } from "./types";
 import { useAPI } from "../useAPIReducer";
+import SearchItemCard from "./SearchItemCard";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,6 +46,8 @@ const WebscraperPageView: FC = () => {
     handleGetSearchResults,
     handleScrapeSearchResults
   } = useAPI();
+
+  const [searchString, setSearchString] = useState("");
   const {
     searchItems,
     selectedOnlineShop,
@@ -55,7 +58,7 @@ const WebscraperPageView: FC = () => {
 
   return (
     <Box className={classes.container}>
-      <Grid container alignItems="center" justify="center">
+      <Grid container alignItems="center" justifyContent="center">
         <FormControl className={classes.formControl}>
           <Select
             labelId="online-shop-dto-select"
@@ -76,12 +79,18 @@ const WebscraperPageView: FC = () => {
           <TextField
             helperText={
               selectedOnlineShop === OnlineShopDto.GOOGLE_SHOPPING
-                ? "You are getting Google search results in Northcote, Auckland."
+                ? "You are getting Google search results in Northcote, Auckland"
                 : `What are you looking for in ${selectedOnlineShop}?`
             }
             id="demo-helper-text-misaligned"
             label="Search String"
-            onChange={handleScrapeSearchResults}
+            placeholder={"click enter to search."}
+            onChange={(e) => setSearchString(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key == "Enter") {
+                handleScrapeSearchResults(searchString);
+              }
+            }}
             disabled={isLoading}
           />
         </FormControl>
@@ -109,7 +118,7 @@ const WebscraperPageView: FC = () => {
         className={classes.cardContainer}
         container
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         spacing={1}
       >
         {searchItems.length === 0 && (
@@ -122,7 +131,7 @@ const WebscraperPageView: FC = () => {
         ))}
       </Grid>
       <div style={{ marginTop: "30px" }}></div>
-      <Grid container alignItems="center" justify="center" spacing={1}>
+      <Grid container alignItems="center" justifyContent="center" spacing={1}>
         {errorMsg}
       </Grid>
     </Box>

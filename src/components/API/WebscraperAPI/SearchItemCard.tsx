@@ -11,11 +11,11 @@ import {
   Typography
 } from "@material-ui/core";
 
-import React, { FC } from "react";
-import { OnlineShoppingItemDTO } from "./webscraperAPITypes";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
+import React, { FC } from "react";
 import { useAPI } from "../useAPIReducer";
+import { OnlineShoppingItemDTO } from "./types";
 
 type SearchItemCardProps = {
   onlineShoppingItemDto: OnlineShoppingItemDTO;
@@ -25,8 +25,6 @@ const useStyles = makeStyles(() =>
   createStyles({
     cover: {
       flex: 1,
-      width: "undefined",
-      height: "undefined",
       resizeMode: "contain"
     }
   })

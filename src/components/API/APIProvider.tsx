@@ -1,8 +1,7 @@
-import React from "react";
-import { FC } from "react";
-import { useAPIReducer, APIContext } from "./useAPIReducer";
+import React, { FC } from "react";
+import { OnlineShopDto } from "./WebscraperAPI/types";
 import { APIProviderProps, APIState } from "./types";
-import { OnlineShopDto } from "./WebscraperAPI";
+import { APIContext, useAPIReducer } from "./useAPIReducer";
 
 const APIProvider: FC<APIProviderProps> = ({ children }: APIProviderProps) => {
   const initialState: APIState = {

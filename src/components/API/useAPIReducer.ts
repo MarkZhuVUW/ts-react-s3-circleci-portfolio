@@ -6,18 +6,14 @@ import {
   useCallback,
   useContext
 } from "react";
-import { APIAction, APIActionTypes, APIControls, APIState } from "./types";
-import {
-  getSearchResults,
-  GetSearchResultsResponse,
-  OnlineShopDto
-} from "./WebscraperAPI";
-import debounce from "lodash.debounce";
+import { APIAction, APIActions, APIControls, APIState } from "./types";
+import { getSearchResults, GetSearchResultsResponse } from "./WebscraperAPI";
 import {
   GetSearchResultsRequest,
+  OnlineShopDto,
   OnlineShoppingItemDTO,
   ScrapeSearchResultsRequest
-} from "./WebscraperAPI/webscraperAPITypes";
+} from "./WebscraperAPI/types";
 import { scrapeSearchResults } from "./WebscraperAPI/WebscraperAPI";
 
 /**
@@ -28,15 +24,15 @@ import { scrapeSearchResults } from "./WebscraperAPI/WebscraperAPI";
  */
 const apiReducer = (prevState: APIState, action: APIAction): APIState => {
   switch (action.type) {
-    case APIActionTypes.ScrapeSearchResults:
+    case APIActions.WebscraperAPIActions.ScrapeSearchResults:
       return handleScrapeSearchResultsAction(prevState, action);
-    case APIActionTypes.SelectOnlineShop:
+    case APIActions.WebscraperAPIActions.SelectOnlineShop:
       return handleSelectOnlineShop(prevState, action);
-    case APIActionTypes.SetLoading:
+    case APIActions.WebscraperAPIActions.SetLoading:
       return handleSetLoading(prevState, action);
-    case APIActionTypes.ShowFavoriteItems:
+    case APIActions.WebscraperAPIActions.ShowFavoriteItems:
       return handleShowFavoriteItems(prevState, action);
-    case APIActionTypes.FavoriteItem:
+    case APIActions.WebscraperAPIActions.FavoriteItem:
       return handleFavoriteItem(prevState, action);
     default:
       throw new Error(`Unhandled API action type: ${action.type}`);
@@ -118,110 +114,98 @@ export default apiReducer;
 export const useAPIReducer = (
   initialState: APIState
 ): [APIControls, Dispatch<APIAction>] => {
-  const handleScrapeSearchResults = (
-    event: ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => {
+  const handleScrapeSearchResults = (searchString: string) => {
     const scrapeSearchResultsRequest: ScrapeSearchResultsRequest = {
       params: {
         onlineShopName: selectedOnlineShop,
-        searchString: event.target.value as string
+        searchString: searchString
       }
     };
-    debouncedScrapeSearchResults(scrapeSearchResultsRequest);
-  };
-  const debouncedScrapeSearchResults = useCallback(
-    debounce((scrapeSearchResultsRequest) => {
-      dispatch({
-        type: APIActionTypes.SetLoading,
-        payload: { isLoading: true }
-      });
-      scrapeSearchResults(
-        scrapeSearchResultsRequest,
-        (response: GetSearchResultsResponse) => {
-          dispatch({
-            type: APIActionTypes.ScrapeSearchResults,
-            payload: {
-              response: response,
-              errorMsg: ""
-            }
-          });
-          dispatch({
-            type: APIActionTypes.SetLoading,
-            payload: { isLoading: false }
-          });
-        },
-        (reason: any) => {
-          console.log(JSON.stringify(reason));
 
-          dispatch({
-            type: APIActionTypes.SetLoading,
-            payload: {
-              isLoading: false,
-              errorMsg: reason["message"],
-              response: {
-                data: {
-                  data: []
-                }
+    dispatch({
+      type: APIActions.WebscraperAPIActions.SetLoading,
+      payload: { isLoading: true }
+    });
+    scrapeSearchResults(
+      scrapeSearchResultsRequest,
+      (response: GetSearchResultsResponse) => {
+        dispatch({
+          type: APIActions.WebscraperAPIActions.ScrapeSearchResults,
+          payload: {
+            response: response,
+            errorMsg: ""
+          }
+        });
+        dispatch({
+          type: APIActions.WebscraperAPIActions.SetLoading,
+          payload: { isLoading: false }
+        });
+      },
+      (reason: any) => {
+        console.log(JSON.stringify(reason));
+
+        dispatch({
+          type: APIActions.WebscraperAPIActions.SetLoading,
+          payload: {
+            isLoading: false,
+            errorMsg: reason["message"],
+            response: {
+              data: {
+                data: []
               }
             }
-          });
-        }
-      );
-    }, 800),
-    []
-  );
+          }
+        });
+      }
+    );
+  };
+
   const handleGetSearchResults = () => {
     const getSearchResultsRequest: GetSearchResultsRequest = {};
-    debouncedGetSearchResults(getSearchResultsRequest);
-  };
 
-  const debouncedGetSearchResults = useCallback(
-    debounce((getSearchResultsRequest) => {
-      dispatch({
-        type: APIActionTypes.SetLoading,
-        payload: { isLoading: true }
-      });
-      getSearchResults(
-        getSearchResultsRequest,
-        (response: GetSearchResultsResponse) => {
-          dispatch({
-            type: APIActionTypes.ShowFavoriteItems,
-            payload: {
-              response: response,
-              errorMsg: ""
-            }
-          });
-          dispatch({
-            type: APIActionTypes.SetLoading,
-            payload: { isLoading: false }
-          });
-        },
-        (reason: any) => {
-          console.log(JSON.stringify(reason));
+    dispatch({
+      type: APIActions.WebscraperAPIActions.SetLoading,
+      payload: { isLoading: true }
+    });
+    getSearchResults(
+      getSearchResultsRequest,
+      (response: GetSearchResultsResponse) => {
+        dispatch({
+          type: APIActions.WebscraperAPIActions.ShowFavoriteItems,
+          payload: {
+            response: response,
+            errorMsg: ""
+          }
+        });
+        dispatch({
+          type: APIActions.WebscraperAPIActions.SetLoading,
+          payload: { isLoading: false }
+        });
+      },
+      (reason: any) => {
+        console.log(JSON.stringify(reason));
 
-          dispatch({
-            type: APIActionTypes.SetLoading,
-            payload: {
-              isLoading: false,
-              errorMsg: reason["message"],
-              response: {
-                data: {
-                  data: []
-                }
+        dispatch({
+          type: APIActions.WebscraperAPIActions.SetLoading,
+          payload: {
+            isLoading: false,
+            errorMsg: reason["message"],
+            response: {
+              data: {
+                data: []
               }
             }
-          });
-        }
-      );
-    }, 800),
-    []
-  );
+          }
+        });
+      }
+    );
+  };
 
   const handleOnlineShopChange = (
     event: ChangeEvent<{ name?: string | undefined; value: unknown }>
   ) => {
     dispatch({
-      type: APIActionTypes.SelectOnlineShop,
+      type: APIActions.WebscraperAPIActions.SelectOnlineShop,
       payload: { selectedOnlineShop: event.target.value as OnlineShopDto }
     });
   };
@@ -230,7 +214,7 @@ export const useAPIReducer = (
     onlineShoppingItemDto: OnlineShoppingItemDTO
   ) => {
     dispatch({
-      type: APIActionTypes.SelectOnlineShop,
+      type: APIActions.WebscraperAPIActions.SelectOnlineShop,
       payload: {
         tempFavoritedItem: {
           ...onlineShoppingItemDto,
@@ -282,7 +266,7 @@ export const APIContext = createContext<APIControls>({
   ) => {
     console.warn(`No APIContext.Provider. change event: ${event}`);
   },
-  handleScrapeSearchResults: (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleScrapeSearchResults: (searchString: string) => {
     console.warn(`No APIContext.Provider. change event: ${event}`);
   },
   handleFavoriteIconClick: (onlineShoppingItemDto: OnlineShoppingItemDTO) => {

@@ -1,10 +1,10 @@
 import axios from "axios";
 import APIUrl from "../APIUrl";
 import {
-  ScrapeSearchResultsRequest,
   GetSearchResultsRequest,
-  GetSearchResultsResponse
-} from "./webscraperAPITypes";
+  GetSearchResultsResponse,
+  ScrapeSearchResultsRequest
+} from "./types";
 
 const webscraperAPIAxios = axios.create({
   baseURL:

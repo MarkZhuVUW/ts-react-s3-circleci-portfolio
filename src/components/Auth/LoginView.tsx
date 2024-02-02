@@ -90,7 +90,7 @@ const LoginView: FC = () => {
               S3
             </Typography>
 
-            <Grid container alignItems="center" justify="center">
+            <Grid container alignItems="center" justifyContent="center">
               <Grid item>
                 <Tooltip title={githubAuthLabel}>
                   <IconButton>
@@ -100,7 +100,7 @@ const LoginView: FC = () => {
               </Grid>
             </Grid>
 
-            <Grid container alignItems="center" justify="center">
+            <Grid container alignItems="center" justifyContent="center">
               <Grid item>
                 <Tooltip title={skipButtonLabel}>
                   <Button
