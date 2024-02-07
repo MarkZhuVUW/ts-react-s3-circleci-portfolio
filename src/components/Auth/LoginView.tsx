@@ -76,7 +76,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const LoginView: FC = () => {
   const classes = useStyles();
-  const { authStates, handleSkipButtonClick } = useAuth();
+  const { authStates, handleGoToWebscraperService, handleSkipLogin } =
+    useAuth();
 
   const { skipButtonLabel, githubAuthLabel } = authStates;
 
@@ -89,7 +90,7 @@ const LoginView: FC = () => {
               Cache-first content served from service worker or CloudFront from
               S3
             </Typography>
-
+            <Typography>Auth has not been implemented</Typography>
             <Grid container alignItems="center" justifyContent="center">
               <Grid item>
                 <Tooltip title={githubAuthLabel}>
@@ -106,9 +107,23 @@ const LoginView: FC = () => {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={handleSkipButtonClick}
+                    onClick={handleSkipLogin}
                   >
                     Skip Login
+                  </Button>
+                </Tooltip>
+              </Grid>
+            </Grid>
+
+            <Grid container alignItems="center" justifyContent="center">
+              <Grid item>
+                <Tooltip title={"Go to Webcraper service"}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleGoToWebscraperService}
+                  >
+                    Webscraper Service
                   </Button>
                 </Tooltip>
               </Grid>

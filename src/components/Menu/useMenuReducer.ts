@@ -30,7 +30,7 @@ const menuReducer = (prevState: MenuState, action: MenuAction): MenuState => {
 
 const menuToggle = (prevState: MenuState, action: MenuAction) => ({
   ...prevState,
-  isOpen: !action.payload?.isOpen
+  isOpen: !action.payload.isOpen
 });
 
 export default menuReducer;
@@ -52,7 +52,12 @@ export const useMenuReducer = (
     ) {
       return;
     }
-    dispatch({ type: MenuActionTypes.CLOSE_MENU });
+    dispatch({
+      type: MenuActionTypes.CLOSE_MENU,
+      payload: {
+        isOpen: false
+      }
+    });
   };
   const handleMenuToggle = () =>
     dispatch({

@@ -1,7 +1,7 @@
 import React from "react";
 import { FC } from "react";
 import { useAuthReducer, AuthContext } from "./useAuthReducer";
-import { AuthProviderProps } from "./types";
+import { AuthProviderProps, Page } from "./types";
 
 const AuthProvider: FC<AuthProviderProps> = ({
   children
@@ -9,7 +9,8 @@ const AuthProvider: FC<AuthProviderProps> = ({
   const initialState = {
     skipButtonLabel: "skip button label",
     githubAuthLabel: "Github oauth button",
-    isAuthenticated: false
+    isAuthenticated: false,
+    currentPage: Page.LoginView
   };
   return (
     <AuthContext.Provider value={{ ...useAuthReducer(initialState)[0] }}>

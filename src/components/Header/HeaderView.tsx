@@ -19,7 +19,6 @@ import {
   useMuiTheme
 } from "@portfolio-ui/components/GlobalProviders";
 import React, { FC } from "react";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EmailIcon from "@material-ui/icons/Email";
 import { MenuView } from "@portfolio-ui/components";
 import { useHeader } from "./useHeaderReducer";
@@ -56,37 +55,16 @@ const HeaderView: FC = () => {
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
         <Box flexWrap="nowrap" flexGrow="1">
-          {/* For decorative icons, set aira-hidden to true */}
-
-          {isSmallScreen && (
-            <Slide direction="right" in={true} timeout={500}>
-              <Box
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                className={classes.headerText}
-              >
-                <Typography>Code</Typography>
-                <ArrowForwardIcon
-                  aria-hidden="true"
-                  fontSize="large"
-                  className={classes.icon}
-                />
-              </Box>
-            </Slide>
-          )}
-          {!isSmallScreen && (
-            <Slide direction="right" in={true} timeout={500}>
-              <Box
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                className={classes.headerText}
-              >
-                <Typography>Portfolio</Typography>
-              </Box>
-            </Slide>
-          )}
+          <Slide direction="right" in={true} timeout={500}>
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              className={classes.headerText}
+            >
+              <Typography>Portfolio</Typography>
+            </Box>
+          </Slide>
         </Box>
         <Box>
           <Tooltip title={`Toggle light/dark mode - Currently ${theme} mode.`}>

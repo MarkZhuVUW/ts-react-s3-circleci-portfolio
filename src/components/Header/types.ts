@@ -7,7 +7,7 @@ export enum HeaderActionTypes {
 export type HeaderAction = {
   type: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
-  payload?: {};
+  payload: {};
 };
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type HeaderState = {};

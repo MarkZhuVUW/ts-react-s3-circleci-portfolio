@@ -30,7 +30,7 @@ export enum MenuActionTypes {
 }
 export type MenuAction = {
   type: string;
-  payload?: {
+  payload: {
     isOpen: boolean;
   };
 };
